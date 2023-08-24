@@ -13,10 +13,10 @@ server* g_server = new server();
 
 int main() {
 #ifdef _WIN32
-    SetConsoleTitleA("Erza Proxy");
+    SetConsoleTitleA("Rzky Proxy");
 #endif
 
-printf("Erza Proxy Authentication.\n\n");
+printf("Rzky Proxy Authentication.\n\n");
 
     std::string user_name = "";
     printf("Enter License : "); std::cin >> user_name;
@@ -40,8 +40,8 @@ printf("Erza Proxy Authentication.\n\n");
          
    
 
-     printf("Erza Proxy is Running...\n");
-        printf("Erza Proxy Online!!\n");
+     printf("Rzky Proxy is Running...\n");
+        printf("Rzky Proxy Online!!\n");
         while (true) {
             g_server->poll();
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
