@@ -1135,7 +1135,7 @@ else if (find_command(chat, "proxy")) {
             //    "`2/wrenchmsg (Auto Msg Wrench People), /setmsg (for set message text)");
            std::string paket1;
             paket1 =
-                "\nadd_label_with_icon|big|`9Erza Proxy Command|left|2480|"
+                "\nadd_label_with_icon|big|`9Rzky Proxy Command|left|2480|"
                 "\nadd_spacer|small"
 		"\nadd_label_with_icon|small|`9Main Command|left|32|"
 "\nadd_textbox|`2/tp [name] (teleports to a player in the world)|left|2480|"
@@ -1276,7 +1276,7 @@ bool events::in::variantlist(gameupdatepacket_t* packet) {
         case fnv32("OnSendToServer"): g_server->redirect_server(varlist); return true;
 
         case fnv32("OnConsoleMessage"): {
-            varlist[1] = "`2[`9ErzaProxy`2]`o " + varlist[1].get_string();
+            varlist[1] = "`2[`9RzkyProxy`2]`o " + varlist[1].get_string();
             auto cnsl = varlist[1].get_string();
           g_server->send(true, varlist);
        return true;
@@ -1652,8 +1652,8 @@ bool events::in::tracking(std::string packet) {
     {
         std::string wlbalance = packet.substr(packet.find("Worldlock_balance|") + 18, packet.length() - packet.find("Worldlock_balance|") - 1);
 
-	    gt::send_log("`9Welcome to [`bErzaProxy`9]");
-	    gt::send_log("Owner ErzaProxy Discord : TehTarik#1195 & kimbacatan#6426");
+	    gt::send_log("`9Welcome to [`bRzkyProxy`9]");
+	    
 		    
         if (wlbalance.find("PLAYER.") != -1)
         {
