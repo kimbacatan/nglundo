@@ -432,7 +432,7 @@ else if (find_command(chat, "game ")) { //dropwl
             bruh3 = bruh2 * taxcount / 100;
             bruh4 = stoi(value2) - bruh3;
 	if (taxstring == "") {
-gt::send_log("Set tax game first using /tax <amount>");
+gt::send_log("`9Set tax game first using /tax <amount>");
 	}
 	else {
             gt::send_log("`9Total Bet : " + value2 + " , Tax setted : " + taxstring + "%");
@@ -844,21 +844,21 @@ if (item_count(242) < halohai) {
 else if (find_command(chat, "tpos ")) {
 	std::string tepos = chat.substr(6);
 auto& bruh = g_server->m_world.local;
-	pos1.m_x = atoi(pos1xm.c_str());
-	pos1.m_y = atoi(pos1ym.c_str());
-	pos2.m_x = atoi(pos2xm.c_str());
-	pos2.m_y = atoi(pos2ym.c_str());
-	pos3.m_x = atoi(pos3xm.c_str());
-	pos3.m_y = atoi(pos3ym.c_str());
-	pos4.m_x = atoi(pos4xm.c_str());
-	pos4.m_y = atoi(pos4ym.c_str());
+	ppos1.m_x = atoi(pos1xm.c_str());
+	ppos1.m_y = atoi(pos1ym.c_str());
+	ppos2.m_x = atoi(pos2xm.c_str());
+	ppos2.m_y = atoi(pos2ym.c_str());
+	ppos3.m_x = atoi(pos3xm.c_str());
+	ppos3.m_y = atoi(pos3ym.c_str());
+	ppos4.m_x = atoi(pos4xm.c_str());
+	ppos4.m_y = atoi(pos4ym.c_str());
 
 	if (tepos == "1") {
 		if (pos1xm == "" && pos1ym == "") {
 			gt::send_log("`9Please setpos 1 first");
 }
 			else {
-tptopos(pos1.m_x,pos1.m_y);
+tptopos(ppos1.m_x,ppos1.m_y);
 		gt::send_log("`9Teleport to position 1");
 		
 }
@@ -870,7 +870,7 @@ tptopos(pos1.m_x,pos1.m_y);
 			gt::send_log("`9Please setpos 2 first");
 }
 			else {
-tptopos(pos2.m_x,pos2.m_y);
+tptopos(ppos2.m_x,ppos2.m_y);
 		gt::send_log("`9Teleport to position 2");
 		
 }
@@ -881,7 +881,7 @@ if (tepos == "3") {
 			gt::send_log("`9Please setpos 3 first");
 }
 			else {
-tptopos(pos3.m_x,pos3.m_y);
+tptopos(ppos3.m_x,ppos3.m_y);
 		gt::send_log("`9Teleport to position 3");
 		
 }
@@ -892,7 +892,7 @@ if (tepos == "4") {
 			gt::send_log("`9Please setpos 4 first");
 }
 			else {
-tptopos(pos4.m_x,pos4.m_y);
+tptopos(ppos4.m_x,ppos4.m_y);
 		gt::send_log("`9Teleport to position 4");
 		
 }
@@ -904,18 +904,7 @@ tptopos(pos4.m_x,pos4.m_y);
 
 }
 
-		if (tepos == "2") {
-		if (pos2xm == "" && pos2ym == "") {
-			gt::send_log("`9Please setpos 2 first");
-}
-			else {
-tptopos(pos2.m_x,pos2.m_y);
-		gt::send_log("`9Teleport to position 2");
-		
-}
 	
-}
-
 
 
 }
