@@ -858,7 +858,7 @@ auto& bruh = g_server->m_world.local;
 	ppos4.m_x = atoi(pos4xm.c_str());
 	ppos4.m_y = atoi(pos4ym.c_str());
 
-	if (tepos == "1") {
+if (tepos == "1") {
 		if (pos1xm == "" && pos1ym == "") {
 			gt::send_log("`9Please setpos 1 first");
 }
@@ -870,7 +870,7 @@ tptopos(ppos1.m_x,ppos1.m_y);
 	
 }
 
-		if (tepos == "2") {
+if (tepos == "2") {
 		if (pos2xm == "" && pos2ym == "") {
 			gt::send_log("`9Please setpos 2 first");
 }
@@ -891,7 +891,8 @@ tptopos(ppos3.m_x,ppos3.m_y);
 		
 }
 
-
+}
+	
 if (tepos == "4") {
 		if (pos4xm == "" && pos4ym == "") {
 			gt::send_log("`9Please setpos 4 first");
@@ -903,14 +904,7 @@ tptopos(ppos4.m_x,ppos4.m_y);
 }
 	
 }
-
 		return true;
-
-
-}
-
-	
-
 
 }
 
