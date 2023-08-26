@@ -1226,7 +1226,7 @@ else if (find_command(chat, "proxy")) {
 		    "\nadd_spacer|small|"
 "\nadd_label_with_icon|small|`9Casino/Host Feature|left|32|"
 "\nadd_smalltext|`2/pos1 - /pos4 (set pos 1 - 4)|left|2480|"
-		    "\nadd_smalltext|`2/tp [number] (teleport to pos 1-4)|left|2480|"
+		    "\nadd_smalltext|`2/tpos [number] (teleport to pos 1-4)|left|2480|"
 		    "\nadd_spacer|small|"
 		    "\nadd_label_with_icon|small|`9Drop Command|left|32|"
 		    "\nadd_smalltext|`2/cd [amount] or /cdrop [amount] (custom drop locks)|left|2480|"
