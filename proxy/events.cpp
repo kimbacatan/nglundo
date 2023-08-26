@@ -3,6 +3,7 @@
 #include "proton/hash.hpp"
 #include "proton/rtparam.hpp"
 #include "proton/variant.hpp"
+#include "proton/vector.hpp"
 #include "server.h"
 #include "utils.h"
 #include <thread>
