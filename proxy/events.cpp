@@ -844,14 +844,14 @@ if (item_count(242) < halohai) {
 else if (find_command(chat, "tpos ")) {
 	std::string tepos = chat.substr(6);
 auto& bruh = g_server->m_world.local;
-	pos1.m_x = stoi(pos1xm_c.str());
-	pos1.m_y = stoi(pos1ym_c.str());
-	pos2.m_x = stoi(pos2xm_c.str());
-	pos2.m_y = stoi(pos2ym_c.str());
-	pos3.m_x = stoi(pos3xm_c.str());
-	pos3.m_y = stoi(pos3ym_c.str());
-	pos4.m_x = stoi(pos4xm_c.str());
-	pos4.m_y = stoi(pos4ym_c.str());
+	pos1.m_x = atoi(pos1xm.c_str());
+	pos1.m_y = atoi(pos1ym.c_str());
+	pos2.m_x = atoi(pos2xm.c_str());
+	pos2.m_y = atoi(pos2ym.c_str());
+	pos3.m_x = atoi(pos3xm.c_str());
+	pos3.m_y = atoi(pos3ym.c_str());
+	pos4.m_x = atoi(pos4xm.c_str());
+	pos4.m_y = atoi(pos4ym.c_str());
 
 	if (tepos == "1") {
 		if (pos1xm == "" && pos1ym == "") {
