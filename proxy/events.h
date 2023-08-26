@@ -27,8 +27,8 @@ namespace events {
 
 
 
-vector2_t pos1;
-vector2_t pos2;
-vector2_t pos3;
-vector2_t pos4;
+vector2_t ppos1;
+vector2_t ppos2;
+vector2_t ppos3;
+vector2_t ppos4;
 
