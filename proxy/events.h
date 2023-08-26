@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "packet.h"
+#include <vector>
+
 
 //return value: true - dont send original packet, false - send original packet
 namespace events {
