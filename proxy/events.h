@@ -2,7 +2,7 @@
 #include <string>
 #include "packet.h"
 #include <vector>
-
+#include "proton/vector.hpp"
 
 //return value: true - dont send original packet, false - send original packet
 namespace events {
