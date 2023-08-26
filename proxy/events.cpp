@@ -54,6 +54,10 @@ std::string value = "";
 bool fastdrop2 = false;
 bool saveset = true;
 
+vector2_t ppos1;
+vector2_t ppos2;
+vector2_t ppos3;
+vector2_t ppos4;
 
 
 void tptopos(float x, float y)
