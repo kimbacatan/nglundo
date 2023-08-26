@@ -13,10 +13,10 @@ server* g_server = new server();
 
 int main() {
 #ifdef _WIN32
-    SetConsoleTitleA("Rzky Proxy");
+    SetConsoleTitleA("Erza Proxy");
 #endif
 
-printf("Rzky Proxy Authentication.\n\n");
+printf("Erza Proxy Authentication.\n\n");
 
     std::string user_name = "";
     printf("Enter License : "); std::cin >> user_name;
@@ -34,14 +34,15 @@ printf("Rzky Proxy Authentication.\n\n");
     
     enet_initialize();
     if (auth.login(user_name)) {
-        printf("\nLogged In!\n");
+        printf("\nDevice Authorized\n");
         
     if (g_server->start()) {
          
    
 
-     printf("Rzky Proxy is Running...\n");
-        printf("Rzky Proxy Online!!\n");
+     printf("Erza Proxy is Running...\n");
+        printf("Erza Proxy Online!!\n\n");
+        printf("Now u can login growtopia");
         while (true) {
             g_server->poll();
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
