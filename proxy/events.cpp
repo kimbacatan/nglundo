@@ -55,6 +55,17 @@ bool saveset = true;
 
 
 
+void tptopos(float x, float y)
+{
+    vector2_t pos;
+    pos.m_x = x;
+    pos.m_y = y;
+    variantlist_t varlist{ "OnSetPos" };
+    varlist[1] = pos;
+    g_server->m_world.local.pos = pos;
+    g_server->send(true, varlist, g_server->m_world.local.netid, -1);
+}
+
 
 bool dropitem(int itemid, string count) {
     cdrop = true;
@@ -377,6 +388,8 @@ effpart = chat.substr(10);
         }
 
 
+
+	
 	else if (find_command(chat, "tax ")) {
 taxstring = chat.substr(5);
  taxcount = stoi(taxstring);
@@ -828,7 +841,86 @@ if (item_count(242) < halohai) {
         return 0;
 	}
 
-		    
+else if (find_command(chat, "tpos ")) {
+	std::string tepos = chat.substr(6);
+auto& bruh = g_server->m_world.local;
+	pos1.m_x = atoi(pos1xm_c.str());
+	pos1.m_y = atoi(pos1ym_c.str());
+	pos2.m_x = atoi(pos2xm_c.str());
+	pos2.m_y = atoi(pos2ym_c.str());
+	pos3.m_x = atoi(pos3xm_c.str());
+	pos3.m_y = atoi(pos3ym_c.str());
+	pos4.m_x = atoi(pos4xm_c.str());
+	pos4.m_y = atoi(pos4ym_c.str());
+
+	if (tepos == "1") {
+		if (pos1xm == "" && pos1ym == "") {
+			gt::send_log("`9Please setpos 1 first");
+}
+			else {
+tptopos(pos1.m_x,pos1.m_y);
+		gt::send_log("`9Teleport to position 1");
+		
+}
+	
+}
+
+		if (tepos == "2") {
+		if (pos2xm == "" && pos2ym == "") {
+			gt::send_log("`9Please setpos 2 first");
+}
+			else {
+tptopos(pos2.m_x,pos2.m_y);
+		gt::send_log("`9Teleport to position 2");
+		
+}
+	
+}
+if (tepos == "3") {
+		if (pos3xm == "" && pos3ym == "") {
+			gt::send_log("`9Please setpos 3 first");
+}
+			else {
+tptopos(pos3.m_x,pos3.m_y);
+		gt::send_log("`9Teleport to position 3");
+		
+}
+
+
+if (tepos == "4") {
+		if (pos4xm == "" && pos4ym == "") {
+			gt::send_log("`9Please setpos 4 first");
+}
+			else {
+tptopos(pos4.m_x,pos4.m_y);
+		gt::send_log("`9Teleport to position 4");
+		
+}
+	
+}
+
+		return true;
+
+
+}
+
+		if (tepos == "2") {
+		if (pos2xm == "" && pos2ym == "") {
+			gt::send_log("`9Please setpos 2 first");
+}
+			else {
+tptopos(pos2.m_x,pos2.m_y);
+		gt::send_log("`9Teleport to position 2");
+		
+}
+	
+}
+
+
+
+}
+
+	
         else if (find_command(chat, "pos1")) {
         auto& bruh = g_server->m_world.local;
         int pos1x = bruh.pos.m_x;
@@ -932,24 +1024,6 @@ else if (find_command(chat, "pos3")) {
             gt::resolving_uid2 = true;
             return true;
 
-        } else if (find_command(chat, "tp ")) {
-            std::string name = chat.substr(4);
-            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
-            for (auto& player : g_server->m_world.players) {
-                auto name_2 = player.name.substr(2); //remove color
-                std::transform(name_2.begin(), name_2.end(), name_2.begin(), ::tolower);
-                if (name_2.find(name) == 0) {
-                    gt::send_log("`#Teleporting to " + player.name);
-                    variantlist_t varlist{ "OnSetPos" };
-                    varlist[1] = player.pos;
-                    g_server->m_world.local.pos = player.pos;
-                    g_server->send(true, varlist, g_server->m_world.local.netid, -1);
-                    break;
-                }
-            }
-         
-
-         
         } else if (find_command(chat, "warp ")) {
             std::string name = chat.substr(6);
             gt::send_log("`#Warping to " + name);
@@ -1135,41 +1209,41 @@ else if (find_command(chat, "proxy")) {
             //    "`2/wrenchmsg (Auto Msg Wrench People), /setmsg (for set message text)");
            std::string paket1;
             paket1 =
-                "\nadd_label_with_icon|big|`9Rzky Proxy Command|left|2480|"
+                "\nadd_label_with_icon|big|`9Erza Proxy Command|left|2480|"
                 "\nadd_spacer|small"
 		"\nadd_label_with_icon|small|`9Main Command|left|32|"
-"\nadd_textbox|`2/tp [name] (teleports to a player in the world)|left|2480|"
 		    "\nadd_textbox|`2/uid [name] (resolves no uid)|left|2480|"
-                "\nadd_textbox|`2/spam (spam menu)|left|2480|"
-		"\nadd_textbox|`2// (start auto spam)|left|2480|"
-                "\nadd_textbox|`2/banall (World Ban All People in world)|left|2480|"
-                "\nadd_textbox|`2/killall (Kick all People in world)|left|2480|"
-                "\nadd_textbox|`2/tradeall (trade all people in the world|left|2480|"
-                "\nadd_textbox|`2/warp [world name] (warping world without SSUP)|left|2480|"
-                "\nadd_textbox|`2/skin [Id] (change skin colours)|left|2480|"
-		    "\nadd_textbox|`2/ft (fast trash) |left|2480|"
-                "\nadd_textbox|`2/fd (fast drop) |left|2480|"
-"\nadd_textbox|`2/info (Proxy information) |left|2480|"
-                "\nadd_textbox|`2/autopull (auto pull when people enter world) |left|2480|"
-                "\nadd_textbox|`2/pullauto (auto pull for casino hoster) |left|2480|"
+                "\nadd_smalltext|`2/spam (spam menu)|left|2480|"
+		"\nadd_smalltext|`2// (start auto spam)|left|2480|"
+                "\nadd_smalltext|`2/banall (World Ban All People in world)|left|2480|"
+                "\nadd_smalltext|`2/killall (Kick all People in world)|left|2480|"
+                "\nadd_smalltext|`2/tradeall (trade all people in the world|left|2480|"
+                "\nadd_smalltext|`2/warp [world name] (warping world without SSUP)|left|2480|"
+                "\nadd_smalltext|`2/skin [Id] (change skin colours)|left|2480|"
+		    "\nadd_smalltext|`2/ft (fast trash) |left|2480|"
+                "\nadd_smalltext|`2/fd (fast drop) |left|2480|"
+"\nadd_smalltext|`2/info (Proxy information) |left|2480|"
+                "\nadd_smalltext|`2/autopull (auto pull when people enter world) |left|2480|"
+                "\nadd_smalltext|`2/pullauto (auto pull for casino hoster) |left|2480|"
 		    "\nadd_spacer|small|"
 		    "\nadd_label_with_icon|small|`9Visual Command|left|32|"
-		    "\nadd_textbox|`2/flag [id] (sets flag to item id)|left|2480|"
-"\nadd_textbox|`2/name [name] (Change Name Visual)|left|2480|"
-"\nadd_textbox|`2/country (/countrylist for check list)|left|2480|"
-		    "\nadd_textbox|`2/countrylist (List Country For /country) |left|2480|"
-		    "\nadd_textbox|`2/legend (visual legendary title)|left|2480|"
-		    "\nadd_textbox|`2/g4g (visual grow4good title)|left|2480|"
-		    "\nadd_textbox|`2/maxlevel (visual maxlevel)|left|2480|"
-		    "\nadd_textbox|`2/mentor (visual mentor title)|left|2480|"
+		    "\nadd_smalltext|`2/flag [id] (sets flag to item id)|left|2480|"
+"\nadd_smalltext|`2/name [name] (Change Name Visual)|left|2480|"
+"\nadd_smalltext|`2/country (/countrylist for check list)|left|2480|"
+		    "\nadd_smalltext|`2/countrylist (List Country For /country) |left|2480|"
+		    "\nadd_smalltext|`2/legend (visual legendary title)|left|2480|"
+		    "\nadd_smalltext|`2/g4g (visual grow4good title)|left|2480|"
+		    "\nadd_smalltext|`2/maxlevel (visual maxlevel)|left|2480|"
+		    "\nadd_smalltext|`2/mentor (visual mentor title)|left|2480|"
 		    "\nadd_spacer|small|"
 "\nadd_label_with_icon|small|`9Casino/Host Feature|left|32|"
-"\nadd_textbox|`2/pos1 - /pos4 (set pos 1 - 4)|left|2480|"
+"\nadd_smalltext|`2/pos1 - /pos4 (set pos 1 - 4)|left|2480|"
+		    "\nadd_smalltext|`2/tp [number] (teleport to pos 1-4)|left|2480|"
 		    "\nadd_spacer|small|"
 		    "\nadd_label_with_icon|small|`9Drop Command|left|32|"
-		    "\nadd_textbox|`2/cd [amount] (custom drop locks)|left|2480|"
-		    "\nadd_textbox|`2/dd [amount] (diamond locks drop)|left|2480|"
-		    "\nadd_textbox|`2/bd [amount] (blue gem lock drop)|left|2480|"
+		    "\nadd_smalltext|`2/cd [amount] or /cdrop [amount] (custom drop locks)|left|2480|"
+		    "\nadd_smalltext|`2/dd [amount] or /ddrop [amount] (diamond locks drop)|left|2480|"
+		    "\nadd_smalltext|`2/bd [amount] or /bdrop [amount] (blue gem lock drop)|left|2480|"
                 "\nadd_spacer|small|\n\nadd_url_button||`3Discord``|NOFLAGS|https://discord.gg/2YZj3fmxRk|Join Erza Proxy Discord!|"
                 "\nadd_quick_exit|"
                 "\nend_dialog|end|Cancel|Okay|";
@@ -1276,7 +1350,7 @@ bool events::in::variantlist(gameupdatepacket_t* packet) {
         case fnv32("OnSendToServer"): g_server->redirect_server(varlist); return true;
 
         case fnv32("OnConsoleMessage"): {
-            varlist[1] = "`2[`9RzkyProxy`2]`o " + varlist[1].get_string();
+            varlist[1] = "`2[`9ErzaProxy`2]`o " + varlist[1].get_string();
             auto cnsl = varlist[1].get_string();
           g_server->send(true, varlist);
        return true;
@@ -1652,7 +1726,7 @@ bool events::in::tracking(std::string packet) {
     {
         std::string wlbalance = packet.substr(packet.find("Worldlock_balance|") + 18, packet.length() - packet.find("Worldlock_balance|") - 1);
 
-	    gt::send_log("`9Welcome to [`bRzkyProxy`9]");
+	    gt::send_log("`9Welcome to [`bErzaProxy`9]");
 	    
 		    
         if (wlbalance.find("PLAYER.") != -1)
