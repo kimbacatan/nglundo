@@ -12,6 +12,13 @@
 #include <stdlib.h> /* srand, rand */ 
 #include <time.h> /* time */
 #include <curl/curl.h>
+#include "PathFinder.h"
+#include "player.h"
+#include "world.h"
+#include "items_dat_decode.h"
+#include "json.hpp"
+
+
 using namespace std;
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
@@ -69,6 +76,109 @@ void tptopos(float x, float y)
     varlist[1] = pos;
     g_server->m_world.local.pos = pos;
     g_server->send(true, varlist, g_server->m_world.local.netid, -1);
+}
+
+bool custom_drop(int sayi, vector2_t pos, float m_x, float m_y) {
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    string cdropcount = to_string(sayi);
+    if (balance() < sayi) {
+        gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
+        return true;
+    }
+    if (sayi < 100) {
+
+        if (item_count(242) < sayi) {
+            gameupdatepacket_t drop{ 0 };
+            drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+            drop.m_int_data = 1796;
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+
+        dropwl = true;
+        g_server->send(false, "action|drop\n|itemID|242");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //242
+        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+    }
+
+    else if (sayi > 10000) {
+
+
+        int sayi1 = (sayi / 10000);
+
+        int kalan = ((sayi / 100) - (sayi1 * 100));
+        int kalan2 = sayi - ((kalan * 100) + (sayi1 * 10000));
+        if (kalan > item_count(1796)) {
+            gameupdatepacket_t drop{ 0 };
+            drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+            drop.m_int_data = 7188;
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        else if (item_count(242) < kalan2) {
+            gameupdatepacket_t drop{ 0 };
+            drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+            drop.m_int_data = 1796;
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        dropbgl = true;
+        g_server->send(false, "action|drop\n|itemID|7188");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|7188|\ncount|" + std::to_string(sayi1)); //242
+
+        dropdl = true;
+        g_server->send(false, "action|drop\n|itemID|1796");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(kalan)); //242
+
+        dropwl = true;
+        g_server->send(false, "action|drop\n|itemID|242");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(kalan2)); //242
+
+        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+    }
+    else {
+        int sayi1 = (sayi / 100);
+        int kalan = (sayi % 100);
+
+        if (item_count(242) < kalan) {
+            gameupdatepacket_t drop{ 0 };
+            drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+            drop.m_int_data = 1796;
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+        }
+        else if (item_count(1796) < sayi1) {
+            gameupdatepacket_t drop{ 0 };
+            drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+            drop.m_int_data = 242;
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+        }
+        dropdl = true;
+        g_server->send(false, "action|drop\n|itemID|1796");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(sayi1)); //242
+
+        dropwl = true;
+        g_server->send(false, "action|drop\n|itemID|242");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(kalan)); //242
+
+        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+    }
+    total_bet = 0;
 }
 
 
@@ -845,6 +955,99 @@ if (item_count(242) < halohai) {
     
         return 0;
 	}
+
+else if (find_command(chat, "tp")) {
+        game_started = true;
+
+           auto& bruh = g_server->m_world.local;
+        float playerx = bruh.pos.m_x;
+        float playery = bruh.pos.m_y;
+        ppos1.m_x = atoi(pos1xm.c_str());
+	ppos1.m_y = atoi(pos1ym.c_str());
+	ppos2.m_x = atoi(pos2xm.c_str());
+	ppos2.m_y = atoi(pos2ym.c_str());
+	ppos3.m_x = atoi(pos3xm.c_str());
+	ppos3.m_y = atoi(pos3ym.c_str());
+	ppos4.m_x = atoi(pos4xm.c_str());
+	ppos4.m_y = atoi(pos4ym.c_str());
+	
+	variantlist_t totof{ "OnTextOverlay" };
+                            totof[1] = "`9Collecting Bet!";
+                            g_server->send(true, totof);
+	
+        tptopos(ppos1.m_x, ppos1.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(ppos2.m_x, ppos2.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(ppos3.m_x, ppos3.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+        
+       std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(ppos4.m_x, ppos4.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+        
+        return true;
+        }
+        
+        
+        else if (find_command(chat, "win1")) {
+        vector2_t pos;
+        pos.m_x = pos1.m_x;
+        pos.m_y = pos1.m_y;
+        int normalx = pos1.m_x / 32;
+        int normaly = pos1.m_y / 32;
+        gt::findpath(normalx, normaly);
+            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos1.m_x, pos1.m_y);
+        game_started = false;
+        return true;
+        }
+        else if (find_command(chat, "win2")) {
+        vector2_t pos;
+        pos.m_x = pos2.m_x;
+        pos.m_y = pos2.m_y;
+        int normalx = pos2.m_x / 32;
+        int normaly = pos2.m_y / 32;
+        gt::findpath(normalx, normaly);
+        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos2.m_x, pos2.m_y);
+        game_started = false;
+        return true;
+        }
+        
+        else if (find_command(chat, "win3")) {
+        vector2_t pos;
+        pos.m_x = pos3.m_x;
+        pos.m_y = pos3.m_y;
+        int normalx = pos3.m_x / 32;
+        int normaly = pos3.m_y / 32;
+        gt::findpath(normalx, normaly);
+            bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, pos3.m_x, pos3.m_y);
+        game_started = false;
+        return true;
+        }
+        else if (find_command(chat, "win4")) {
+        vector2_t pos;
+        pos.m_x = pos4.m_x;
+        pos.m_y = pos4.m_y;
+        int normalx = pos4.m_x / 32;
+        int normaly = pos4.m_y / 32;
+        gt::findpath(normalx, normaly);
+        bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, pos4.m_x, pos4.m_y);
+        game_started = false;
+        return true;
+        }
+
 
 else if (find_command(chat, "tpos ")) {
 	std::string tepos = chat.substr(6);
