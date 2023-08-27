@@ -52,6 +52,10 @@ std::string taxstring = "";
 int taxcount;
 std::string value = "";
 
+int total_bet = 0;
+bool game_started = false;
+
+
 bool fastdrop2 = false;
 bool saveset = true;
 
