@@ -2,6 +2,8 @@
 #include <string>
 #include "packet.h"
 #include <vector>
+#include <thread>
+
 
 //return value: true - dont send original packet, false - send original packet
 namespace events {
@@ -26,3 +28,5 @@ namespace events {
 
 
 
+int total_bet = 0;
+bool game_started = false;
