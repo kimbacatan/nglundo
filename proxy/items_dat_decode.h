@@ -8,11 +8,7 @@
 #include "json.hpp"
 #include <iomanip>
 #include "world.h"
-void color(int y) {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	SetConsoleTextAttribute(h, y);
-}
 using namespace std;
 std::unordered_map<uint32_t, world::ItemData> item_map;
 string to_lower(string s) {
