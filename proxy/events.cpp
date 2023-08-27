@@ -12,6 +12,7 @@
 #include <stdlib.h> /* srand, rand */ 
 #include <time.h> /* time */
 #include <curl/curl.h>
+#include "world.h"
 using namespace std;
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
