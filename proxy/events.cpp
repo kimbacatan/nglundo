@@ -59,6 +59,24 @@ vector2_t ppos2;
 vector2_t ppos3;
 vector2_t ppos4;
 
+void autoc() {
+    gt::send_log("`9Collecting items in 10far");
+    for (auto it = g_server->m_world.objects.begin(); it != g_server->m_world.objects.end(); ++it)
+    {
+        if (isInside(it->second.pos.m_x, it->second.pos.m_y, 10 * 32, g_server->m_world.local.pos.m_x, g_server->m_world.local.pos.m_y))
+        {
+            GameUpdatePacket packet{ 0 };
+            packet.pos_x = it->second.pos.m_x;
+            packet.pos_y = it->second.pos.m_y;
+            packet.type = 11;
+            packet.netid = -1;
+            packet.object_id = it->second.uid;
+            g_server->send(false, 4, (uint8_t*)&packet, sizeof(GameUpdatePacket));
+        }
+    }
+}
+
+
 
 void tptopos(float x, float y)
 {
