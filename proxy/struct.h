@@ -53,8 +53,24 @@ struct PlayerInventory {
 };
 
 
+struct Player {
+	std::string name;
+	std::string country;
+	int netid = -1;
+	int userid = -1;
+	int state = 0;
+	vector2_t pos{};
+	bool invis = false;
+	bool mod = false;
 
-struct LocalPlayer {
+	virtual ~Player() = default;
+	virtual vector2_t GetPos() const {
+		return pos;
+	}
+};
+
+
+struct LocalPlayer : Player {
 	PlayerInventory inventory;
 	uint32_t gems_balance = -1;
 	uint32_t wl_balance = -1;
