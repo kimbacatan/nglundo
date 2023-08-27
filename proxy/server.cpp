@@ -211,7 +211,7 @@ void server::handle_incoming() {
                                    
                                     else s_items_ptr->operator[](object->second.itemID).count += buffer;
 
-                                    if (game_started) {
+                                    if (gt::game_started) {
                                         if (object->second.itemID == 242) {
                                             gt::total_bet += buffer;
                                         }
