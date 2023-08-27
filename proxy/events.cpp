@@ -126,7 +126,7 @@ void Sleep(int milliseconds) {
 }
 
 
-bool custom_drop(int jumlahcd, vector2_t ppos, float m_x, float m_y) {
+bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     string cdropcount = to_string(jumlahcd);
     if (balance() < jumlahcd) {
@@ -598,7 +598,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         tptopos(playerx, playery);
 
 		variantlist_t halodek{ "OnTextOverlay" };
-		halodek[1] = "Collected " + total_bet + "`9WLS";
+		halodek[1] = "Collected " + to_string(total_bet) + "`9WLS";
 		g_server->send(true, halodek);
 		
         return true;
