@@ -4,14 +4,7 @@
 #include <random>
 #include "proton/variant.hpp"
 
-bool utils::isInside(int circle_x, int circle_y, int rad, int x, int y) {
-    // Compare radius of circle with distance
-    // of its center from given point
-    if ((x - circle_x) * (x - circle_x) + (y - circle_y) * (y - circle_y) <= rad * rad)
-        return true;
-    else
-        return false;
-}
+
 
 
 char* utils::get_text(ENetPacket* packet) {
@@ -81,6 +74,15 @@ std::string utils::hex_str(unsigned char data) {
     s[0] = hexmap_s[(data & 0xF0) >> 4];
     s[1] = hexmap_s[data & 0x0F];
     return s;
+}
+
+bool utils::isInside(int circle_x, int circle_y, int rad, int x, int y) {
+    // Compare radius of circle with distance
+    // of its center from given point
+    if ((x - circle_x) * (x - circle_x) + (y - circle_y) * (y - circle_y) <= rad * rad)
+        return true;
+    else
+        return false;
 }
 
 std::string utils::random(uint32_t length) {
