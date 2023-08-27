@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "player.h"
 //#include "struct.h"//
+#include "gt.hpp"
 using namespace std;
 
 struct DroppedItem {
