@@ -60,4 +60,8 @@ struct LocalPlayer {
 	uint32_t wl_balance = -1;
 	uint32_t level = -1;
 	uint32_t awesomeness = -1;
+
+vector2_t GetPos() const override {
+		return pos;
+	}
 };
