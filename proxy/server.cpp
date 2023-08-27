@@ -7,8 +7,7 @@
 #include "utils.h"
 
 
-int total_bet = 0;
-bool game_started = false;
+
 
 
 void server::sendState(int netid2, bool server) {
