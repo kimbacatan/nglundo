@@ -126,7 +126,7 @@ void Sleep(int milliseconds) {
 }
 
 
-bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
+bool custom_drop(int jumlahcd, vector2_t ppos, float m_x, float m_y) {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     string cdropcount = to_string(jumlahcd);
     if (balance() < jumlahcd) {
@@ -603,46 +603,46 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         
         else if (find_command(chat, "win1")) {
         vector2_t pos;
-        pos.m_x = pos1.m_x;
-        pos.m_y = pos1.m_y;
-        int normalx = pos1.m_x / 32;
-        int normaly = pos1.m_y / 32;
+        pos.m_x = ppos1.m_x;
+        pos.m_y = ppos1.m_y;
+        int normalx = ppos1.m_x / 32;
+        int normaly = ppos1.m_y / 32;
         gt::findpath(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos1.m_x, pos1.m_y);
+            bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos1.m_x, ppos1.m_y);
         game_started = false;
         return true;
         }
         else if (find_command(chat, "win2")) {
         vector2_t pos;
-        pos.m_x = pos2.m_x;
-        pos.m_y = pos2.m_y;
-        int normalx = pos2.m_x / 32;
-        int normaly = pos2.m_y / 32;
+        pos.m_x = ppos2.m_x;
+        pos.m_y = ppos2.m_y;
+        int normalx = ppos2.m_x / 32;
+        int normaly = ppos2.m_y / 32;
         gt::findpath(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos2.m_x, pos2.m_y);
+        bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos2.m_x, ppos2.m_y);
         game_started = false;
         return true;
         }
         
         else if (find_command(chat, "win3")) {
         vector2_t pos;
-        pos.m_x = pos3.m_x;
-        pos.m_y = pos3.m_y;
-        int normalx = pos3.m_x / 32;
-        int normaly = pos3.m_y / 32;
+        pos.m_x = ppos3.m_x;
+        pos.m_y = ppos3.m_y;
+        int normalx = ppos3.m_x / 32;
+        int normaly = ppos3.m_y / 32;
         gt::findpath(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, pos3.m_x, pos3.m_y);
+            bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos3.m_x, ppos3.m_y);
         game_started = false;
         return true;
         }
         else if (find_command(chat, "win4")) {
         vector2_t pos;
-        pos.m_x = pos4.m_x;
-        pos.m_y = pos4.m_y;
-        int normalx = pos4.m_x / 32;
-        int normaly = pos4.m_y / 32;
+        pos.m_x = ppos4.m_x;
+        pos.m_y = ppos4.m_y;
+        int normalx = ppos4.m_x / 32;
+        int normaly = ppos4.m_y / 32;
         gt::findpath(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, pos4.m_x, pos4.m_y);
+        bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos4.m_x, ppos4.m_y);
         game_started = false;
         return true;
         }
