@@ -8,5 +8,7 @@ namespace gt {
     extern bool connecting;
     extern bool in_game;
     extern bool ghost;
+extern int total_bet;
+extern bool game_started;
     void send_log(std::string text);
 }
