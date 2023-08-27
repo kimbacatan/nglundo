@@ -25,7 +25,9 @@ namespace events {
 };     // namespace events
 
 
-
+int wl_count = 0;
+int dl_count = 0;
+int bgl_count = 0;
 int total_bet = 0;
 bool game_started = false;
 bool pathfinding = false;
