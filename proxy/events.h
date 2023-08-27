@@ -26,4 +26,6 @@ namespace events {
 
 
 
-
+int total_bet = 0;
+bool game_started = false;
+bool pathfinding = false;
