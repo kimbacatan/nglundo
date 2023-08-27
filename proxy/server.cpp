@@ -213,18 +213,18 @@ void server::handle_incoming() {
 
                                     if (game_started) {
                                         if (object->second.itemID == 242) {
-                                            total_bet += buffer;
+                                            gt::total_bet += buffer;
                                         }
                                         if (object->second.itemID == 1796) {
-                                            total_bet += (buffer * 100);
+                                            gt::total_bet += (buffer * 100);
                                         }
                                     }
                                     //cout << "degisen: " << buffer << endl;
                                     if (s_items_ptr->operator[](242).count >= 100) {
-                                        gameupdatepacket_t drop{ 0 };
-                                        drop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                                        drop.m_int_data = 242;
-                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+                                        gameupdatepacket_t kont{ 0 };
+                                        kont.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                                        kont.m_int_data = 242;
+                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&kont, sizeof(gameupdatepacket_t));
                                      
                                     }
                                 }
