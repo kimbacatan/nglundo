@@ -227,7 +227,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
 
         gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
     }
-    total_bet = 0;
+    gt::total_bet = 0;
 }
 
 
@@ -600,7 +600,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         tptopos(playerx, playery);
 
 		variantlist_t halodek{ "OnTextOverlay" };
-		halodek[1] = "Collected " + to_string(total_bet) + "`9WLS";
+		halodek[1] = "Collected " + to_string(gt::total_bet) + "`9WLS";
 		g_server->send(true, halodek);
 		
         return true;
@@ -614,8 +614,8 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos1.m_x / 32;
         int normaly = ppos1.m_y / 32;
         tptopos(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, ppos1.m_x, ppos1.m_y);
-        game_started = false;
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
+        gt::game_started = false;
         return true;
         }
         else if (find_command(chat, "win2")) {
@@ -625,8 +625,8 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
         tptopos(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, ppos2.m_x, ppos2.m_y);
-        game_started = false;
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
+        gt::game_started = false;
         return true;
         }
         
@@ -637,8 +637,8 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos3.m_x / 32;
         int normaly = ppos3.m_y / 32;
         tptopos(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, ppos3.m_x, ppos3.m_y);
-        game_started = false;
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos3.m_x, ppos3.m_y);
+        gt::game_started = false;
         return true;
         }
         else if (find_command(chat, "win4")) {
@@ -648,8 +648,8 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos4.m_x / 32;
         int normaly = ppos4.m_y / 32;
         tptopos(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, ppos4.m_x, ppos4.m_y);
-        game_started = false;
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos4.m_x, ppos4.m_y);
+        gt::game_started = false;
         return true;
         }
 
