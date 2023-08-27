@@ -30,6 +30,7 @@ namespace utils {
     std::string generate_mac(const std::string& prefix = "02");
     std::string hex_str(unsigned char data);
     std::string random(uint32_t length);
+bool isInside(int circle_x, int circle_y, int rad, int x, int y);
     INLINE uint8_t* get_extended(gameupdatepacket_t* packet) {
         return reinterpret_cast<uint8_t*>(&packet->m_data_size);
     }
