@@ -23,7 +23,8 @@ class server {
 
     int m_user = 0;
     int m_token = 0;
-LocalPlayer local_player;
+int gtmap[60][100];
+    LocalPlayer local_player;
     std::string m_server = "213.179.209.168";
     std::string meta = "NULL";
     int m_port = 17198;
