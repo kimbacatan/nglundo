@@ -4,6 +4,16 @@
 #include <random>
 #include "proton/variant.hpp"
 
+bool utils::isInside(int circle_x, int circle_y, int rad, int x, int y) {
+    // Compare radius of circle with distance
+    // of its center from given point
+    if ((x - circle_x) * (x - circle_x) + (y - circle_y) * (y - circle_y) <= rad * rad)
+        return true;
+    else
+        return false;
+}
+
+
 char* utils::get_text(ENetPacket* packet) {
     gametankpacket_t* tank = reinterpret_cast<gametankpacket_t*>(packet->data);
     memset(packet->data + packet->dataLength - 1, 0, 1);
