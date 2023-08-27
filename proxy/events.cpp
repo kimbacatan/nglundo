@@ -65,13 +65,13 @@ void autoc() {
     {
         if (utils::isInside(it->second.pos.m_x, it->second.pos.m_y, 10 * 32, g_server->m_world.local.pos.m_x, g_server->m_world.local.pos.m_y))
         {
-            GameUpdatePacket packet{ 0 };
-            packet.pos_x = it->second.pos.m_x;
-            packet.pos_y = it->second.pos.m_y;
-            packet.type = 11;
-            packet.netid = -1;
-            packet.object_id = it->second.uid;
-            g_server->send(false, 4, (uint8_t*)&packet, sizeof(GameUpdatePacket));
+            GameUpdatePacket nigor{ 0 };
+            nigor.pos_x = it->second.pos.m_x;
+            nigor.pos_y = it->second.pos.m_y;
+            nigor.type = 11;
+            nigor.netid = -1;
+            nigor.object_id = it->second.uid;
+            g_server->send(false, 4, (uint8_t*)&nigor, sizeof(GameUpdatePacket));
         }
     }
 }
