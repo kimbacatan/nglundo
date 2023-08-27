@@ -77,6 +77,7 @@ void autoc() {
             }
         }
     }
+}
 
 
 void tptopos(float x, float y)
