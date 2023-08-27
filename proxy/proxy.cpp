@@ -8,6 +8,8 @@
 #include "NubiAuth.h"
 #include "android_device_id.h"
 #include "server.h"
+#include "events.h"
+#include "gt.hpp"
 
 server* g_server = new server();
 
