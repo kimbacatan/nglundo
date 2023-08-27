@@ -60,7 +60,7 @@ vector2_t ppos2;
 vector2_t ppos3;
 vector2_t ppos4;
 
-bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
+
 
 
 
@@ -126,7 +126,7 @@ void Sleep(int milliseconds) {
 }
 
 
-
+bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     string cdropcount = to_string(jumlahcd);
     if (balance() < jumlahcd) {
@@ -500,10 +500,7 @@ effpart = chat.substr(10);
         return true;
         }
 
-else if (find_command(chat, "collect")) {
-        autoc();
-        return true;
-        }
+
 
 	
 	else if (find_command(chat, "tax ")) {
