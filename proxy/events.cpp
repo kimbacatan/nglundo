@@ -63,7 +63,7 @@ void autoc() {
     gt::send_log("`9Collecting items in 10far");
     for (auto it = g_server->m_world.objects.begin(); it != g_server->m_world.objects.end(); ++it)
     {
-        if (isInside(it->second.pos.m_x, it->second.pos.m_y, 10 * 32, g_server->m_world.local.pos.m_x, g_server->m_world.local.pos.m_y))
+        if (utils::isInside(it->second.pos.m_x, it->second.pos.m_y, 10 * 32, g_server->m_world.local.pos.m_x, g_server->m_world.local.pos.m_y))
         {
             GameUpdatePacket packet{ 0 };
             packet.pos_x = it->second.pos.m_x;
@@ -410,7 +410,10 @@ effpart = chat.substr(10);
         return true;
         }
 
-
+else if (find_command(chat, "collect")) {
+        autoc();
+        return true;
+        }
 
 	
 	else if (find_command(chat, "tax ")) {
