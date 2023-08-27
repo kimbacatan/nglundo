@@ -596,7 +596,11 @@ gt::send_log("`9Set tax game first using /tax <amount>");
 
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         tptopos(playerx, playery);
-        
+
+		variantlist_t halodek{ "OnTextOverlay" };
+		halodek[1] = "Collected " + total_bet + "`9WLS";
+		g_server->send(true, halodek);
+		
         return true;
         }
         
@@ -607,7 +611,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         pos.m_y = ppos1.m_y;
         int normalx = ppos1.m_x / 32;
         int normaly = ppos1.m_y / 32;
-        gt::findpath(normalx, normaly);
+        tptopos(normalx, normaly);
             bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos1.m_x, ppos1.m_y);
         game_started = false;
         return true;
@@ -618,7 +622,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         pos.m_y = ppos2.m_y;
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
-        gt::findpath(normalx, normaly);
+        tptopos(normalx, normaly);
         bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos2.m_x, ppos2.m_y);
         game_started = false;
         return true;
@@ -630,7 +634,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         pos.m_y = ppos3.m_y;
         int normalx = ppos3.m_x / 32;
         int normaly = ppos3.m_y / 32;
-        gt::findpath(normalx, normaly);
+        tptopos(normalx, normaly);
             bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos3.m_x, ppos3.m_y);
         game_started = false;
         return true;
@@ -641,7 +645,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         pos.m_y = ppos4.m_y;
         int normalx = ppos4.m_x / 32;
         int normaly = ppos4.m_y / 32;
-        gt::findpath(normalx, normaly);
+        tptopos(normalx, normaly);
         bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos4.m_x, ppos4.m_y);
         game_started = false;
         return true;
