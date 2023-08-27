@@ -558,7 +558,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
 
 
 	else if (find_command(chat, "tp")) {
-        game_started = true;
+        gt::game_started = true;
 
            auto& bruh = g_server->m_world.local;
         float playerx = bruh.pos.m_x;
