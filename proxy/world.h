@@ -1,12 +1,13 @@
 #pragma once
 #include <fstream>
 #include <string>
-//#include <unordered_map>//
+#include <unordered_map>
 #include <iostream>
 #include <vector>
 #include "utils.h"
 #include "player.h"
 //#include "struct.h"//
+using namespace std;
 
 struct DroppedItem {
 	uint16_t itemID;
@@ -28,7 +29,11 @@ int lastDroppedUid = 0;
 
 std::unordered_map<uint32_t, DroppedItem> objects;
 
-
+void LoadFromMem(gameupdatepacket_t* packet) {
+		try
+		{
+			auto extended = utils::get_extended(packet);
+			
 int droppedCount;
 				memcpy(&droppedCount, extended, 4);
 				memcpy(&lastDroppedUid, extended + 4, 4);
@@ -47,12 +52,13 @@ int droppedCount;
 					objects[item.uid] = item;
 				}
 				connected = true;
-			}
+			
 		}
 		catch (const std::exception&)
 		{
 			gt::send_log("`4Unable To serialize this world");
 		}
-	}
+}
+	
 };
 
