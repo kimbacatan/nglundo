@@ -139,7 +139,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
             gameupdatepacket_t yahacdrop{ 0 };
             yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
             yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&drop, sizeof(gameupdatepacket_t));
+            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
 
@@ -612,7 +612,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos1.m_x / 32;
         int normaly = ppos1.m_y / 32;
         tptopos(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos1.m_x, ppos1.m_y);
+            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, ppos1.m_x, ppos1.m_y);
         game_started = false;
         return true;
         }
@@ -623,7 +623,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
         tptopos(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / 10)), ppos, ppos2.m_x, ppos2.m_y);
+        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, ppos2.m_x, ppos2.m_y);
         game_started = false;
         return true;
         }
@@ -635,7 +635,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos3.m_x / 32;
         int normaly = ppos3.m_y / 32;
         tptopos(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos3.m_x, ppos3.m_y);
+            bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, ppos3.m_x, ppos3.m_y);
         game_started = false;
         return true;
         }
@@ -646,7 +646,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         int normalx = ppos4.m_x / 32;
         int normaly = ppos4.m_y / 32;
         tptopos(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / taxcount)), ppos, ppos4.m_x, ppos4.m_y);
+        bool aga = custom_drop((total_bet - (total_bet / taxcount)), pos, ppos4.m_x, ppos4.m_y);
         game_started = false;
         return true;
         }
