@@ -4,6 +4,7 @@
 
 class player {
    public:
+float m_vec2_y;
     std::string name{};
     std::string country{};
     int netid = -1;
