@@ -61,22 +61,22 @@ vector2_t ppos3;
 vector2_t ppos4;
 
 void autoc() {
-    gt::send_log("`9Collecting items in 10far");
-    for (auto it = g_server->m_world.objects.begin(); it != g_server->m_world.objects.end(); ++it)
-    {
-        if (utils::isInside(it->second.pos.m_x, it->second.pos.m_y, 10 * 32, g_server->m_world.local.pos.m_x, g_server->m_world.local.pos.m_y))
-        {
-            GameUpdatePacket nigor{ 0 };
-            nigor.pos_x = it->second.pos.m_x;
-            nigor.pos_y = it->second.pos.m_y;
-            nigor.type = 11;
-            nigor.netid = -1;
-            nigor.object_id = it->second.uid;
-            g_server->send(false, 4, (uint8_t*)&nigor, sizeof(GameUpdatePacket));
+    if (g_server->m_world.connected) {
+        auto pos2f = g_server->local_player.GetPos();
+        for (const auto& object : g_server->m_world.objects) {
+            if (utils::isInside(object.second.pos.m_x, object.second.pos.m_y, 10 * 32, pos2f.m_x, pos2f.m_y)) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_vec_x = object.second.pos.m_x;
+                packet.m_vec_y = object.second.pos.m_y;
+                packet.m_type = 11;
+                packet.m_player_flags = -1;
+                packet.m_int_data = object.second.uid;
+                packet.m_state1 = object.second.pos.m_x + object.second.pos.m_y + 9;
+
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, reinterpret_cast<uint8_t*>(&packet), sizeof(gameupdatepacket_t));
+            }
         }
     }
-}
-
 
 
 void tptopos(float x, float y)
