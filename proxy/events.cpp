@@ -556,13 +556,8 @@ gt::send_log("`9Set tax game first using /tax <amount>");
             return true;
         }
 
-
 else if (find_command(chat, "tp")) {
-gt::game_started = true;
-
-	auto& bruh = g_server->m_world.local;
-        float playerx = bruh.pos.m_x;
-        float playery = bruh.pos.m_y;
+	gt::game_started = true;
         ppos1.m_x = atoi(pos1xm.c_str());
 	ppos1.m_y = atoi(pos1ym.c_str());
 	ppos2.m_x = atoi(pos2xm.c_str());
@@ -571,7 +566,8 @@ gt::game_started = true;
 	ppos3.m_y = atoi(pos3ym.c_str());
 	ppos4.m_x = atoi(pos4xm.c_str());
 	ppos4.m_y = atoi(pos4ym.c_str());
-	
+	pposback.m_x = atoi(posbackxm.c_str());
+	pposback.m_y = atoi(posbackym.c_str());
         int clt1 = 0;
         int clt2 = 0;
         int clt3 = 0;
@@ -588,21 +584,25 @@ gt::game_started = true;
                 if (item.second.itemID == 242) clt2 += item.second.count;
                 if (item.second.itemID == 1796) clt2 += item.second.count * 100;
             }
-       
+        }
         
         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
-                if (item.second.itemID == 242) clt3 += item.second.count;
-                if (item.second.itemID == 1796) clt3 += item.second.count * 100;
+                if (item.second.itemID == 242) clt1 += item.second.count;
+                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
             }
 
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos4.m_x * 32), (ppos4.m_y * 32))) {
-                if (item.second.itemID == 242) clt4 += item.second.count;
-                if (item.second.itemID == 1796) clt4 += item.second.count * 100;
+                if (item.second.itemID == 242) clt2 += item.second.count;
+                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
             }
         }
 
-        if (clt1 == clt2 == clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
-            gt::total_bet = clt1 + clt2 + clt3 + clt4;  
+        if (clt1 == clt2 && clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
+            gt::total_bet = clt1 + clt2 + clt3 + clt4;
+            
+            
+            
+            
           
                 tptopos(ppos1.m_x, ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
@@ -612,14 +612,60 @@ gt::game_started = true;
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 tptopos(ppos4.m_x, ppos4.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                tptopos(playerx, playery);
-                variantlist_t loler{ "OnTextOverlay" };
-                loler[1] = "Collected " + to_string(gt::total_bet) + " `9WLS";
-                g_server->send(true, loler);
-                return true;
+                tptopos(pposback.m_y, pposback.m_y);
             }
-            
+            else {
+                for (auto& item : p) {
+                    gameupdatepacket_t packet{};
+                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
+                    packet.m_player_flags = -1;
+                    packet.m_vec_x = item.second.pos.m_x;
+                    packet.m_vec_y = item.second.pos.m_y;
+                    packet.m_int_data = item.second.uid;
+                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
+                    if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                        
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos4.m_x * 32), (ppos4.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                        
+                    }
+                }
             }
+            gt::send_log("`9Collected!");
+        }
+        else {
+            gt::send_log("`9WL'S Is Not Equal.");
+        }
+
+        return true;
+    }
+    
+    
+    
+    
+
 
 
 	
@@ -1137,7 +1183,7 @@ tptopos(ppos4.m_x,ppos4.m_y);
         pos1xm = to_string(pos1x);
         pos1ym = to_string(pos1y);
         variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 358;
+        varlist[1] = 88;
         varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
         varlist[3] = 0;
         varlist[4] = 0;
@@ -1154,7 +1200,7 @@ tptopos(ppos4.m_x,ppos4.m_y);
         pos2xm = to_string(pos2x);
         pos2ym = to_string(pos2y);
         variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 358;
+        varlist[1] = 88;
         varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
         varlist[3] = 0;
         varlist[4] = 0;
@@ -1171,7 +1217,7 @@ else if (find_command(chat, "pos3")) {
         pos3xm = to_string(pos3x);
         pos3ym = to_string(pos3y);
         variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 358;
+        varlist[1] = 88;
         varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
         varlist[3] = 0;
         varlist[4] = 0;
@@ -1188,7 +1234,7 @@ else if (find_command(chat, "pos3")) {
         pos4xm = to_string(pos4x);
         pos4ym = to_string(pos4y);
         variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 358;
+        varlist[1] = 88;
         varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
         varlist[3] = 0;
         varlist[4] = 0;
@@ -1197,6 +1243,25 @@ else if (find_command(chat, "pos3")) {
         gt::send_log("`94th position: `#" + pos4xm + ", " + pos4ym);
         return true;
         }
+
+			else if (find_command(chat, "posb")) {
+auto& bruh = g_server->m_world.local;
+				int posbackx = bruh.pos.m_x;
+				int posbacky = bruh.pod.m_y;
+				std::string posbackxm = to_string(posbackx);
+				std::string posbackym = to_string(posbacky);
+				variantlist_t varlist{"OnParticleEffect"};
+				varlist[1] = 88;
+        varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
+        varlist[3] = 0;
+        varlist[4] = 0;
+        g_server->send(true, varlist);
+        
+        gt::send_log("`9pos position: `#" + posbackxm + ", " + posbackym);
+        return true;
+        }
+			}
+
 
 			
 	    else if (find_command(chat, "wrench")) {
