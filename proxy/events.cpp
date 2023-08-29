@@ -615,7 +615,7 @@ gt::game_started = true;
                 tptopos(playerx, playery);
                 variantlist_t loler{ "OnTextOverlay" };
                 loler[1] = "Collected " + to_string(gt::total_bet) + " `9WLS";
-                g_server->send(true, loler)
+                g_server->send(true, loler);
                 return true;
             }
             
