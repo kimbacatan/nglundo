@@ -557,10 +557,10 @@ gt::send_log("`9Set tax game first using /tax <amount>");
         }
 
 
-	else if (find_command(chat, "tp")) {
-        gt::game_started = true;
+else if (find_command(chat, "tp")) {
+gt::game_started = true;
 
-           auto& bruh = g_server->m_world.local;
+	auto& bruh = g_server->m_world.local;
         float playerx = bruh.pos.m_x;
         float playery = bruh.pos.m_y;
         ppos1.m_x = atoi(pos1xm.c_str());
@@ -572,40 +572,57 @@ gt::send_log("`9Set tax game first using /tax <amount>");
 	ppos4.m_x = atoi(pos4xm.c_str());
 	ppos4.m_y = atoi(pos4ym.c_str());
 	
-	variantlist_t totof{ "OnTextOverlay" };
-                            totof[1] = "`9Collecting Bet!";
-                            g_server->send(true, totof);
-	
-        tptopos(ppos1.m_x, ppos1.m_y);
+        int clt1 = 0;
+        int clt2 = 0;
+        int clt3 = 0;
+        int clt4 = 0;
+        auto p = g_server->m_world.objects;
+        for (auto& item : p) {
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
+            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
+                if (item.second.itemID == 242) clt1 += item.second.count;
+                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
+            }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(ppos2.m_x, ppos2.m_y);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
+            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
+                if (item.second.itemID == 242) clt2 += item.second.count;
+                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
+            }
+       
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(ppos3.m_x, ppos3.m_y);
+        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
+                if (item.second.itemID == 242) clt3 += item.second.count;
+                if (item.second.itemID == 1796) clt3 += item.second.count * 100;
+            }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
-        
-       std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(ppos4.m_x, ppos4.m_y);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
-
-		variantlist_t halodek{ "OnTextOverlay" };
-		halodek[1] = "Collected " + to_string(gt::total_bet) + "`9WLS";
-		g_server->send(true, halodek);
-		
-        return true;
+            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos4.m_x * 32), (ppos4.m_y * 32))) {
+                if (item.second.itemID == 242) clt4 += item.second.count;
+                if (item.second.itemID == 1796) clt4 += item.second.count * 100;
+            }
         }
-        
+
+        if (clt1 == clt2 == clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
+            gt::total_bet = clt1 + clt2 + clt3 + clt4;  
+          
+                tptopos(ppos1.m_x, ppos1.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                tptopos(ppos2.m_x, ppos2.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                tptopos(ppos3.m_x, ppos3.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                tptopos(ppos4.m_x, ppos4.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                tptopos(playerx, playery);
+                variantlist_t loler{ "OnTextOverlay" };
+                loler[1] = "Collected " + to_string(gt::total_bet) + " `9WLS";
+                g_server->send(true, loler)
+                return true;
+            }
+            
+            }
+
+
+	
         
         else if (find_command(chat, "win1")) {
         vector2_t pos;
