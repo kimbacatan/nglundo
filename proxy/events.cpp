@@ -1109,13 +1109,10 @@ auto& bruh = g_server->m_world.local;
 
 else if (find_command(chat, "tp")) {
 	gt::game_started = true;
-	
- 
-        int clt1 = 0;
+	int clt1 = 0;
         int clt2 = 0;
         int clt3 = 0;
         int clt4 = 0;
-
 	ppos1.m_x = atoi(pos1xm.c_str());
 	ppos1.m_y = atoi(pos1ym.c_str());
 	ppos2.m_x = atoi(pos2xm.c_str());
@@ -1126,7 +1123,6 @@ else if (find_command(chat, "tp")) {
 	ppos4.m_y = atoi(pos4ym.c_str());
 	pposback.m_x = atoi(posbackxm.c_str());
 	pposback.m_y = atoi(posbackym.c_str());
-	
         auto p = g_server->m_world.objects;
         for (auto& item : p) {
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
@@ -1137,8 +1133,7 @@ else if (find_command(chat, "tp")) {
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
                 if (item.second.itemID == 242) clt2 += item.second.count;
                 if (item.second.itemID == 1796) clt2 += item.second.count * 100;
-            }
-        }
+}
         
         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
                 if (item.second.itemID == 242) clt1 += item.second.count;
@@ -1157,7 +1152,7 @@ else if (find_command(chat, "tp")) {
             
             
             
-          
+     
                 tptopos(ppos1.m_x, ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 tptopos(ppos2.m_x, ppos2.m_y);
