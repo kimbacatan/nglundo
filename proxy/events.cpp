@@ -1123,6 +1123,17 @@ else if (find_command(chat, "tp")) {
 	ppos4.m_y = atoi(pos4ym.c_str());
 	pposback.m_x = atoi(posbackxm.c_str());
 	pposback.m_y = atoi(posbackym.c_str());
+
+tptopos(ppos1.m_x, ppos1.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                tptopos(ppos2.m_x, ppos2.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                tptopos(ppos3.m_x, ppos3.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                tptopos(ppos4.m_x, ppos4.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                tptopos(pposback.m_y, pposback.m_y);
+
         auto p = g_server->m_world.objects;
         for (auto& item : p) {
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
@@ -1148,15 +1159,11 @@ else if (find_command(chat, "tp")) {
 
         if (clt1 == clt2 && clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
             gt::total_bet = clt1 + clt2 + clt3 + clt4;
-                tptopos(ppos1.m_x, ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                tptopos(ppos2.m_x, ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                tptopos(ppos3.m_x, ppos3.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                tptopos(ppos4.m_x, ppos4.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                tptopos(pposback.m_y, pposback.m_y);
+                variantlist_t jawir{ "OnTextOverlay" };
+		jawir[1] = "Collected `9" + gt::total_bet + " WLS";
+
+		g_server->send(true, jawir);
+		return true;
             }
             else {
                 for (auto& item : p) {
