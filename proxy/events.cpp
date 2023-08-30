@@ -1099,10 +1099,10 @@ auto& bruh = g_server->m_world.local;
         varlist[4] = 0;
         g_server->send(true, varlist);
         
-        gt::send_log("`9pos position: `#" + posbackxm + ", " + posbackym);
+        gt::send_log("`9pos hostposition: `#" + posbackxm + ", " + posbackym);
         return true;
         }
-			}
+			
 
 
 else if (find_command(chat, "tp")) {
