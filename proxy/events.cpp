@@ -1959,12 +1959,12 @@ bool events::in::gamemessage(std::string packet) {
 
 bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
     if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
-        if (packet->m_player_flags == g_server->localPlayer.netid) {
+        if (packet->m_player_flags == g_server->local_player.netid) {
             auto object = g_server->m_world.objects.find(packet->m_int_data);
             if (object->second.itemID != 112) {
-                auto s_items_ptr = &g_server->localPlayer.inventory.items;
-                int buffer = g_server->localPlayer.inventory.getObjectAmountToPickUpUnsafe(object->second);
-                if (!g_server->localPlayer.inventory.doesItemExistUnsafe(object->second.itemID)) {
+                auto s_items_ptr = &g_server->local_player.inventory.items;
+                int buffer = g_server->local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
+                if (!g_server->local_player.inventory.doesItemExistUnsafe(object->second.itemID)) {
                     Item item;
                     item.id = object->second.itemID;
                     item.count = buffer;
@@ -1973,7 +1973,7 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                 }
                 else s_items_ptr->operator[](object->second.itemID).count += buffer;
             }
-            else g_server->localPlayer.gems_balance += object->second.count;
+            else g_server->local_player.gems_balance += object->second.count;
         }
         g_server->m_world.objects.erase(packet->m_int_data);
     }
