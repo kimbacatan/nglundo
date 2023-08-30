@@ -211,6 +211,14 @@ void server::handle_incoming() {
                                     }
                                     break;
 
+
+                                case PACKET_ITEM_CHANGE_OBJECT:
+                                    if (events::in::OnChangeObject(packet)) {
+                                        enet_packet_destroy(event.packet);
+                                        return;
+                                    }
+                                    break;
+
                                 case PACKET_SEND_MAP_DATA:
                                     if (events::in::sendmapdata(packet)) {
                                         enet_packet_destroy(event.packet);
