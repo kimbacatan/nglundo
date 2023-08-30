@@ -290,6 +290,8 @@ std::string pos3xm = "";
 std::string pos3ym = "";
 std::string pos4xm = "";
 std::string pos4ym = "";
+std::string posbackxm = "";
+std::string posbackym = "";
 int delay = 0;
 std::string message = "";
 std::string mode = "pull";
@@ -1089,9 +1091,9 @@ else if (find_command(chat, "pos3")) {
 			else if (find_command(chat, "posb")) {
 auto& bruh = g_server->m_world.local;
 				int posbackx = bruh.pos.m_x;
-				int posbacky = bruh.pod.m_y;
-				std::string posbackxm = to_string(posbackx);
-				std::string posbackym = to_string(posbacky);
+				int posbacky = bruh.pos.m_y;
+			 posbackxm = to_string(posbackx);
+				 posbackym = to_string(posbacky);
 				variantlist_t varlist{"OnParticleEffect"};
 				varlist[1] = 88;
         varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
@@ -1107,7 +1109,14 @@ auto& bruh = g_server->m_world.local;
 
 else if (find_command(chat, "tp")) {
 	gt::game_started = true;
-        ppos1.m_x = atoi(pos1xm.c_str());
+	
+ 
+        int clt1 = 0;
+        int clt2 = 0;
+        int clt3 = 0;
+        int clt4 = 0;
+
+	ppos1.m_x = atoi(pos1xm.c_str());
 	ppos1.m_y = atoi(pos1ym.c_str());
 	ppos2.m_x = atoi(pos2xm.c_str());
 	ppos2.m_y = atoi(pos2ym.c_str());
@@ -1117,13 +1126,9 @@ else if (find_command(chat, "tp")) {
 	ppos4.m_y = atoi(pos4ym.c_str());
 	pposback.m_x = atoi(posbackxm.c_str());
 	pposback.m_y = atoi(posbackym.c_str());
-        int clt1 = 0;
-        int clt2 = 0;
-        int clt3 = 0;
-        int clt4 = 0;
+	
         auto p = g_server->m_world.objects;
         for (auto& item : p) {
-
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
                 if (item.second.itemID == 242) clt1 += item.second.count;
                 if (item.second.itemID == 1796) clt1 += item.second.count * 100;
