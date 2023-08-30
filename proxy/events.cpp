@@ -1148,11 +1148,6 @@ else if (find_command(chat, "tp")) {
 
         if (clt1 == clt2 && clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
             gt::total_bet = clt1 + clt2 + clt3 + clt4;
-            
-            
-            
-            
-     
                 tptopos(ppos1.m_x, ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 tptopos(ppos2.m_x, ppos2.m_y);
@@ -1201,9 +1196,9 @@ else if (find_command(chat, "tp")) {
                         
                     }
                 }
+		    gt::send_log("`9Collected!");
             }
-            gt::send_log("`9Collected!");
-        }
+            
         else {
             gt::send_log("`9WL'S Is Not Equal.");
         }
