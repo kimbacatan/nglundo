@@ -1136,60 +1136,60 @@ else if (find_command(chat, "tp")) {
 }
         
         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
-                if (item.second.itemID == 242) clt1 += item.second.count;
-                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
+                if (item.second.itemID == 242) clt3 += item.second.count;
+                if (item.second.itemID == 1796) clt3 += item.second.count * 100;
             }
 
             if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos4.m_x * 32), (ppos4.m_y * 32))) {
-                if (item.second.itemID == 242) clt2 += item.second.count;
-                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
+                if (item.second.itemID == 242) clt4 += item.second.count;
+                if (item.second.itemID == 1796) clt4 += item.second.count * 100;
             }
         }
 
         if (clt1 == clt2 && clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
             gt::total_bet = clt1 + clt2 + clt3 + clt4;
                 tptopos(ppos1.m_x, ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 tptopos(ppos2.m_x, ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 tptopos(ppos3.m_x, ppos3.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 tptopos(ppos4.m_x, ppos4.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 tptopos(pposback.m_y, pposback.m_y);
             }
             else {
                 for (auto& item : p) {
-                    gameupdatepacket_t packet{};
-                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
-                    packet.m_player_flags = -1;
-                    packet.m_vec_x = item.second.pos.m_x;
-                    packet.m_vec_y = item.second.pos.m_y;
-                    packet.m_int_data = item.second.uid;
-                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
+                    gameupdatepacket_t kuntul{};
+                    kuntul.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
+                    kuntul.m_player_flags = -1;
+                    kuntul.m_vec_x = item.second.pos.m_x;
+                    kuntul.m_vec_y = item.second.pos.m_y;
+                    kuntul.m_int_data = item.second.uid;
+                    kuntul.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
                     if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
                         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
                             if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                g_server->send(false, 4, (uint8_t*)&kuntul, sizeof(packet));
                                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                             }
                         }
                         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
                             if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                g_server->send(false, 4, (uint8_t*)&kuntul, sizeof(packet));
                                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                             }
                         }
                         
                         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos3.m_x * 32), (ppos3.m_y * 32))) {
                             if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                g_server->send(false, 4, (uint8_t*)&kuntul, sizeof(packet));
                                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                             }
                         }
                         if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos4.m_x * 32), (ppos4.m_y * 32))) {
                             if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                g_server->send(false, 4, (uint8_t*)&kuntul, sizeof(packet));
                                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                             }
                         }
