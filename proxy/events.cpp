@@ -1196,8 +1196,8 @@ else if (find_command(chat, "tp")) {
                         
                     }
                 }
-		    gt::send_log("`9Collected!");
 }
+		    gt::send_log("`9Collected!");
         else {
             gt::send_log("`9WL'S Is Not Equal.");
         }
