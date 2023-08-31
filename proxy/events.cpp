@@ -1073,7 +1073,7 @@ tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
         int normalx = pos1.m_x / 32;
         int normaly = pos1.m_y / 32;
         tptopos(normalx, normaly);
-            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos1.m_x, pos1.m_y);
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1084,7 +1084,7 @@ tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
         int normalx = pos2.m_x / 32;
         int normaly = pos2.m_y / 32;
         tptopos(normalx, normaly);
-        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos2.m_x, pos2.m_y);
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
         return true;
         }
