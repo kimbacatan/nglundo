@@ -957,67 +957,6 @@ if (item_count(242) < halohai) {
         return 0;
 	}
 
-else if (find_command(chat, "tpos ")) {
-	std::string tepos = chat.substr(6);
-auto& bruh = g_server->m_world.local;
-	ppos1.m_x = atoi(pos1xm.c_str());
-	ppos1.m_y = atoi(pos1ym.c_str());
-	ppos2.m_x = atoi(pos2xm.c_str());
-	ppos2.m_y = atoi(pos2ym.c_str());
-	ppos3.m_x = atoi(pos3xm.c_str());
-	ppos3.m_y = atoi(pos3ym.c_str());
-	ppos4.m_x = atoi(pos4xm.c_str());
-	ppos4.m_y = atoi(pos4ym.c_str());
-
-if (tepos == "1") {
-		if (pos1xm == "" && pos1ym == "") {
-			gt::send_log("`9Please setpos 1 first");
-}
-			else {
-tptopos(ppos1.m_x,ppos1.m_y);
-		gt::send_log("`9Teleport to position 1");
-		
-}
-	
-}
-
-if (tepos == "2") {
-		if (pos2xm == "" && pos2ym == "") {
-			gt::send_log("`9Please setpos 2 first");
-}
-			else {
-tptopos(ppos2.m_x,ppos2.m_y);
-		gt::send_log("`9Teleport to position 2");
-		
-}
-	
-}
-if (tepos == "3") {
-		if (pos3xm == "" && pos3ym == "") {
-			gt::send_log("`9Please setpos 3 first");
-}
-			else {
-tptopos(ppos3.m_x,ppos3.m_y);
-		gt::send_log("`9Teleport to position 3");
-		
-}
-
-}
-	
-if (tepos == "4") {
-		if (pos4xm == "" && pos4ym == "") {
-			gt::send_log("`9Please setpos 4 first");
-}
-			else {
-tptopos(ppos4.m_x,ppos4.m_y);
-		gt::send_log("`9Teleport to position 4");
-		
-}
-	
-}
-		return true;
-
-}
 
 	
         else if (find_command(chat, "pos1")) {
@@ -1125,13 +1064,13 @@ else if (find_command(chat, "tp")) {
 	pposback.m_y = atoi(posbackym.c_str());
 
 tptopos(ppos1.m_x, ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(ppos2.m_x, ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(ppos3.m_x, ppos3.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(ppos4.m_x, ppos4.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(pposback.m_y, pposback.m_y);
 
         auto p = g_server->m_world.objects;
@@ -1218,46 +1157,46 @@ tptopos(ppos1.m_x, ppos1.m_y);
 	
         
         else if (find_command(chat, "win1")) {
-        vector2_t pos;
-        pos.m_x = ppos1.m_x;
-        pos.m_y = ppos1.m_y;
-        int normalx = ppos1.m_x / 32;
-        int normaly = ppos1.m_y / 32;
-        tptopos(normalx, normaly);
+        vector2_t pos1;
+        pos1.m_x = ppos1.m_x;
+        pos1.m_y = ppos1.m_y;
+        int normalx1 = ppos1.m_x / 32;
+        int normaly1 = ppos1.m_y / 32;
+        tptopos(normalx1, normaly1);
             bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
         else if (find_command(chat, "win2")) {
-        vector2_t pos;
-        pos.m_x = ppos2.m_x;
-        pos.m_y = ppos2.m_y;
-        int normalx = ppos2.m_x / 32;
-        int normaly = ppos2.m_y / 32;
-        tptopos(normalx, normaly);
+        vector2_t pos2;
+        pos2.m_x = ppos2.m_x;
+        pos2.m_y = ppos2.m_y;
+        int normalx2 = ppos2.m_x / 32;
+        int normaly2 = ppos2.m_y / 32;
+        tptopos(normalx2, normaly2);
         bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
         return true;
         }
         
         else if (find_command(chat, "win3")) {
-        vector2_t pos;
-        pos.m_x = ppos3.m_x;
-        pos.m_y = ppos3.m_y;
-        int normalx = ppos3.m_x / 32;
-        int normaly = ppos3.m_y / 32;
-        tptopos(normalx, normaly);
+        vector2_t pos3;
+        pos3.m_x = ppos3.m_x;
+        pos3.m_y = ppos3.m_y;
+        int normalx3 = ppos3.m_x / 32;
+        int normaly3 = ppos3.m_y / 32;
+        tptopos(normalx3, normaly3);
             bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos3.m_x, ppos3.m_y);
         gt::game_started = false;
         return true;
         }
         else if (find_command(chat, "win4")) {
-        vector2_t pos;
-        pos.m_x = ppos4.m_x;
-        pos.m_y = ppos4.m_y;
+        vector2_t pos4;
+        pos4.m_x = ppos4.m_x;
+        pos4.m_y = ppos4.m_y;
         int normalx = ppos4.m_x / 32;
         int normaly = ppos4.m_y / 32;
-        tptopos(normalx, normaly);
+        tptopos(normalx4, normaly4);
         bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos4.m_x, ppos4.m_y);
         gt::game_started = false;
         return true;
