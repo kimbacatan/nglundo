@@ -179,40 +179,8 @@ void server::handle_incoming() {
                                 break;
 
                             switch (packet->m_type) {
-                                case PACKET_SEND_INVENTORY_STATE: {
-                        local_player.inventory.slotCount = 0;
-                        local_player.inventory.itemCount = 0;
-                        local_player.inventory.items.clear();
-       
-                                   std::vector<Item> invBuf;
-                        auto extended_ptr = utils::get_extended(packet);
-                        memcpy(&local_player.inventory.slotCount, extended_ptr + 5, 4);
-                        memcpy(&local_player.inventory.itemCount, extended_ptr + 9, 2);
-                        invBuf.resize(local_player.inventory.itemCount);
-                        memcpy(invBuf.data(), extended_ptr + 11, invBuf.capacity() * sizeof(Item));
-                        for (Item& item : invBuf)
-                            local_player.inventory.items.operator[](item.id) = item;
-                       
-                    }break;        
 
-                                
-
-                                
-                    case 8: {
-                        if (!packet->m_int_data) {
-                            std::string dice_roll = std::to_string(packet->m_count + 1);
-                          //  gt::send_log("`bThe dice `bwill roll a `#" + dice_roll);
-                        }
-                    }break;                                    
-                                case PACKET_CALL_FUNCTION:
-                                    if (events::in::variantlist(packet)) {
-                                        enet_packet_destroy(event.packet);
-                                        return;
-                                    }
-                                    break;
-
-
-                                case PACKET_ITEM_CHANGE_OBJECT: {
+case PACKET_ITEM_CHANGE_OBJECT: {
                         if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
                             if (packet->m_player_flags == m_world.local.netid) {
                                 auto object = m_world.objects.find(packet->m_int_data);
@@ -275,6 +243,41 @@ void server::handle_incoming() {
 
                     }break;
 
+                                
+                                case PACKET_SEND_INVENTORY_STATE: {
+                        local_player.inventory.slotCount = 0;
+                        local_player.inventory.itemCount = 0;
+                        local_player.inventory.items.clear();
+       
+                                   std::vector<Item> invBuf;
+                        auto extended_ptr = utils::get_extended(packet);
+                        memcpy(&local_player.inventory.slotCount, extended_ptr + 5, 4);
+                        memcpy(&local_player.inventory.itemCount, extended_ptr + 9, 2);
+                        invBuf.resize(local_player.inventory.itemCount);
+                        memcpy(invBuf.data(), extended_ptr + 11, invBuf.capacity() * sizeof(Item));
+                        for (Item& item : invBuf)
+                            local_player.inventory.items.operator[](item.id) = item;
+                       
+                    }break;        
+
+                                
+
+                                
+                    case 8: {
+                        if (!packet->m_int_data) {
+                            std::string dice_roll = std::to_string(packet->m_count + 1);
+                          //  gt::send_log("`bThe dice `bwill roll a `#" + dice_roll);
+                        }
+                    }break;                                    
+                                case PACKET_CALL_FUNCTION:
+                                    if (events::in::variantlist(packet)) {
+                                        enet_packet_destroy(event.packet);
+                                        return;
+                                    }
+                                    break;
+
+
+                                
 
                                 case PACKET_SEND_MAP_DATA:
                                     if (events::in::sendmapdata(packet)) {
