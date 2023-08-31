@@ -1068,10 +1068,10 @@ tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
         
         else if (find_command(chat, "win1")) {
         vector2_t pos;
-        pos.m_x = pos1.m_x;
-        pos.m_y = pos1.m_y;
-        int normalx = pos1.m_x / 32;
-        int normaly = pos1.m_y / 32;
+        pos.m_x = ppos1.m_x;
+        pos.m_y = ppos1.m_y;
+        int normalx = ppos1.m_x / 32;
+        int normaly = ppos1.m_y / 32;
         tptopos(normalx, normaly);
             bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
@@ -1079,10 +1079,10 @@ tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
         }
         else if (find_command(chat, "win2")) {
         vector2_t pos;
-        pos.m_x = pos2.m_x;
-        pos.m_y = pos2.m_y;
-        int normalx = pos2.m_x / 32;
-        int normaly = pos2.m_y / 32;
+        pos.m_x = ppos2.m_x;
+        pos.m_y = ppos2.m_y;
+        int normalx = ppos2.m_x / 32;
+        int normaly = ppos2.m_y / 32;
         tptopos(normalx, normaly);
         bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
