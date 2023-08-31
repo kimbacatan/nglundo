@@ -1163,7 +1163,7 @@ tptopos(ppos1.m_x, ppos1.m_y);
         int normalx1 = ppos1.m_x / 32;
         int normaly1 = ppos1.m_y / 32;
         tptopos(normalx1, normaly1);
-            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos1, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1174,7 +1174,7 @@ tptopos(ppos1.m_x, ppos1.m_y);
         int normalx2 = ppos2.m_x / 32;
         int normaly2 = ppos2.m_y / 32;
         tptopos(normalx2, normaly2);
-        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos2, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1186,7 +1186,7 @@ tptopos(ppos1.m_x, ppos1.m_y);
         int normalx3 = ppos3.m_x / 32;
         int normaly3 = ppos3.m_y / 32;
         tptopos(normalx3, normaly3);
-            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos3.m_x, ppos3.m_y);
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos3, ppos3.m_x, ppos3.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1197,7 +1197,7 @@ tptopos(ppos1.m_x, ppos1.m_y);
         int normalx = ppos4.m_x / 32;
         int normaly = ppos4.m_y / 32;
         tptopos(normalx4, normaly4);
-        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos4.m_x, ppos4.m_y);
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos4, ppos4.m_x, ppos4.m_y);
         gt::game_started = false;
         return true;
         }
