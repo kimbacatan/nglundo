@@ -239,10 +239,10 @@ void server::handle_incoming() {
                                     }
                                     //cout << "degisen: " << buffer << endl;
                                     if (s_items_ptr->operator[](242).count >= 100) {
-                                        gameupdatepacket_t goto{ 0 };
-                                        goto.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                                        goto.m_int_data = 242;
-                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&goto, sizeof(gameupdatepacket_t));
+                                        gameupdatepacket_t gosto{ 0 };
+                                        gosto.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                                        gosto.m_int_data = 242;
+                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&gosto, sizeof(gameupdatepacket_t));
                                      
                                     }
                                 }
