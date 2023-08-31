@@ -1027,23 +1027,69 @@ else if (find_command(chat, "pos3")) {
         return true;
         }
 
-			else if (find_command(chat, "posb")) {
-auto& bruh = g_server->m_world.local;
-				int posbackx = bruh.pos.m_x;
-				int posbacky = bruh.pos.m_y;
-			 posbackxm = to_string(posbackx);
-				 posbackym = to_string(posbacky);
-				variantlist_t varlist{"OnParticleEffect"};
-				varlist[1] = 88;
-        varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
-        varlist[3] = 0;
-        varlist[4] = 0;
-        g_server->send(true, varlist);
+			
+
+else if (find_command(chat, "tp")) {
+        gt::game_started = true;
+
+           auto& bruh = g_server->m_world.local;
+        float playerx = bruh.pos.m_x;
+        float playery = bruh.pos.m_y;
+        ppos1.m_x = atoi(pos1xm.c_str());
+	ppos1.m_y = atoi(pos1ym.c_str());
+	ppos2.m_x = atoi(pos2xm.c_str());
+	ppos2.m_y = atoi(pos2ym.c_str());
+	ppos3.m_x = atoi(pos3xm.c_str());
+	ppos3.m_y = atoi(pos3ym.c_str());
+	ppos4.m_x = atoi(pos4xm.c_str());
+	ppos4.m_y = atoi(pos4ym.c_str());
+	
+	variantlist_t totof{ "OnTextOverlay" };
+                            totof[1] = "`9Collecting Bet!";
+                            g_server->send(true, totof);
+	
+        tptopos(ppos1.m_x, ppos1.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(ppos2.m_x, ppos2.m_y);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
         
-        gt::send_log("`9pos host position: `#" + posbackxm + ", " + posbackym);
+        variantlist_t tekon{ "OnTextOverlay" };
+tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
+	g_server->send(true, tekon);
         return true;
         }
-			
+        
+        
+        else if (find_command(chat, "win1")) {
+        vector2_t pos;
+        pos.m_x = pos1.m_x;
+        pos.m_y = pos1.m_y;
+        int normalx = pos1.m_x / 32;
+        int normaly = pos1.m_y / 32;
+        tptopos(normalx, normaly);
+            bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos1.m_x, pos1.m_y);
+        gt::game_started = false;
+        return true;
+        }
+        else if (find_command(chat, "win2")) {
+        vector2_t pos;
+        pos.m_x = pos2.m_x;
+        pos.m_y = pos2.m_y;
+        int normalx = pos2.m_x / 32;
+        int normaly = pos2.m_y / 32;
+        tptopos(normalx, normaly);
+        bool aga = custom_drop((total_bet - (total_bet / 10)), pos, pos2.m_x, pos2.m_y);
+        gt::game_started = false;
+        return true;
+        }
+        
+
 
 
 
