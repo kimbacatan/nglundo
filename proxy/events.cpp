@@ -1160,7 +1160,7 @@ tptopos(ppos1.m_x, ppos1.m_y);
         if (clt1 == clt2 && clt3 == clt4 && clt1 != 0 && clt2 != 0 && clt3 != 0 && clt4 != 0) {
             gt::total_bet = clt1 + clt2 + clt3 + clt4;
                 variantlist_t jawir{ "OnTextOverlay" };
-		jawir[1] = "Collected `9" + gt::total_bet + " WLS";
+		jawir[1] = "Collected `9" + to_string(gt::total_bet) + " WLS";
 
 		g_server->send(true, jawir);
 		return true;
