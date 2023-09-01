@@ -36,7 +36,7 @@ LocalPlayer local_player;
     std::string meta = "NULL";
     int m_port = 17198;
     int m_proxyport = 17091;
-    world m_world;
+    g_server->m_world
 
 
     bool start();
