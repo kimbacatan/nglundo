@@ -1094,11 +1094,7 @@ auto& bruh = g_server->m_world.local;
                 }
             
             gt::send_log("Collected!");
-        }
-        else {
-            gt::send_log("WL'S Is Not Equal.");
-        }
-
+}
         return true;
     }
         
