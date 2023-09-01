@@ -1051,18 +1051,16 @@ else if (find_command(chat, "tp")) {
 	
         tptopos(ppos1.m_x, ppos1.m_y);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
         tptopos(playerx, playery);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
         tptopos(ppos2.m_x, ppos2.m_y);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
         tptopos(playerx, playery);
         
-        variantlist_t tekon{ "OnTextOverlay" };
-tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
-	g_server->send(true, tekon);
+        
         return true;
         }
         
