@@ -198,68 +198,53 @@ void server::handle_incoming() {
                                 
 case PACKET_ITEM_CHANGE_OBJECT: {
                         if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
-                            if (packet->m_player_flags == m_world.local.netid) {
-                                auto object = m_world.objects.find(packet->m_int_data);
-                                if (object->second.itemID != 112) {
-                                    auto s_items_ptr = &local_player.inventory.items;
-                                    int buffer = local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
-                                    if (!local_player.inventory.doesItemExistUnsafe(object->second.itemID)) { //haven't tested yet.
-                                        Item item;
-                                        item.id = object->second.itemID;
-                                        item.count = buffer;
-                                        item.type = 0;
-                                        s_items_ptr->operator[](item.id) = item;
-                                    }
-                                   
-                                    else s_items_ptr->operator[](object->second.itemID).count += buffer;
+        if (packet->m_player_flags == g_server->m_world.local.netid) {
+            auto object = g_server->m_world.objects.find(packet->m_int_data);
+            if (object->second.itemID != 112) {
+                auto s_items_ptr = &g_server->local_player.inventory.items;
+                int buffer = g_server->local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
+                if (!g_server->local_player.inventory.doesItemExistUnsafe(object->second.itemID)) {
+                    Item item;
+                    item.id = object->second.itemID;
+                    item.count = buffer;
+                    item.type = 0;
+                    s_items_ptr->operator[](item.id) = item;
+                }
+                else s_items_ptr->operator[](object->second.itemID).count += buffer;
+            }
+            else g_server->local_player.gems_balance += object->second.count;
+        }
+        g_server->m_world.objects.erase(packet->m_int_data);
+    }
+    else {
 
-                                    if (gt::game_started) {
-                                        if (object->second.itemID == 242) {
-                                            gt::total_bet += buffer;
-                                        }
-                                        if (object->second.itemID == 1796) {
-                                            gt::total_bet += (buffer * 100);
-                                        }
-                                        variantlist_t tekon{ "OnTextOverlay" };
-tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
-	g_server->send(true, tekon);
-                                    }
-                                    //cout << "degisen: " << buffer << endl;
-                                    if (s_items_ptr->operator[](242).count >= 100) {
-                                        gameupdatepacket_t meski{ 0 };
-                                        meski.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                                        meski.m_int_data = 242;
-                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&meski, sizeof(gameupdatepacket_t));
-                                     
-                                    }
-                                }
-                                else {
-                                    local_player.gems_balance += object->second.count;
-                                }
+        if (packet->m_player_flags == -3) {
+            auto obj = g_server->m_world.objects.find(packet->m_item);
+            if (obj != g_server->m_world.objects.end()) {
+                obj->second.itemID = packet->m_int_data;
+                obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
+                obj->second.count = uint32_t(packet->m_struct_flags);
+            }
+        }
+        if (packet->m_player_flags == -1) {
+            g_server->m_world.lastDroppedUid = g_server->m_world.lastDroppedUid + 1;
+            DroppedItem item;
+            item.uid = g_server->m_world.lastDroppedUid;
+            item.pos.m_x = packet->m_vec_x;
+            item.pos.m_y = packet->m_vec_y;
+            item.itemID = packet->m_int_data;
+            item.count = (int)packet->m_struct_flags;
+            item.flags = packet->m_packet_flags;
 
-                            }
-                            m_world.objects.erase(packet->m_int_data);
-                        }
-                        else {
-                            if (packet->m_player_flags == -1) {
-                                DroppedItem item;
-                                item.itemID = packet->m_int_data;
-                                item.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                item.count = uint32_t(packet->m_struct_flags);
-                                item.flags = 0; //set this to what??
-                                item.uid = ++m_world.lastDroppedUid;
-                                m_world.objects[item.uid] = item;
-                            }
-                            else if (packet->m_player_flags == -3) {
-                                auto obj = m_world.objects.find(packet->m_item);
-                                if (obj != m_world.objects.end()) {
-                                    obj->second.itemID = packet->m_int_data;
-                                    obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                    obj->second.count = uint32_t(packet->m_struct_flags);
-                                }
-                            }
-                        }
+            g_server->m_world.objects[item.uid] = item;
 
+        }
+        if (packet->m_item == -1 && packet->m_player_flags != -1) {
+            g_server->m_world.lastDroppedUid = packet->m_int_data;
+            g_server->m_world.objects.erase(packet->m_int_data);
+
+        }
+    }
                     }break;
 
                                 
