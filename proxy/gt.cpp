@@ -11,6 +11,8 @@ bool gt::in_game = false;
 bool gt::ghost = false;
 int gt::total_bet = 0;
 bool gt::game_started = false;
+int gt::lastCollect1 = 0;
+int gt::lastCollect2 = 0;
 
 void gt::send_log(std::string text) {
     g_server->send(true, "action|log\nmsg|" + text, NET_MESSAGE_GAME_MESSAGE);
