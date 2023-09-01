@@ -20,10 +20,10 @@ namespace events {
         bool variantlist(gameupdatepacket_t* packet);
         bool generictext(std::string packet);
         bool gamemessage(std::string packet); 
-        bool OnChangeObject(gameupdatepacket_t* packet);
         bool sendmapdata(gameupdatepacket_t* packet);
         bool state(gameupdatepacket_t* packet);
         bool tracking(std::string packet);
+bool OnChangeObject(gameupdatepacket_t* packet);
     }; // namespace in
 };     // namespace events
 
