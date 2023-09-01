@@ -3,6 +3,7 @@
 #include "packet.h"
 #include <vector>
 #include <thread>
+#include "server.h"
 
 
 //return value: true - dont send original packet, false - send original packet
