@@ -1,7 +1,6 @@
 #pragma once
 #include "enet/include/enet.h"
 #include <string>
-#include <conio.h>
 #include <iostream>
 #include <fstream>
 #include <time.h>
