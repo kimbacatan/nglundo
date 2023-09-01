@@ -10,5 +10,7 @@ namespace gt {
     extern bool ghost;
 extern int total_bet;
 extern bool game_started;
+extern int lastCollect1;
+    extern int lastCollect2;
     void send_log(std::string text);
 }
