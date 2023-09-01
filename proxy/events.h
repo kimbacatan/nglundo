@@ -23,7 +23,6 @@ namespace events {
         bool sendmapdata(gameupdatepacket_t* packet);
         bool state(gameupdatepacket_t* packet);
         bool tracking(std::string packet);
-bool OnChangeObject(gameupdatepacket_t* packet);
     }; // namespace in
 };     // namespace events
 
