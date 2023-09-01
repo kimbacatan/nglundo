@@ -1915,8 +1915,8 @@ bool events::in::tracking(std::string packet) {
 
 bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
     if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
-                            if (packet->m_player_flags == m_world.local.netid) {
-                                auto object = m_world.objects.find(packet->m_int_data);
+                            if (packet->m_player_flags == g_server->m_world.local.netid) {
+                                auto object = g_server->m_world.objects.find(packet->m_int_data);
                                 if (object->second.itemID != 112) {
                                     auto s_items_ptr = &local_player.inventory.items;
                                     int buffer = local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
@@ -1965,8 +1965,8 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                 m_world.objects[item.uid] = item;
                             }
                             else if (packet->m_player_flags == -3) {
-                                auto obj = m_world.objects.find(packet->m_item);
-                                if (obj != m_world.objects.end()) {
+                                auto obj = g_server->m_world.objects.find(packet->m_item);
+                                if (obj != g_server->m_world.objects.end()) {
                                     obj->second.itemID = packet->m_int_data;
                                     obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
                                     obj->second.count = uint32_t(packet->m_struct_flags);
