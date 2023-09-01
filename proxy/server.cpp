@@ -196,10 +196,13 @@ void server::handle_incoming() {
                     }break;        
 
                                 
-case PACKET_ITEM_CHANGE_OBJECT: {
+case PACKET_ITEM_CHANGE_OBJECT: 
                      if (events::in::OnChangeObject(packet)) {
                                         enet_packet_destroy(event.packet);
-                    }break;
+                     return;
+                       
+                     }
+    break;
 
                                 
                                                        
