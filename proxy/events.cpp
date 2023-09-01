@@ -1795,85 +1795,10 @@ bool events::in::gamemessage(std::string packet) {
 }
 
 
-bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
-if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
-                            if (packet->m_player_flags == m_world.local.netid) {
-                                auto object = m_world.objects.find(packet->m_int_data);
-                                if (object->second.itemID != 112) {
-                                    auto s_items_ptr = &local_player.inventory.items;
-                                    int buffer = local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
-                                    if (!local_player.inventory.doesItemExistUnsafe(object->second.itemID)) { //haven't tested yet.
-                                        Item item;
-                                        item.id = object->second.itemID;
-                                        item.count = buffer;
-                                        item.type = 0;
-                                        s_items_ptr->operator[](item.id) = item;
-                                    }
-                                   
-                                    else s_items_ptr->operator[](object->second.itemID).count += buffer;
-
-                                    if (gt::game_started) {
-                                        if (object->second.itemID == 242) {
-                                            gt::total_bet += buffer;
-                                        }
-                                        if (object->second.itemID == 1796) {
-                                            gt::total_bet += (buffer * 100);
-                                        }
-                                    }
-                                    //cout << "degisen: " << buffer << endl;
-                                    if (s_items_ptr->operator[](242).count >= 100) {
-                                        gameupdatepacket_t meki{ 0 };
-                                        meki.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                                        meki.m_int_data = 242;
-                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&meki, sizeof(gameupdatepacket_t));
-                                     
-                                    }
-                                }
-                                else {
-                                    local_player.gems_balance += object->second.count;
-                                }
-
-                            }
-                            m_world.objects.erase(packet->m_int_data);
-                        }
-                        else {
-                            if (packet->m_player_flags == -1) {
-                                DroppedItem item;
-                                item.itemID = packet->m_int_data;
-                                item.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                item.count = uint32_t(packet->m_struct_flags);
-                                item.flags = 0; //set this to what??
-                                item.uid = ++m_world.lastDroppedUid;
-                                m_world.objects[item.uid] = item;
-                            }
-                            else if (packet->m_player_flags == -3) {
-                                auto obj = m_world.objects.find(packet->m_item);
-                                if (obj != m_world.objects.end()) {
-                                    obj->second.itemID = packet->m_int_data;
-                                    obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                    obj->second.count = uint32_t(packet->m_struct_flags);
-                                }
-                            }
-                        }
-                        return false;
-                        }
 
 bool events::in::sendmapdata(gameupdatepacket_t* packet) {
-    g_server->m_world = {};
-    auto extended = utils::get_extended(packet);
-    extended += 4;
-    auto data = extended + 6;
-    auto name_length = *(short*)data;
-
-    char* name = new char[name_length + 1];
-    memcpy(name, data + sizeof(short), name_length);
-    char none = '\0';
-    memcpy(name + name_length, &none, 1);
-
-    g_server->m_world.name = std::string(name);
+    g_server->m_world.LoadFromMem(packet);
     g_server->m_world.connected = true;
-    delete[] name;
-    PRINTC("world name is %s\n", g_server->m_world.name.c_str());
     return false;
 }
 
