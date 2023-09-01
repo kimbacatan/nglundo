@@ -1092,7 +1092,7 @@ auto& bruh = g_server->m_world.local;
                         }
                     }
                 }
-            }
+            
             gt::send_log("Collected!");
         }
         else {
