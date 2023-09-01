@@ -1918,9 +1918,9 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                             if (packet->m_player_flags == g_server->m_world.local.netid) {
                                 auto object = g_server->m_world.objects.find(packet->m_int_data);
                                 if (object->second.itemID != 112) {
-                                    auto s_items_ptr = &local_player.inventory.items;
-                                    int buffer = local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
-                                    if (!local_player.inventory.doesItemExistUnsafe(object->second.itemID)) { //haven't tested yet.
+                                    auto s_items_ptr = g_server->&local_player.inventory.items;
+                                    int buffer = g_server->local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
+                                    if (!g_server->local_player.inventory.doesItemExistUnsafe(object->second.itemID)) { //haven't tested yet.
                                         Item item;
                                         item.id = object->second.itemID;
                                         item.count = buffer;
@@ -1948,11 +1948,11 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                     }
                                 }
                                 else {
-                                    local_player.gems_balance += object->second.count;
+                                    g_server->local_player.gems_balance += object->second.count;
                                 }
 
                             }
-                            m_world.objects.erase(packet->m_int_data);
+                            g_server->m_world.objects.erase(packet->m_int_data);
                         }
                         else {
                             if (packet->m_player_flags == -1) {
