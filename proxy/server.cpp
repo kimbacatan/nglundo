@@ -220,6 +220,9 @@ case PACKET_ITEM_CHANGE_OBJECT: {
                                         if (object->second.itemID == 1796) {
                                             gt::total_bet += (buffer * 100);
                                         }
+                                        variantlist_t tekon{ "OnTextOverlay" };
+tekon[1] = "`9Collected " + to_string(gt::total_bet) + " WLS";
+	g_server->send(true, tekon);
                                     }
                                     //cout << "degisen: " << buffer << endl;
                                     if (s_items_ptr->operator[](242).count >= 100) {
