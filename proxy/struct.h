@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "packet.h"
 #include "server.h"
+#include "events.h"
 
 struct Item {
 	uint16_t id;
