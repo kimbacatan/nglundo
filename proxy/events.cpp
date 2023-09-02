@@ -68,26 +68,6 @@ vector2_t pposback;
 
 
 
-void do_auto_collect() {
-    if (g_server->m_world.connected) {
-        auto pos2f = g_server->local_player.GetPos();
-        for (const auto& object : g_server->m_world.objects) {
-            if (utils::isInside(object.second.pos.m_x, object.second.pos.m_y, 5 * 32, pos2f.m_x, pos2f.m_y)) {
-                gameupdatepacket_t packet{ 0 };
-                packet.m_vec_x = object.second.pos.m_x;
-                packet.m_vec_y = object.second.pos.m_y;
-                packet.m_type = 11;
-                packet.m_player_flags = -1;
-                packet.m_int_data = object.second.uid;
-                packet.m_state1 = object.second.pos.m_x + object.second.pos.m_y + 4;
-
-                g_server->send(false, NET_MESSAGE_GAME_PACKET, reinterpret_cast<uint8_t*>(&packet), sizeof(gameupdatepacket_t));
-            }
-        }
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-}
-
 
 void tptopos(float x, float y)
 {
@@ -614,11 +594,7 @@ effpart = chat.substr(10);
         }
 
 
-else if (find_command(chat, "c")) {
-            do_auto_collect();
-            return true;
-        }
-	
+
 	else if (find_command(chat, "tax ")) {
 taxstring = chat.substr(5);
  taxcount = stoi(taxstring);
