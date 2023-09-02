@@ -1220,7 +1220,7 @@ else if (find_command(chat, "win1")) {
         return true;
     }
 
-else if (find_command(chat, "win1")) {
+else if (find_command(chat, "win2")) {
         auto& bruh = g_server->m_world.local;
         vector2_t posb;
         posb.m_x = bruh.pos.m_x;
