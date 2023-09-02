@@ -1047,9 +1047,6 @@ else if (find_command(chat, "tp")) {
 	ppos4.m_x = atoi(pos4xm.c_str());
 	ppos4.m_y = atoi(pos4ym.c_str());
 	
-	variantlist_t totof{ "OnTextOverlay" };
-                            totof[1] = "`9Collecting Bet!";
-                            g_server->send(true, totof);
 	
         tptopos(ppos1.m_x, ppos1.m_y);
 
@@ -1062,7 +1059,10 @@ else if (find_command(chat, "tp")) {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         tptopos(playerx, playery);
         
-        
+        variantlist_t pekon{ "OnTextOverlay" };
+		    pekon[1] = "Collected `9" + to_string(gt::total_bet) + "`0WLS";
+
+		    g_server->send(true, pekon);
         return true;
         }
         
