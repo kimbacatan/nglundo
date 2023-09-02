@@ -1142,7 +1142,7 @@ auto& bruh = g_server->m_world.local;
             }
         }
 
-        if (clt1 == clt2 && clt1 != 0 && clt2 != 0) {
+        
             gt::lastCollect1 = clt1;
             gt::lastCollect2 = clt2;
 
@@ -1179,11 +1179,7 @@ auto& bruh = g_server->m_world.local;
                 }
             }
             gt::send_log("Collected!");
-        }
-        else {
-            gt::send_log("WL'S Is Not Equal.");
-        }
-
+        
         return true;
     }
         
