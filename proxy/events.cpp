@@ -1198,7 +1198,7 @@ else if (find_command(chat, "win1")) {
         tptopos(ppos1.m_x, ppos1.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
+        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
@@ -1230,7 +1230,7 @@ else if (find_command(chat, "win2")) {
         tptopos(ppos2.m_x, ppos2.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
+        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
