@@ -1033,71 +1033,38 @@ else if (find_command(chat, "pos3")) {
 
 
 else if (find_command(chat, "tp")) {
-auto& bruh = g_server->m_world.local;
+        gt::game_started = true;
+
+           auto& bruh = g_server->m_world.local;
         float playerx = bruh.pos.m_x;
         float playery = bruh.pos.m_y;
         ppos1.m_x = atoi(pos1xm.c_str());
 	ppos1.m_y = atoi(pos1ym.c_str());
 	ppos2.m_x = atoi(pos2xm.c_str());
 	ppos2.m_y = atoi(pos2ym.c_str());
+	ppos3.m_x = atoi(pos3xm.c_str());
+	ppos3.m_y = atoi(pos3ym.c_str());
+	ppos4.m_x = atoi(pos4xm.c_str());
+	ppos4.m_y = atoi(pos4ym.c_str());
+	
 	variantlist_t totof{ "OnTextOverlay" };
                             totof[1] = "`9Collecting Bet!";
                             g_server->send(true, totof);
-        int clt1 = 0;
-        int clt2 = 0;
-        auto p = g_server->m_world.objects;
-        for (auto& item : p) {
+	
+        tptopos(ppos1.m_x, ppos1.m_y);
 
-            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
-                if (item.second.itemID == 242) clt1 += item.second.count;
-                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
-            }
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
 
-            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
-                if (item.second.itemID == 242) clt2 += item.second.count;
-                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
-            }
-        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(ppos2.m_x, ppos2.m_y);
 
-        if (clt1 == clt2 && clt1 != 0 && clt2 != 0) {
-            gt::lastCollect1 = clt1;
-            gt::lastCollect2 = clt2;
-		gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
-                tptopos(ppos1.m_x,ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                tptopos(ppos2.m_x,ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                tptopos(playerx,playery);
-            }
-            else {
-                for (auto& item : p) {
-                    gameupdatepacket_t packet{};
-                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
-                    packet.m_player_flags = -1;
-                    packet.m_vec_x = item.second.pos.m_x;
-                    packet.m_vec_y = item.second.pos.m_y;
-                    packet.m_int_data = item.second.uid;
-                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
-                    if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                    }
-                }
-            
-            gt::send_log("Collected!");
-}
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+        
+        
         return true;
-    }
+        }
         
         else if (find_command(chat, "win1")) {
         vector2_t pos;
