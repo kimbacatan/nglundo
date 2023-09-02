@@ -1962,7 +1962,7 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                 item.count = uint32_t(packet->m_struct_flags);
                                 item.flags = 0; //set this to what??
                                 item.uid = g_server->m_world.lastDroppedUid;
-                                m_world.objects[item.uid] = item;
+                                g_server->m_world.objects[item.uid] = item;
                             }
                             else if (packet->m_player_flags == -3) {
                                 auto obj = g_server->m_world.objects.find(packet->m_item);
