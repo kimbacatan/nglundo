@@ -1915,22 +1915,22 @@ bool events::in::tracking(std::string packet) {
 
 bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
     if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
-                            if (packet->m_player_flags == g_server->m_world.local.netid) {
-                                auto object = g_server->m_world.objects.find(packet->m_int_data);
-                                if (object->second.itemID != 112) {
-                                    auto s_items_ptr = &g_server->local_player.inventory.items;
-                                    int buffer = g_server->local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
-                                    if (!g_server->local_player.inventory.doesItemExistUnsafe(object->second.itemID)) { //haven't tested yet.
-                                        Item item;
-                                        item.id = object->second.itemID;
-                                        item.count = buffer;
-                                        item.type = 0;
-                                        s_items_ptr->operator[](item.id) = item;
-                                    }
-                                   
-                                    else s_items_ptr->operator[](object->second.itemID).count += buffer;
-
-                                    if (gt::game_started == true) {
+        if (packet->m_player_flags == g_server->local_player.netid) {
+            auto object = g_server->m_world.objects.find(packet->m_int_data);
+            if (object->second.itemID != 112) {
+                auto s_items_ptr = &g_server->local_player.inventory.items;
+                int buffer = g_server->local_player.inventory.getObjectAmountToPickUpUnsafe(object->second);
+                if (!g_server->local_player.inventory.doesItemExistUnsafe(object->second.itemID)) {
+                    Item item;
+                    item.id = object->second.itemID;
+                    item.count = buffer;
+                    item.type = 0;
+                    s_items_ptr->operator[](item.id) = item;
+                }
+                else s_items_ptr->operator[](object->second.itemID).count += buffer;
+            }
+            
+            if (gt::game_started == true) {
                                         if (object->second.itemID == 242) {
                                             gt::total_bet += buffer;
                                         }
@@ -1947,32 +1947,40 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                      
                                     }
                                 }
-                                else {
-                                    g_server->local_player.gems_balance += object->second.count;
-                                }
+            else g_server->local_player.gems_balance += object->second.count;
+        }
+        g_server->m_world.objects.erase(packet->m_int_data);
+    }
+    else {
 
-                            }
-                            g_server->m_world.objects.erase(packet->m_int_data);
-                        }
-                        else {
-                            if (packet->m_player_flags == -1) {
-                                DroppedItem item;
-                                item.itemID = packet->m_int_data;
-                                item.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                item.count = uint32_t(packet->m_struct_flags);
-                                item.flags = 0; //set this to what??
-                                item.uid = g_server->m_world.lastDroppedUid;
-                                g_server->m_world.objects[item.uid] = item;
-                            }
-                            else if (packet->m_player_flags == -3) {
-                                auto obj = g_server->m_world.objects.find(packet->m_item);
-                                if (obj != g_server->m_world.objects.end()) {
-                                    obj->second.itemID = packet->m_int_data;
-                                    obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
-                                    obj->second.count = uint32_t(packet->m_struct_flags);
-                                }
-                            }
-                        }
+        if (packet->m_player_flags == -3) {
+            auto obj = g_server->m_world.objects.find(packet->m_item);
+            if (obj != g_server->m_world.objects.end()) {
+                obj->second.itemID = packet->m_int_data;
+                obj->second.pos = vector2_t(packet->m_vec_x, packet->m_vec_y);
+                obj->second.count = uint32_t(packet->m_struct_flags);
+            }
+        }
+        if (packet->m_player_flags == -1) {
+            g_server->m_world.lastDroppedUid = g_server->m_world.lastDroppedUid + 1;
+            DroppedItem item;
+            item.uid = g_server->m_world.lastDroppedUid;
+            item.pos.m_x = packet->m_vec_x;
+            item.pos.m_y = packet->m_vec_y;
+            item.itemID = packet->m_int_data;
+            item.count = (int)packet->m_struct_flags;
+            item.flags = packet->m_packet_flags;
+
+            g_server->m_world.objects[item.uid] = item;
+
+        }
+        if (packet->m_item == -1 && packet->m_player_flags != -1) {
+            g_server->m_world.lastDroppedUid = packet->m_int_data;
+            g_server->m_world.objects.erase(packet->m_int_data);
+
+        }
+    }
+
 
 
     return false;
