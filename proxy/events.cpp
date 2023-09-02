@@ -1047,7 +1047,20 @@ if (item_count(242) < halohai) {
         return 0;
 	}
 
-
+else if (find_command(chat, "gems")) {
+            int count = 0;
+            for (auto& obj : g_server->m_world.objects) {
+                if (obj.second.itemID == 112) {
+                    count += obj.second.count;
+                }
+            }
+            count = std::floor(count);
+            variantlist_t text{ "OnTextOverlay" };
+            text[1] = "`9 gems in world is : " + std::to_string(count);
+            g_server->send(true, text);
+            return true;
+        }
+	
 	
         else if (find_command(chat, "pos1")) {
         auto& bruh = g_server->m_world.local;
