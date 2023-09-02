@@ -52,7 +52,6 @@ int bruh2;
 int bruh3;
 int bruh4;
 std::string taxstring = "";
-int taxcount;
 std::string value = "";
 
 int taxcount = 0;
