@@ -1175,9 +1175,9 @@ int clt2 = 0;
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         tptopos(playerx, playery);
        
-       variantlist_t totof{ "OnTextOverlay" };
-                            totof[1] = "`0Collected `9" + to_string(gt::total_bet) + "`0 WLS!";
-                            g_server->send(true, totof);
+       variantlist_t kuntul{ "OnTextOverlay" };
+                            kuntul[1] = "`0Collected `9" + to_string(gt::total_bet) + "`0 WLS!";
+                            g_server->send(true, kuntul);
         
         
         return true;
