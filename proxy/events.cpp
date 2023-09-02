@@ -1171,7 +1171,7 @@ int clt2 = 0;
         
         gt::lastCollect1 = clt1;
         gt::lastCollect2 = clt2;
-        gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
+        
         
         
         tptopos(ppos1.m_x, ppos1.m_y);
@@ -1186,7 +1186,7 @@ int clt2 = 0;
         tptopos(playerx, playery);
        
        variantlist_t kuntul{ "OnTextOverlay" };
-                            kuntul[1] = "`0Collected `9" + to_string(gt::total_bet) + "`0 WLS!";
+                            kuntul[1] = "`0Collected `9" + to_string(gt::lastCollect1 + gt::lastCollect2) + "`0 WLS!";
                             g_server->send(true, kuntul);
         
         
