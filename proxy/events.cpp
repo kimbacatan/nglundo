@@ -271,6 +271,93 @@ bool find_command(std::string chat, std::string name) {
         gt::send_log("`6" + chat);
     return found;
 }
+
+pair<int, int> commands::DropDLWL(int count, int tax = gt::tax) {
+    auto inventory = g_server->localPlayer.inventory.items;
+    auto totalCount = 0;
+    for (auto items : inventory) {
+        if (items.second.id == 242) totalCount += items.second.count;
+        if (items.second.id == 1796) totalCount += items.second.count * 100;
+    }
+
+    if (totalCount < count && count != -1 && totalCount != 0) {
+        gt::send_log("You Don't Have DLs, WLs");
+        return { 0, 0 };
+    }
+
+    if (count == -1) count = totalCount;
+
+    int bruh = count % 10;
+    if (tax == 0) bruh = 0;
+    int bruh2 = count;
+
+    if (bruh == 1) bruh2 = bruh2 - 1;
+    if (bruh == 2) bruh2 = bruh2 - 2;
+    if (bruh == 3) bruh2 = bruh2 - 3;
+    if (bruh == 4) bruh2 = bruh2 - 4;
+    if (bruh == 5) bruh2 = bruh2 + 5;
+    if (bruh == 6) bruh2 = bruh2 + 4;
+    if (bruh == 7) bruh2 = bruh2 + 3;
+    if (bruh == 8) bruh2 = bruh2 + 2;
+    if (bruh == 9) bruh2 = bruh2 + 1;
+
+    int bruh3 = bruh2 * tax / 100;
+    int bruh4 = count - bruh3;
+
+    int dls = (bruh4 / 100);
+    int wls = (bruh4 % 100);
+
+    auto getDL = inventory.find(1796);
+    auto getWL = inventory.find(242);
+
+    if (dls != 0) {
+        if (getDL != inventory.end()) {
+            if (getDL->second.count < dls) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 242;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+        }
+        else {
+            if (getWL != inventory.end()) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 242;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+            else {
+                gt::send_log("You Don't Have DLs, WLs");
+                return { 0, 0 };
+            }
+        }
+    }
+    if (wls != 0) {
+        if (getWL != inventory.end()) {
+            if (getWL->second.count < wls) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+        }
+        else {
+            if (getDL != inventory.end()) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+            else {
+                gt::send_log("You Don't Have WLs, DLs");
+                return { 0, 0 };
+            }
+        }
+    }
+
+    return { wls, dls };
+}
+
 bool wrench = false;
 bool fastdrop = false;
 bool fasttrash = false;
@@ -1033,325 +1120,137 @@ else if (find_command(chat, "pos3")) {
 
 
 else if (find_command(chat, "tp")) {
-        gt::game_started = true;
+gt::game_started = true;
+auto& bruh = g_server->m_world.local;
+        vector2_t posb;
+        posb.m_x = bruh.pos.m_x;
+        posb.m_y = bruh.pos.m_y;
+        int clt1 = 0;
+        int clt2 = 0;
+        auto p = g_server->m_world.objects;
+        for (auto& item : p) {
 
-           auto& bruh = g_server->m_world.local;
-        float playerx = bruh.pos.m_x;
-        float playery = bruh.pos.m_y;
-        ppos1.m_x = atoi(pos1xm.c_str());
-	ppos1.m_y = atoi(pos1ym.c_str());
-	ppos2.m_x = atoi(pos2xm.c_str());
-	ppos2.m_y = atoi(pos2ym.c_str());
-	ppos3.m_x = atoi(pos3xm.c_str());
-	ppos3.m_y = atoi(pos3ym.c_str());
-	ppos4.m_x = atoi(pos4xm.c_str());
-	ppos4.m_y = atoi(pos4ym.c_str());
-	
-	
+            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
+                if (item.second.itemID == 242) clt1 += item.second.count;
+                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
+            }
+
+            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
+                if (item.second.itemID == 242) clt2 += item.second.count;
+                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
+            }
+        }
+
+        if (clt1 == clt2 && clt1 != 0 && clt2 != 0) {
+            gt::lastCollect1 = clt1;
+            gt::lastCollect2 = clt2;
+
+            if (gt::game_started == true) {
+                tptopos(ppos1.m_x, ppos1.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                tptopos(ppos2.m_x, ppos2.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                tptopos(posb.m_x, posb.m_y);
+            }
+            else {
+                for (auto& item : p) {
+                    gameupdatepacket_t packet{};
+                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
+                    packet.m_player_flags = -1;
+                    packet.m_vec_x = item.second.pos.m_x;
+                    packet.m_vec_y = item.second.pos.m_y;
+                    packet.m_int_data = item.second.uid;
+                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
+                    if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
+                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
+                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
+                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                            }
+                        }
+                    }
+                }
+            }
+            gt::send_log("Collected!");
+        }
+        else {
+            gt::send_log("WL'S Is Not Equal.");
+        }
+
+        return true;
+    }
+        
+        
+
+else if (find_command(chat, "win1")) {
+        auto& bruh = g_server->m_world.local;
+        vector2_t posb;
+        posb.m_x = bruh.pos.m_x;
+        posb.m_y = bruh.pos.m_y;
         tptopos(ppos1.m_x, ppos1.m_y);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
+        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), gt::win1Tax);
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        if (dlwl.first != 0) {
+            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+            g_server->send(false, "action|drop\n|itemID|242");
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        if (dlwl.second != 0) {
+            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+            g_server->send(false, "action|drop\n|itemID|1796");
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        tptopos(posb.m_x, posb.m_y);
+
+        gt::lastCollect1 = 0;
+        gt::lastCollect2 = 0;
+        return true;
+    }
+
+else if (find_command(chat, "win1")) {
+        auto& bruh = g_server->m_world.local;
+        vector2_t posb;
+        posb.m_x = bruh.pos.m_x;
+        posb.m_y = bruh.pos.m_y;
         tptopos(ppos2.m_x, ppos2.m_y);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        tptopos(playerx, playery);
-        
-        variantlist_t pekon{ "OnTextOverlay" };
-		    pekon[1] = "Collected `9" + to_string(gt::total_bet) + "`0WLS";
+        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), gt::win1Tax);
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
-		    g_server->send(true, pekon);
-        return true;
+        if (dlwl.first != 0) {
+            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+            g_server->send(false, "action|drop\n|itemID|242");
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
         }
-        
-        else if (find_command(chat, "win1")) {
-        vector2_t pos;
-        pos.m_x = ppos1.m_x;
-        pos.m_y = ppos1.m_y;
-        int normalx = ppos1.m_x / 32;
-        int normaly = ppos1.m_y / 32;
-        tptopos(normalx, normaly);
-        
-bruh = gt::total_bet % 10;
-            bruh2 = gt::total_bet;
-            if (bruh == 1) {
-                bruh2 = bruh2 - 1;
-            }
-            if (bruh == 2) {
-                bruh2 = bruh2 - 2;
-            }
-            if (bruh == 3) {
-                bruh2 = bruh2 - 3;
-            }
-            if (bruh == 4) {
-                bruh2 = bruh2 - 4;
-            }
-            if (bruh == 5) {
-                bruh2 = bruh2 + 5;
-            }
-            if (bruh == 6) {
-                bruh2 = bruh2 + 4;
-            }
-            if (bruh == 7) {
-                bruh2 = bruh2 + 3;
-            }
-            if (bruh == 8) {
-                bruh2 = bruh2 + 2;
-            }
-            if (bruh == 9) {
-                bruh2 = bruh2 + 1;
-            }
-            bruh3 = bruh2 * taxcount / 100;
-            bruh4 = gt::total_bet - bruh3;
-            
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    string cdropcount = to_string(gt::total_bet);
-    if (balance() < bruh4) {
-        gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        if (dlwl.second != 0) {
+            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+            g_server->send(false, "action|drop\n|itemID|1796");
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        tptopos(posb.m_x, posb.m_y);
+
+        gt::lastCollect1 = 0;
+        gt::lastCollect2 = 0;
         return true;
     }
-    if (bruh4 < 100) {
-
-        if (item_count(242) < bruh4) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //242
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-
-    else if (bruh4 > 10000) {
-
-
-        int jumlahcd1 = (bruh4 / 10000);
-
-        int halohai = ((bruh4 / 100) - (jumlahcd1 * 100));
-        int halohai1 = bruh4 - ((halohai * 100) + (jumlahcd1 * 10000));
-        if (halohai > item_count(1796)) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 7188;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        else if (item_count(242) < halohai1) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        dropbgl = true;
-        g_server->send(false, "action|drop\n|itemID|7188");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|7188|\ncount|" + std::to_string(jumlahcd1)); //242
-
-        dropdl = true;
-        g_server->send(false, "action|drop\n|itemID|1796");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(halohai)); //242
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai1)); //242
-
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-    else {
-        int jumlahcd1 = (bruh4 / 100);
-        int halohai = (bruh4 % 100);
-
-        if (item_count(242) < halohai) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-        }
-        else if (item_count(1796) < jumlahcd1) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 242;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-        }
-        dropdl = true;
-        g_server->send(false, "action|drop\n|itemID|1796");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(jumlahcd1)); //242
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai)); //242
-
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-    bruh4 = 0;
-		gt::game_started = false;
-       }
-		
-        else if (find_command(chat, "win2")) {
-        vector2_t pos;
-        pos.m_x = ppos2.m_x;
-        pos.m_y = ppos2.m_y;
-        int normalx = ppos2.m_x / 32;
-        int normaly = ppos2.m_y / 32;
-        tptopos(normalx, normaly);
-        
-bruh = gt::total_bet % 10;
-            bruh2 = gt::total_bet;
-            if (bruh == 1) {
-                bruh2 = bruh2 - 1;
-            }
-            if (bruh == 2) {
-                bruh2 = bruh2 - 2;
-            }
-            if (bruh == 3) {
-                bruh2 = bruh2 - 3;
-            }
-            if (bruh == 4) {
-                bruh2 = bruh2 - 4;
-            }
-            if (bruh == 5) {
-                bruh2 = bruh2 + 5;
-            }
-            if (bruh == 6) {
-                bruh2 = bruh2 + 4;
-            }
-            if (bruh == 7) {
-                bruh2 = bruh2 + 3;
-            }
-            if (bruh == 8) {
-                bruh2 = bruh2 + 2;
-            }
-            if (bruh == 9) {
-                bruh2 = bruh2 + 1;
-            }
-            bruh3 = bruh2 * taxcount / 100;
-            bruh4 = gt::total_bet - bruh3;
-            
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    string cdropcount = to_string(gt::total_bet);
-    if (balance() < bruh4) {
-        gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
-        return true;
-    }
-    if (bruh4 < 100) {
-
-        if (item_count(242) < bruh4) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //242
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-
-    else if (bruh4 > 10000) {
-
-
-        int jumlahcd1 = (bruh4 / 10000);
-
-        int halohai = ((bruh4 / 100) - (jumlahcd1 * 100));
-        int halohai1 = bruh4 - ((halohai * 100) + (jumlahcd1 * 10000));
-        if (halohai > item_count(1796)) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 7188;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        else if (item_count(242) < halohai1) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        dropbgl = true;
-        g_server->send(false, "action|drop\n|itemID|7188");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|7188|\ncount|" + std::to_string(jumlahcd1)); //242
-
-        dropdl = true;
-        g_server->send(false, "action|drop\n|itemID|1796");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(halohai)); //242
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai1)); //242
-
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-    else {
-        int jumlahcd1 = (bruh4 / 100);
-        int halohai = (bruh4 % 100);
-
-        if (item_count(242) < halohai) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 1796;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-        }
-        else if (item_count(1796) < jumlahcd1) {
-            gameupdatepacket_t yahacdrop{ 0 };
-            yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-            yahacdrop.m_int_data = 242;
-            g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-
-        }
-        dropdl = true;
-        g_server->send(false, "action|drop\n|itemID|1796");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(jumlahcd1)); //242
-
-        dropwl = true;
-        g_server->send(false, "action|drop\n|itemID|242");
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai)); //242
-
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-    }
-    bruh4 = 0;
-		gt::game_started = false;
-       }     
-
-
-
 
 			
 	    else if (find_command(chat, "wrench")) {
