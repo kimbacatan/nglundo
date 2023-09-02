@@ -195,28 +195,7 @@ void server::handle_incoming() {
                        
                     }break;        
 
-                                
-
-                                                       
-                                case PACKET_CALL_FUNCTION:
-                                    if (events::in::variantlist(packet)) {
-                                        enet_packet_destroy(event.packet);
-                                        return;
-                                    }
-                                    break;
-
-
-                                
-                                
-
-                                case PACKET_SEND_MAP_DATA:
-                                    if (events::in::sendmapdata(packet)) {
-                                        enet_packet_destroy(event.packet);
-                                        return;
-                                    }
-                                    break;
-
-                            case PACKET_ITEM_CHANGE_OBJECT: {
+                                case PACKET_ITEM_CHANGE_OBJECT: {
                                     if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
         if (packet->m_player_flags == g_server->local_player.netid) {
             auto object = g_server->m_world.objects.find(packet->m_int_data);
@@ -240,10 +219,7 @@ void server::handle_incoming() {
                                         if (object->second.itemID == 1796) {
                                             gt::total_bet += (buffer * 100);
                                         }
-		    variantlist_t pekon{ "OnTextOverlay" };
-		    pekon[1] = "Collected `9" + to_string(gt::total_bet) + "`0WLS";
-
-		    g_server->send(true, pekon);
+		    
                                     }
                                     //cout << "degisen: " << buffer << endl;
                                     if (s_items_ptr->operator[](242).count >= 100) {
@@ -290,6 +266,26 @@ void server::handle_incoming() {
     }
                             }
                                     break;    
+
+                                                       
+                                case PACKET_CALL_FUNCTION:
+                                    if (events::in::variantlist(packet)) {
+                                        enet_packet_destroy(event.packet);
+                                        return;
+                                    }
+                                    break;
+
+
+                                
+                                
+
+                                case PACKET_SEND_MAP_DATA:
+                                    if (events::in::sendmapdata(packet)) {
+                                        enet_packet_destroy(event.packet);
+                                        return;
+                                    }
+                                    break;
+
                                 
                                 case PACKET_STATE:
                                     if (events::in::state(packet)) {
