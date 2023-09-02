@@ -211,7 +211,7 @@ void server::handle_incoming() {
                 }
                 else s_items_ptr->operator[](object->second.itemID).count += buffer;
 
-            
+	    }
             else g_server->local_player.gems_balance += object->second.count;
 	    
         }
