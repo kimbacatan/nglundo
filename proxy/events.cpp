@@ -1121,7 +1121,7 @@ else if (find_command(chat, "pos3")) {
 
 
 
-else if (find_command(chat, "win1")) {
+
       else if (find_command(chat, "tp")) {
         gt::game_started = true;
 int clt1 = 0;
