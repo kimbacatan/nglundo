@@ -1069,7 +1069,7 @@ else if (find_command(chat, "tp")) {
         else if (find_command(chat, "win1")) {
         vector2_t pos;
         pos.m_x = ppos1.m_x;
-        pos.m_y = pos1.m_y;
+        pos.m_y = ppos1.m_y;
         int normalx = ppos1.m_x / 32;
         int normaly = ppos1.m_y / 32;
         tptopos(normalx, normaly);
