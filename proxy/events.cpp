@@ -131,7 +131,7 @@ void Sleep(int milliseconds) {
 }
 
 
-void custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
+bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     string cdropcount = to_string(jumlahcd);
     if (balance() < jumlahcd) {
@@ -1071,7 +1071,7 @@ else if (find_command(chat, "tp")) {
         pos.m_x = ppos1.m_x;
         pos.m_y = ppos1.m_y;
         tptopos(ppos1.m_x, ppos1.m_y);
-            custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
+        auto dropg = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1082,7 +1082,7 @@ else if (find_command(chat, "tp")) {
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
         tptopos(ppos2.m_x, ppos2.m_y);
-        custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
+        auto dropg = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
         return true;
         }
