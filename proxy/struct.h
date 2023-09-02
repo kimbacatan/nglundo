@@ -10,6 +10,7 @@
 #include "proton/rtparam.hpp"
 #include "utils.h"
 #include "packet.h"
+#include "server.h"
 
 struct Item {
 	uint16_t id;
