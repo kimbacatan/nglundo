@@ -1902,6 +1902,10 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                         if (object->second.itemID == 1796) {
                                             gt::total_bet += (buffer * 100);
                                         }
+		    variantlist_t pekon{ "OnTextOverlay" };
+		    pekon[1] = "Collected `9" + to_string(gt::total_bet) + "`0WLS";
+
+		    g_server->send(true, pekon);
                                     }
                                     //cout << "degisen: " << buffer << endl;
                                     if (s_items_ptr->operator[](242).count >= 100) {
