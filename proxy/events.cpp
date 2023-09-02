@@ -1174,7 +1174,7 @@ int clt2 = 0;
         tptopos(playerx, playery);
        
        variantlist_t totof{ "OnTextOverlay" };
-                            totof[1] = "`0Collected `9" + to_string gt::total_bet) + "`0 WLS!";
+                            totof[1] = "`0Collected `9" + to_string(gt::total_bet) + "`0 WLS!";
                             g_server->send(true, totof);
         }
         else {
