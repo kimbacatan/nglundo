@@ -1185,11 +1185,7 @@ int clt2 = 0;
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         tptopos(playerx, playery);
        
-       variantlist_t kuntul{ "OnTextOverlay" };
-                            kuntul[1] = "`0Collected `9" + to_string(gt::lastCollect1 + gt::lastCollect2) + "`0 WLS!";
-                            g_server->send(true, kuntul);
-        
-        
+       
         return true;
         }
         
@@ -1201,7 +1197,7 @@ int clt2 = 0;
         int normalx = ppos1.m_x / 32;
         int normaly = ppos1.m_y / 32;
         tptopos(ppos1.m_x, ppos1.m_y);
-            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
+            bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
@@ -1212,7 +1208,7 @@ int clt2 = 0;
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
         tptopos(ppos2.m_x, ppos2.m_y);
-        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
+        bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
         }
