@@ -134,7 +134,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     string cdropcount = to_string(jumlahcd);
     if (balance() < jumlahcd) {
-        gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
+      //  gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
         return true;
     }
     if (jumlahcd < 100) {
@@ -151,7 +151,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
         g_server->send(false, "action|drop\n|itemID|242");
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //242
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+        //gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
     }
 
     else if (jumlahcd > 10000) {
@@ -193,7 +193,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
 
         g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai1)); //242
 
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+        //gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
     }
     else {
         int jumlahcd1 = (jumlahcd / 100);
@@ -227,7 +227,7 @@ bool custom_drop(int jumlahcd, vector2_t pos, float m_x, float m_y) {
 
         g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai)); //242
 
-        gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
+        //gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
     }
     gt::total_bet = 0;
 }
@@ -1176,13 +1176,13 @@ int clt2 = 0;
         
         tptopos(ppos1.m_x, ppos1.m_y);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         tptopos(playerx, playery);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         tptopos(ppos2.m_x, ppos2.m_y);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         tptopos(playerx, playery);
        
        
@@ -1194,9 +1194,9 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos1.m_x;
         pos.m_y = ppos1.m_y;
-        int normalx = ppos1.m_x / 32;
-        int normaly = ppos1.m_y / 32;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         tptopos(ppos1.m_x, ppos1.m_y);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
             bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
@@ -1205,9 +1205,9 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos2.m_x;
         pos.m_y = ppos2.m_y;
-        int normalx = ppos2.m_x / 32;
-        int normaly = ppos2.m_y / 32;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         tptopos(ppos2.m_x, ppos2.m_y);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
         bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
