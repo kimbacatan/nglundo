@@ -1156,11 +1156,13 @@ int clt2 = 0;
                 if (item.second.itemID == 1796) clt2 += item.second.count * 100;
             }
         }
+
+	      
         
-        if (clt1 == clt2 && clt1 != 0 && clt2 != 0) {
         gt::lastCollect1 = clt1;
         gt::lastCollect2 = clt2;
         gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
+        
         
         tptopos(ppos1.m_x, ppos1.m_y);
 
@@ -1176,10 +1178,7 @@ int clt2 = 0;
        variantlist_t totof{ "OnTextOverlay" };
                             totof[1] = "`0Collected `9" + to_string(gt::total_bet) + "`0 WLS!";
                             g_server->send(true, totof);
-        }
-        else {
-        gt::send_log("`9Bet Not Same");
-        }
+        
         
         return true;
         }
