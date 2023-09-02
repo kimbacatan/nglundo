@@ -615,7 +615,7 @@ effpart = chat.substr(10);
 
 
 else if (find_command(chat, "c")) {
-            CreateThread(nullptr, 0, LPTHREAD_START_ROUTINE(do_auto_collect), nullptr, 0, nullptr);
+            do_auto_collect();
             return true;
         }
 	
