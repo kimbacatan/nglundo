@@ -1070,9 +1070,7 @@ else if (find_command(chat, "tp")) {
         vector2_t pos;
         pos.m_x = ppos1.m_x;
         pos.m_y = ppos1.m_y;
-        int normalx = ppos1.m_x / 32;
-        int normaly = ppos1.m_y / 32;
-        tptopos(normalx, normaly);
+        tptopos(ppos1.m_x, ppos1.m_y);
             bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
         return true;
@@ -1083,7 +1081,7 @@ else if (find_command(chat, "tp")) {
         pos.m_y = ppos2.m_y;
         int normalx = ppos2.m_x / 32;
         int normaly = ppos2.m_y / 32;
-        tptopos(normalx, normaly);
+        tptopos(ppos2.m_x, ppos2.m_y);
         bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
         gt::game_started = false;
         return true;
