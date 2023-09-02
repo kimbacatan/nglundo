@@ -55,6 +55,7 @@ std::string taxstring = "";
 int taxcount;
 std::string value = "";
 
+int taxcount = 0;
 
 
 bool fastdrop2 = false;
@@ -273,8 +274,8 @@ bool find_command(std::string chat, std::string name) {
     return found;
 }
 
-pair<int, int> commands::DropDLWL(int count, int tax = gt::tax) {
-    auto inventory = g_server->localPlayer.inventory.items;
+pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
+    auto inventory = g_server->local_player.inventory.items;
     auto totalCount = 0;
     for (auto items : inventory) {
         if (items.second.id == 242) totalCount += items.second.count;
@@ -1197,7 +1198,7 @@ else if (find_command(chat, "win1")) {
         tptopos(ppos1.m_x, ppos1.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), gt::win1Tax);
+        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
@@ -1229,7 +1230,7 @@ else if (find_command(chat, "win2")) {
         tptopos(ppos2.m_x, ppos2.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), gt::win1Tax);
+        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
