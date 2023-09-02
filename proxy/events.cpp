@@ -1928,7 +1928,7 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                     s_items_ptr->operator[](item.id) = item;
                 }
                 else s_items_ptr->operator[](object->second.itemID).count += buffer;
-            }
+
             
             if (gt::game_started == true) {
                                         if (object->second.itemID == 242) {
@@ -1948,6 +1948,7 @@ bool events::in::OnChangeObject(gameupdatepacket_t* packet) {
                                     }
                                 }
             else g_server->local_player.gems_balance += object->second.count;
+	    
         }
         g_server->m_world.objects.erase(packet->m_int_data);
     }
