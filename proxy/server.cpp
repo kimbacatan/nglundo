@@ -212,24 +212,7 @@ void server::handle_incoming() {
                 else s_items_ptr->operator[](object->second.itemID).count += buffer;
 
             
-            if (gt::game_started == true) {
-                                        if (object->second.itemID == 242) {
-                                            gt::total_bet += buffer;
-                                        }
-                                        if (object->second.itemID == 1796) {
-                                            gt::total_bet += (buffer * 100);
-                                        }
-		    
-                                    }
-                                    //cout << "degisen: " << buffer << endl;
-                                    if (s_items_ptr->operator[](242).count >= 100) {
-                                        gameupdatepacket_t goblo{ 0 };
-                                        goblo.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                                        goblo.m_int_data = 242;
-                                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&goblo, sizeof(gameupdatepacket_t));
-                                     
-                                    }
-                                }
+           
             else g_server->local_player.gems_balance += object->second.count;
 	    
         }
