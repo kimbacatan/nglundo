@@ -12,5 +12,6 @@ extern int total_bet;
 extern bool game_started;
 extern int lastCollect1;
     extern int lastCollect2;
+extern int fakeFastDrop;
     void send_log(std::string text);
 }
