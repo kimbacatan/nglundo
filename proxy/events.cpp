@@ -1120,18 +1120,33 @@ else if (find_command(chat, "pos3")) {
 			
 
 
-else if (find_command(chat, "tp")) {
-gt::game_started = true;
-auto& bruh = g_server->m_world.local;
-        vector2_t posb;
-        posb.m_x = bruh.pos.m_x;
-        posb.m_y = bruh.pos.m_y;
-        int clt1 = 0;
-        int clt2 = 0;
+
+else if (find_command(chat, "win1")) {
+      else if (find_command(chat, "tp")) {
+        gt::game_started = true;
+int clt1 = 0;
+int clt2 = 0;
+
+           auto& bruh = g_server->m_world.local;
+        float playerx = bruh.pos.m_x;
+        float playery = bruh.pos.m_y;
+        ppos1.m_x = atoi(pos1xm.c_str());
+	ppos1.m_y = atoi(pos1ym.c_str());
+	ppos2.m_x = atoi(pos2xm.c_str());
+	ppos2.m_y = atoi(pos2ym.c_str());
+	ppos3.m_x = atoi(pos3xm.c_str());
+	ppos3.m_y = atoi(pos3ym.c_str());
+	ppos4.m_x = atoi(pos4xm.c_str());
+	ppos4.m_y = atoi(pos4ym.c_str());
+	
+	variantlist_t totof{ "OnTextOverlay" };
+                            totof[1] = "`9Collecting Bet!";
+                            g_server->send(true, totof);
+	
+        
         auto p = g_server->m_world.objects;
         for (auto& item : p) {
-
-            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
+        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
                 if (item.second.itemID == 242) clt1 += item.second.count;
                 if (item.second.itemID == 1796) clt1 += item.second.count * 100;
             }
@@ -1141,114 +1156,57 @@ auto& bruh = g_server->m_world.local;
                 if (item.second.itemID == 1796) clt2 += item.second.count * 100;
             }
         }
-
         
-            gt::lastCollect1 = clt1;
-            gt::lastCollect2 = clt2;
-
-            if (gt::game_started == true) {
-                tptopos(ppos1.m_x, ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                tptopos(ppos2.m_x, ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                tptopos(posb.m_x, posb.m_y);
-            }
-            else {
-                for (auto& item : p) {
-                    gameupdatepacket_t packet{};
-                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
-                    packet.m_player_flags = -1;
-                    packet.m_vec_x = item.second.pos.m_x;
-                    packet.m_vec_y = item.second.pos.m_y;
-                    packet.m_int_data = item.second.uid;
-                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
-                    if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                    }
-                }
-            }
-            gt::send_log("Collected!");
+        if (clt1 == clt2 && clt1 != 0 && clt2 != 0) {
+        gt::lastCollect1 = clt1;
+        gt::lastCollect2 = clt2;
+        gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
         
-        return true;
-    }
-        
-        
-
-else if (find_command(chat, "win1")) {
-        auto& bruh = g_server->m_world.local;
-        vector2_t posb;
-        posb.m_x = bruh.pos.m_x;
-        posb.m_y = bruh.pos.m_y;
         tptopos(ppos1.m_x, ppos1.m_y);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
 
-        if (dlwl.first != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|242");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        if (dlwl.second != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|1796");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos(posb.m_x, posb.m_y);
-
-        gt::lastCollect1 = 0;
-        gt::lastCollect2 = 0;
-        return true;
-    }
-
-else if (find_command(chat, "win2")) {
-        auto& bruh = g_server->m_world.local;
-        vector2_t posb;
-        posb.m_x = bruh.pos.m_x;
-        posb.m_y = bruh.pos.m_y;
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
         tptopos(ppos2.m_x, ppos2.m_y);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-
-        if (dlwl.first != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|242");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        tptopos(playerx, playery);
+       
+       variantlist_t totof{ "OnTextOverlay" };
+                            totof[1] = "`0Collected `9" + to_string gt::total_bet) + "`0 WLS!";
+                            g_server->send(true, totof);
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        if (dlwl.second != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|1796");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
+        else {
+        gt::send_log("`9Bet Not Same");
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos(posb.m_x, posb.m_y);
-
-        gt::lastCollect1 = 0;
-        gt::lastCollect2 = 0;
+        
         return true;
-    }
-
+        }
+        
+        
+        else if (find_command(chat, "win1")) {
+        vector2_t pos;
+        pos.m_x = ppos1.m_x;
+        pos.m_y = ppos1.m_y;
+        int normalx = ppos1.m_x / 32;
+        int normaly = ppos1.m_y / 32;
+        tptopos(normalx, normaly);
+            bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos1.m_x, ppos1.m_y);
+        gt::game_started = false;
+        return true;
+        }
+        else if (find_command(chat, "win2")) {
+        vector2_t pos;
+        pos.m_x = ppos2.m_x;
+        pos.m_y = ppos2.m_y;
+        int normalx = ppos2.m_x / 32;
+        int normaly = ppos2.m_y / 32;
+        tptopos(normalx, normaly);
+        bool aga = custom_drop((gt::total_bet - (gt::total_bet / taxcount)), pos, ppos2.m_x, ppos2.m_y);
+        gt::game_started = false;
+        return true;
+        }
 			
 	    else if (find_command(chat, "wrench")) {
             wrench_dialog = (wrench) ? "1" : "0";
