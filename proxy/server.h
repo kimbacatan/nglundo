@@ -49,6 +49,7 @@ world m_world;
     void send(bool client, std::string packet, int32_t type = 2);
 void SendPacketRaw(bool client, int a1, void* packetData, size_t packetDataSize, void* a4, int packetFlag);
 void sendState(int netid2, bool server);
+void MoveXY(int x, int y, int lowx = 0, int lowy = 0);
     void poll();
 };
 
