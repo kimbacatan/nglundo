@@ -12,6 +12,7 @@
 #include "packet.h"
 #include "server.h"
 #include "events.h"
+#include "PathFinder.h"
 
 struct Item {
 	uint16_t id;
