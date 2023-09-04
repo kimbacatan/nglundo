@@ -515,4 +515,104 @@ void server::send(bool client, std::string text, int32_t type) {
 }
 
 
+void server::pathFindTo(int x, int y) {
+    try {
+        auto world = g_server->m_world;
 
+        PathFinder pf(100, 60);
+
+        for (int xx = 0; xx < 100; xx++) {
+            for (int yy = 0; yy < 60; yy++) {
+                int inta = 0;
+                auto tile = world.tiles.find(HashCoord(xx, yy));
+
+                int collisionType = world.itemDataContainer.item_map.find(tile->second.header.foreground)->second.collisionType;
+                if (collisionType == 0) {
+                    inta = 0;
+                }
+                else if (collisionType == 1) {
+                    inta = 1;
+                }
+                else if (collisionType == 2) {
+                    inta = (yy < yy ? 1 : 0);
+                }
+                else if (collisionType == 3) {
+                    inta = !world.hasAccessName() ? (tile->second.header.flags_1 == 0x90 ? 0 : 1) : 0;
+                }
+                /*else if (collisionType == 4) {
+                    inta = tile->second.header.flags_1 == 64 ? 0 : 1;
+                }*/
+                else {
+                    inta = tile->second.header.foreground == 0 ? 0 : 1;
+                }
+
+                if (inta == 1) {
+                    pf.setBlocked(xx, yy);
+                }
+            }
+        }
+
+        pf.setNeighbors({ -1, 0, 1, 0 }, { 0, 1, 0, -1 });
+        vector<pair<int, int>> path = pf.aStar(g_server->Local_Player.pos.m_x / 32, g_server->Local_Player.pos.m_y / 32, x, y);
+
+        if (path.size() > 0) {
+            if (path.size() < 150)
+                for (auto& p : path) {
+                    gameupdatepacket_t packet{ 0 };
+                    packet.m_type = PACKET_STATE;
+                    packet.m_int_data = 6326;
+                    packet.m_vec_x = p.first * 32;
+                    packet.m_vec_y = p.second * 32;
+                    packet.m_state1 = p.first;
+                    packet.m_state2 = p.second;
+                    packet.m_packet_flags = UPDATE_PACKET_PLAYER_MOVING_RIGHT;
+                    g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(gameupdatepacket_t));
+
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                }
+            else {
+                for (std::size_t i = 0; i < path.size(); i += 2) {
+                    gameupdatepacket_t packet{ 0 };
+                    packet.m_type = PACKET_STATE;
+                    packet.m_int_data = 6326;
+                    packet.m_vec_x = path[i].first * 32;
+                    packet.m_vec_y = path[i].second * 32;
+                    packet.m_state1 = path[i].first;
+                    packet.m_state2 = path[i].second;
+                    packet.m_packet_flags = UPDATE_PACKET_PLAYER_MOVING_RIGHT;
+                    g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(gameupdatepacket_t));
+
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
+
+
+
+            variantlist_t lost{ "OnSetPos" };
+            vector2_t pos;
+            pos.m_x = x * 32;
+            pos.m_y = y * 32;
+            lost[1] = pos;
+            g_server->send(true, lost, g_server->Local_Player.netid, -1);
+
+            variantlist_t notif{ "OnAddNotification" };
+            notif[2] = "`2Traveling `9" + to_string(path.size()) + " `2Block";
+            notif[4] = 0;
+            g_server->send(true, notif, -1, -1);
+        }
+        else {
+            variantlist_t notif{ "OnAddNotification" };
+            notif[2] = "`4Traveling Not Possible";
+            notif[4] = 0;
+            g_server->send(true, notif, -1, -1);
+        }
+    }
+    catch (exception ex)
+    {
+        variantlist_t notif{ "OnAddNotification" };
+        notif[2] = "`8Something Goes Wrong";
+        notif[4] = 0;
+        g_server->send(true, notif, -1, -1);
+    }
+}
