@@ -185,7 +185,7 @@ void server::handle_incoming() {
                                     g_server->local_player.inventory.itemCount = 0;
                                     g_server->local_player.inventory.items.clear();
                                     std::vector<Item> invBuf;
-                                    LPBYTE extended_ptr = utils::get_extended(packet);
+                                    auto extended_ptr = utils::get_extended(packet);
                                     memcpy(&g_server->local_player.inventory.slotCount, extended_ptr + 5, 4);
                                     memcpy(&g_server->local_player.inventory.itemCount, extended_ptr + 9, 2);
                                     invBuf.resize(g_server->local_player.inventory.itemCount);
