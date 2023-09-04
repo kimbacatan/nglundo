@@ -20,6 +20,13 @@ struct Item {
 	uint8_t count;
 	uint8_t type;
 };
+struct DroppedItem {
+	uint16_t itemID;
+	vector2_t pos;
+	uint8_t count;
+	uint8_t flags;
+	uint32_t uid;
+};
 
 
 
