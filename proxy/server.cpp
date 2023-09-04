@@ -521,8 +521,7 @@ void server::MoveXY(int x, int y, int lowx, int lowy) {
         auto world = g_server->m_world;
 
 
-        vector<pair<int, int>> path = pf.aStar(g_server->local_player.pos.m_x / 32, g_server->local_player.pos.m_y / 32, x, y);
-
+        vector<pair<int, int>> path = local_player.pf.aStar(g_server->local_player.pos.m_x / 32, g_server->local_player.pos.m_y / 32, x, y);
         if (path.size() > 0) {
             if (path.size() < 150)
                 for (auto& p : path) {
