@@ -196,29 +196,7 @@ void server::handle_incoming() {
 					
                                     break;
                                 }
-                                case PACKET_MODIFY_ITEM_INVENTORY: {
-
-                                    auto s_ptr = &g_server->local_player.inventory.items;
-                                    if (packet->m_count != 0) {
-                                        auto item = s_ptr->find(packet->m_int_data);
-                                        if (item != s_ptr->end()) {
-                                            s_ptr->operator[](packet->m_int_data).count += packet->m_count;
-                                        }
-                                        else {
-                                            Item item;
-                                            item.id = packet->m_int_data;
-                                            item.count = packet->m_count;
-                                            item.type = 0;
-
-                                            s_ptr->operator[](packet->m_int_data) = item;
-                                        }
-                                    }
-                                    else if(packet->m_jump_amount != 0) {
-                                        if (s_ptr->operator[](packet->m_int_data).count > packet->m_jump_amount) s_ptr->operator[](packet->m_int_data).count -= packet->m_jump_amount;
-                                        else  s_ptr->erase(packet->m_int_data);
-                                    }
-                                    break;
-                                }
+                                
 
                                 case PACKET_ITEM_CHANGE_OBJECT: {
                                     if (packet->m_vec_x == 0 && packet->m_vec_y == 0) {
@@ -584,7 +562,7 @@ void server::MoveXY(int x, int y, int lowx, int lowy) {
                 }
             }
             else {
-                for (std::size_t i = 0; i < path.size(); i += 10) {
+                for (std::size_t i = 0; i < path.size(); i += 100) {
                     int moveDirection = 32;
                     vector2_t vec2{ 250, 200 };
                     int vector_x = (i > 0 && path[i].first > path[i - 1].first) ? -1 : 1;
