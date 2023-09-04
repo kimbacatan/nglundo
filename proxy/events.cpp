@@ -1174,16 +1174,16 @@ int clt2 = 0;
         
         
         
-        g_server->MoveXY(ppos1.m_x, ppos1.m_y);
+        g_server->pathFindTo(ppos1.m_x, ppos1.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(playerx, playery);
+        g_server->pathFindTo(playerx, playery);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(ppos2.m_x, ppos2.m_y);
+        g_server->pathFindTo(ppos2.m_x, ppos2.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(playerx, playery);
+        g_server->pathFindTo(playerx, playery);
        
        
         return true;
@@ -1194,7 +1194,7 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos1.m_x;
         pos.m_y = ppos1.m_y;
-        g_server->MoveXY(ppos1.m_x, ppos1.m_y);
+        g_server->pathFindTo(ppos1.m_x, ppos1.m_y);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
             bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
@@ -1204,7 +1204,7 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos2.m_x;
         pos.m_y = ppos2.m_y;
-        g_server->MoveXY(ppos2.m_x, ppos2.m_y);
+        g_server->pathFindTo(ppos2.m_x, ppos2.m_y);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
         bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
