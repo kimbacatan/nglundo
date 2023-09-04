@@ -13,6 +13,7 @@
 #include "server.h"
 #include "events.h"
 #include "PathFinder.h"
+#include "world.h"
 
 struct Item {
 	uint16_t id;
