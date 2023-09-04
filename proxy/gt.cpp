@@ -2,6 +2,7 @@
 #include "packet.h"
 #include "server.h"
 #include "utils.h"
+#include "Pathfinder/PathFinder.h"
 
 std::string gt::version = "4.35";
 std::string gt::flag = "id";
