@@ -89,6 +89,7 @@ struct Player {
 
 
 struct LocalPlayer : Player {
+PathFinder pf = PathFinder(100,60);
 	PlayerInventory inventory;
 	uint32_t gems_balance = -1;
 	uint32_t wl_balance = -1;
