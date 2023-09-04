@@ -1,12 +1,13 @@
 #pragma once
 #include <fstream>
 #include <string>
-//#include <unordered_map>//
+#include <unordered_map>
 #include <iostream>
 #include <vector>
 #include "utils.h"
 #include "player.h"
-//#include "struct.h"//
+#include "struct.h"
+#include "gt.hpp"
 
 struct DroppedItem {
 	uint16_t itemID;
