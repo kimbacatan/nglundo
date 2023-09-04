@@ -12,7 +12,6 @@
 #include "packet.h"
 #include "server.h"
 #include "events.h"
-#include "PathFinder.h"
 #include "world.h"
 
 struct Item {
@@ -85,7 +84,6 @@ struct Player {
 
 
 struct LocalPlayer : Player {
-PathFinder pf = PathFinder(100,60);
 	PlayerInventory inventory;
 	uint32_t gems_balance = -1;
 	uint32_t wl_balance = -1;
