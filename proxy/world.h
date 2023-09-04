@@ -9,13 +9,6 @@
 #include "struct.h"
 #include "gt.hpp"
 
-struct DroppedItem {
-	uint16_t itemID;
-	vector2_t pos;
-	uint8_t count;
-	uint8_t flags;
-	uint32_t uid;
-};
 
 
 class world {
