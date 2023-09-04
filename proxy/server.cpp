@@ -521,7 +521,7 @@ void server::MoveXY(int x, int y, int lowx, int lowy) {
         auto world = g_server->m_world;
 
 
-        vector<pair<int, int>> path = pf.aStar(g_server->Local_Player.pos.m_x / 32, g_server->Local_Player.pos.m_y / 32, x, y);
+        vector<pair<int, int>> path = pf.aStar(g_server->local_player.pos.m_x / 32, g_server->local_player.pos.m_y / 32, x, y);
 
         if (path.size() > 0) {
             if (path.size() < 150)
@@ -562,7 +562,7 @@ void server::MoveXY(int x, int y, int lowx, int lowy) {
             pos.m_x = x * 32;
             pos.m_y = y * 32;
             lost[1] = pos;
-            g_server->send(true, lost, g_server->Local_Player.netid, -1);
+            g_server->send(true, lost, g_server->local_player.netid, -1);
 
             variantlist_t notif{ "OnAddNotification" };
             notif[2] = "`2Traveling `9" + to_string(path.size()) + " `2Block";
