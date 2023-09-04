@@ -410,7 +410,7 @@ void LoadFromMem(gameupdatepacket_t* packet) {
 				}
 				if (itemDataContainer.RequiresTileExtra(header.foreground)) {
 					unsigned short len = 0;
-					BYTE itemType = *extended;
+					auto itemType = *extended;
 					extended++;
 					// Add the if statement here
 					if (itemType == 0) {
@@ -449,7 +449,7 @@ void LoadFromMem(gameupdatepacket_t* packet) {
 					{
 						// wl shit, owner userID etc...
 						extended++;
-						BYTE adminCount = *(extended + 4);
+						auto adminCount = *(extended + 4);
 						extended += (16 + (adminCount * 4));
 					}
 					break;
@@ -613,7 +613,7 @@ void LoadFromMem(gameupdatepacket_t* packet) {
 					{
 						extended++; // skipping owner uid
 						extended += 4;
-						BYTE adminCount = *extended;
+						auto adminCount = *extended;
 						extended += 4; // guild shit
 						extended += (adminCount * 4);
 
