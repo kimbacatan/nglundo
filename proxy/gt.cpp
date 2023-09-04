@@ -3,6 +3,7 @@
 #include "server.h"
 #include "utils.h"
 #include "Pathfinder/PathFinder.h"
+#include <stdint.h>
 
 std::string gt::version = "4.35";
 std::string gt::flag = "id";
@@ -24,7 +25,7 @@ void gt::send_log(std::string text) {
 
 void gt::findpath(int x, int y)
 {
-    typedef pair<int, int> Pair;
+    typedef std::pair<int, int> Pair;
     Pair src((int)g_server->m_world.local.pos.m_x / 32, (int)g_server->m_world.local.pos.m_y / 32);
     Pair dest((int)x, (int)y);
     Pathfinder* pathfinder = new Pathfinder(100, 60);
