@@ -1519,7 +1519,7 @@ liste[1] = paket1;
         packet = var.serialize();
         gt::in_game = false;
         PRINTS("Spoofing login info\n");
-	    gt::send_log("`9Welcome to [`2ERZAPROXY`9]")
+	    gt::send_log("`9Welcome to [`2ERZAPROXY`9]");
         g_server->send(false, packet);
         return true;
     }
