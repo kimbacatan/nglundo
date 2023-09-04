@@ -1090,16 +1090,16 @@ int clt2 = 0;
         
         
         
-        g_server->MoveXY(ppos1.m_x, ppos1.m_y);
+        tptopos(ppos1.m_x, ppos1.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(playerx, playery);
+        tptopos(playerx, playery);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(ppos2.m_x, ppos2.m_y);
+        tptopos(ppos2.m_x, ppos2.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->MoveXY(playerx, playery);
+        tptopos(playerx, playery);
        
        
         return true;
