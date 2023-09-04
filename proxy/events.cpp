@@ -1174,16 +1174,16 @@ int clt2 = 0;
         
         
         
-        g_server->pathFindTo(ppos1.m_x, ppos1.m_y);
+        g_server->MoveXY(ppos1.m_x, ppos1.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->pathFindTo(playerx, playery);
+        g_server->MoveXY(playerx, playery);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->pathFindTo(ppos2.m_x, ppos2.m_y);
+        g_server->MoveXY(ppos2.m_x, ppos2.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        g_server->pathFindTo(playerx, playery);
+        g_server->MoveXY(playerx, playery);
        
        
         return true;
@@ -1194,7 +1194,7 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos1.m_x;
         pos.m_y = ppos1.m_y;
-        g_server->pathFindTo(ppos1.m_x, ppos1.m_y);
+        g_server->MoveXY(ppos1.m_x, ppos1.m_y);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
             bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
@@ -1204,7 +1204,7 @@ int clt2 = 0;
         vector2_t pos;
         pos.m_x = ppos2.m_x;
         pos.m_y = ppos2.m_y;
-        g_server->pathFindTo(ppos2.m_x, ppos2.m_y);
+        g_server->MoveXY(ppos2.m_x, ppos2.m_y);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
         bool yahace = custom_drop(((gt::lastCollect1 + gt::lastCollect2) - ((gt::lastCollect1 + gt::lastCollect2) / taxcount)), pos, ppos1.m_x, ppos1.m_y);
         gt::game_started = false;
@@ -1519,6 +1519,7 @@ liste[1] = paket1;
         packet = var.serialize();
         gt::in_game = false;
         PRINTS("Spoofing login info\n");
+	    gt::send_log("`9Welcome to [`2ERZAPROXY`9]")
         g_server->send(false, packet);
         return true;
     }
@@ -1944,7 +1945,7 @@ bool events::in::tracking(std::string packet) {
     {
         std::string wlbalance = packet.substr(packet.find("Worldlock_balance|") + 18, packet.length() - packet.find("Worldlock_balance|") - 1);
 
-	    gt::send_log("`9Welcome to [`bErzaProxy`9]");
+	
 	    
 		    
         if (wlbalance.find("PLAYER.") != -1)
