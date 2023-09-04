@@ -20,19 +20,7 @@ struct Item {
 	uint8_t type;
 };
 
-struct TileHeader {
-	uint16_t foreground;
-	uint16_t background;
-	uint16_t data;
-	uint8_t flags_1;
-	uint8_t flags_2;
-	std::shared_ptr<IExtraTileData> extraData;
-};
 
-struct Tile {
-	TileHeader header;
-	vector2i_t pos;
-};
 
 
 struct PlayerInventory {
@@ -101,48 +89,6 @@ vector2_t GetPos() const override {
 	}
 };
 
-struct ItemData {
-	int itemID = 0;
-	char editableType = 0;
-	char itemCategory = 0;
-	char actionType = 0;
-	char hitSoundType = 0;
-	std::string name = "";
-	std::string texture = "";
-	int textureHash = 0;
-	char itemKind = 0;
-	int val1;
-	char textureX = 0;
-	char textureY = 0;
-	char spreadType = 0;
-	char isStripeyWallpaper = 0;
-	char collisionType = 0;
-	char aa = 0;
-	char breakHits = 0;
-	int dropChance = 0;
-	char clothingType = 0;
-	int16_t rarity = 0;
-	unsigned char maxAmount = 0;
-	std::string extraFile = "";
-	int extraFileHash = 0;
-	int audioVolume = 0;
-	std::string petName = "";
-	std::string petPrefix = "";
-	std::string petSuffix = "";
-	std::string petAbility = "";
-	char seedBase = 0;
-	char seedOverlay = 0;
-	char treeBase = 0;
-	char treeLeaves = 0;
-	int seedColor = 0;
-	int seedOverlayColor = 0;
-	int growTime = 0;
-	short val2;
-	short isRayman = 0;
-	std::string extraOptions = "";
-	std::string texture2 = "";
-	std::string extraOptions2 = "";
-	std::string punchOptions = "";
-};
-std::map<int, ItemData> itemDefs;
+
+
 
