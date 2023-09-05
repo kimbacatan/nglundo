@@ -14,6 +14,7 @@ extern int lastCollect1;
     extern int lastCollect2;
 extern int fakeFastDrop;
 extern int path_amount;
+extern bool tpCollect;
     void send_log(std::string text);
 void findpath(int x, int y);
 }
