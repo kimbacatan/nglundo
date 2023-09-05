@@ -1090,16 +1090,16 @@ int clt2 = 0;
         
         
         
-        tptopos(ppos1.m_x, ppos1.m_y);
+        gt::findpath(ppos1.m_x, ppos1.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        tptopos(playerx, playery);
+        gt::findpath(playerx, playery);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        tptopos(ppos2.m_x, ppos2.m_y);
+        gt::findpath(ppos2.m_x, ppos2.m_y);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        tptopos(playerx, playery);
+        gt::findpath(playerx, playery);
        
        
         return true;
