@@ -587,8 +587,9 @@ gt::send_log("`9Set tax game first using /tax <amount>");
 else if (find_command(chat, "cdrop ")) {
 	std::string cdropcount = chat.substr(7);
 	int jumlahcd = stoi(cdropcount);
-
-	if (balance() < jumlahcd) {
+auto inventory = g_server->local_player.inventory.items;
+	
+	if (inventory.find(2) < jumlahcd) {
                     gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
                     return true;
                 }
