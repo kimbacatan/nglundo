@@ -8,5 +8,5 @@
 
 
 namespace commands {
-    pair<int, int> DropDLWL(int count, int tax);
+    std::pair<int, int> DropDLWL(int count, int tax);
 }
