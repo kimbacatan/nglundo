@@ -17,6 +17,7 @@ int gt::lastCollect1 = 0;
 int gt::lastCollect2 = 0;
 int gt::fakeFastDrop = 0;
 int gt::path_amount = 0;
+bool gt::tpCollect = false;
 
 
 void gt::send_log(std::string text) {
