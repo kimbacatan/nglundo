@@ -273,7 +273,7 @@ bool find_command(std::string chat, std::string name) {
 }
 
 
-pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
+std::pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
     auto inventory = g_server->local_player.inventory.items;
     auto totalCount = 0;
     for (auto items : inventory) {
@@ -675,7 +675,7 @@ else if (find_command(chat, "cdrop ")) {
 	int jumlahcd = stoi(cdropcount);
 auto inventory = g_server->local_player.inventory.items;
 	
-	if (balance()) < jumlahcd) {
+	if (balance() < jumlahcd) {
                     gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
                     return true;
                 }
