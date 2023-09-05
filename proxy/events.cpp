@@ -273,6 +273,92 @@ bool find_command(std::string chat, std::string name) {
 }
 
 
+pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
+    auto inventory = g_server->local_player.inventory.items;
+    auto totalCount = 0;
+    for (auto items : inventory) {
+        if (items.second.id == 242) totalCount += items.second.count;
+        if (items.second.id == 1796) totalCount += items.second.count * 100;
+    }
+
+    if (totalCount < count && count != -1 && totalCount != 0) {
+        gt::send_log("You Don't Have DLs, WLs");
+        return { 0, 0 };
+    }
+
+    if (count == -1) count = totalCount;
+
+    int bruh = count % 10;
+    if (tax == 0) bruh = 0;
+    int bruh2 = count;
+
+    if (bruh == 1) bruh2 = bruh2 - 1;
+    if (bruh == 2) bruh2 = bruh2 - 2;
+    if (bruh == 3) bruh2 = bruh2 - 3;
+    if (bruh == 4) bruh2 = bruh2 - 4;
+    if (bruh == 5) bruh2 = bruh2 + 5;
+    if (bruh == 6) bruh2 = bruh2 + 4;
+    if (bruh == 7) bruh2 = bruh2 + 3;
+    if (bruh == 8) bruh2 = bruh2 + 2;
+    if (bruh == 9) bruh2 = bruh2 + 1;
+
+    int bruh3 = bruh2 * tax / 100;
+    int bruh4 = count - bruh3;
+
+    int dls = (bruh4 / 100);
+    int wls = (bruh4 % 100);
+
+    auto getDL = inventory.find(1796);
+    auto getWL = inventory.find(242);
+
+    if (dls != 0) {
+        if (getDL != inventory.end()) {
+            if (getDL->second.count < dls) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 242;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+        }
+        else {
+            if (getWL != inventory.end()) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 242;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+            else {
+                gt::send_log("You Don't Have DLs, WLs");
+                return { 0, 0 };
+            }
+        }
+    }
+    if (wls != 0) {
+        if (getWL != inventory.end()) {
+            if (getWL->second.count < wls) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+        }
+        else {
+            if (getDL != inventory.end()) {
+                gameupdatepacket_t packet{ 0 };
+                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                packet.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
+            }
+            else {
+                gt::send_log("You Don't Have WLs, DLs");
+                return { 0, 0 };
+            }
+        }
+    }
+
+    return { wls, dls };
+}
+
 
 bool wrench = false;
 bool fastdrop = false;
@@ -1442,91 +1528,6 @@ liste[1] = paket1;
         return false;
     }
 
-pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
-    auto inventory = g_server->local_player.inventory.items;
-    auto totalCount = 0;
-    for (auto items : inventory) {
-        if (items.second.id == 242) totalCount += items.second.count;
-        if (items.second.id == 1796) totalCount += items.second.count * 100;
-    }
-
-    if (totalCount < count && count != -1 && totalCount != 0) {
-        gt::send_log("You Don't Have DLs, WLs");
-        return { 0, 0 };
-    }
-
-    if (count == -1) count = totalCount;
-
-    int bruh = count % 10;
-    if (tax == 0) bruh = 0;
-    int bruh2 = count;
-
-    if (bruh == 1) bruh2 = bruh2 - 1;
-    if (bruh == 2) bruh2 = bruh2 - 2;
-    if (bruh == 3) bruh2 = bruh2 - 3;
-    if (bruh == 4) bruh2 = bruh2 - 4;
-    if (bruh == 5) bruh2 = bruh2 + 5;
-    if (bruh == 6) bruh2 = bruh2 + 4;
-    if (bruh == 7) bruh2 = bruh2 + 3;
-    if (bruh == 8) bruh2 = bruh2 + 2;
-    if (bruh == 9) bruh2 = bruh2 + 1;
-
-    int bruh3 = bruh2 * tax / 100;
-    int bruh4 = count - bruh3;
-
-    int dls = (bruh4 / 100);
-    int wls = (bruh4 % 100);
-
-    auto getDL = inventory.find(1796);
-    auto getWL = inventory.find(242);
-
-    if (dls != 0) {
-        if (getDL != inventory.end()) {
-            if (getDL->second.count < dls) {
-                gameupdatepacket_t packet{ 0 };
-                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                packet.m_int_data = 242;
-                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
-            }
-        }
-        else {
-            if (getWL != inventory.end()) {
-                gameupdatepacket_t packet{ 0 };
-                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                packet.m_int_data = 242;
-                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
-            }
-            else {
-                gt::send_log("You Don't Have DLs, WLs");
-                return { 0, 0 };
-            }
-        }
-    }
-    if (wls != 0) {
-        if (getWL != inventory.end()) {
-            if (getWL->second.count < wls) {
-                gameupdatepacket_t packet{ 0 };
-                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                packet.m_int_data = 1796;
-                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
-            }
-        }
-        else {
-            if (getDL != inventory.end()) {
-                gameupdatepacket_t packet{ 0 };
-                packet.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                packet.m_int_data = 1796;
-                g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&packet, sizeof(packet));
-            }
-            else {
-                gt::send_log("You Don't Have WLs, DLs");
-                return { 0, 0 };
-            }
-        }
-    }
-
-    return { wls, dls };
-}
 
 	
     if (packet.find("game_version|") != -1) {
