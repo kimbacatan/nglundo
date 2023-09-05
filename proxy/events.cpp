@@ -1116,10 +1116,10 @@ else if (find_command(chat, "tp")) {
         
         else if (find_command(chat, "win1")) {
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
-        tptopos(ppos1.m_x, ppos1.m_y, 20, 0);
+        tptopos(ppos1.m_x, ppos1.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
+        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
@@ -1144,10 +1144,10 @@ else if (find_command(chat, "tp")) {
     }
         else if (find_command(chat, "win1")) {
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
-        tptopos(ppos2.m_x, ppos2.m_y, 20, 0);
+        tptopos(ppos2.m_x, ppos2.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-        auto dlwl = DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
+        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         if (dlwl.first != 0) {
@@ -1442,7 +1442,7 @@ liste[1] = paket1;
         return false;
     }
 
-pair<int, int> commands::DropDLWL(int count, int tax = gt::tax) {
+pair<int, int> commands::DropDLWL(int count, int tax = taxcount) {
     auto inventory = g_server->local_player.inventory.items;
     auto totalCount = 0;
     for (auto items : inventory) {
