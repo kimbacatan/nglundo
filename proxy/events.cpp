@@ -675,7 +675,7 @@ else if (find_command(chat, "cdrop ")) {
 	int jumlahcd = stoi(cdropcount);
 auto inventory = g_server->local_player.inventory.items;
 	
-	if (inventory.find(2) < jumlahcd) {
+	if (balance()) < jumlahcd) {
                     gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
                     return true;
                 }
