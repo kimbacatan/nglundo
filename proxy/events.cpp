@@ -386,16 +386,7 @@ std::string posbackym = "";
 int delay = 0;
 std::string message = "";
 std::string mode = "pull";
-ppos1.m_x = std::atoi(pos1xm);
-	ppos1.m_y = std::atoi(pos1ym);
-	ppos2.m_x = std::atoi(pos2xm);
-	ppos2.m_y = std::atoi(pos2ym);
-	ppos3.m_x = std::atoi(pos3xm);
-	ppos3.m_y = std::atoi(pos3ym);
-	ppos4.m_x = std::atoi(pos4xm);
-	ppos4.m_y = std::atoi(pos4ym);
-	pposb.m_x = std::atoi(posbackxm);
-	pposb.m_y = std::atoi(posbackym);
+
 	    
 bool events::out::generictext(std::string packet) {
 	
@@ -1170,6 +1161,16 @@ else if (find_command(chat, "pos3")) {
 
 else if (find_command(chat, "tp")) {
 	auto& bruh = g_server->m_world.local;
+	ppos1.m_x = std::atoi(pos1xm);
+	ppos1.m_y = std::atoi(pos1ym);
+	ppos2.m_x = std::atoi(pos2xm);
+	ppos2.m_y = std::atoi(pos2ym);
+	ppos3.m_x = std::atoi(pos3xm);
+	ppos3.m_y = std::atoi(pos3ym);
+	ppos4.m_x = std::atoi(pos4xm);
+	ppos4.m_y = std::atoi(pos4ym);
+	pposb.m_x = std::atoi(posbackxm);
+	pposb.m_y = std::atoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
         int clt1 = 0;
@@ -1235,6 +1236,16 @@ else if (find_command(chat, "tp")) {
         
         else if (find_command(chat, "win1")) {
 		auto& bruh = g_server->m_world.local;
+		ppos1.m_x = std::atoi(pos1xm);
+	ppos1.m_y = std::atoi(pos1ym);
+	ppos2.m_x = std::atoi(pos2xm);
+	ppos2.m_y = std::atoi(pos2ym);
+	ppos3.m_x = std::atoi(pos3xm);
+	ppos3.m_y = std::atoi(pos3ym);
+	ppos4.m_x = std::atoi(pos4xm);
+	ppos4.m_y = std::atoi(pos4ym);
+	pposb.m_x = std::atoi(posbackxm);
+	pposb.m_y = std::atoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
@@ -1266,6 +1277,16 @@ else if (find_command(chat, "tp")) {
     }
         else if (find_command(chat, "win2")) {
 		auto& bruh = g_server->m_world.local;
+		ppos1.m_x = std::atoi(pos1xm);
+	ppos1.m_y = std::atoi(pos1ym);
+	ppos2.m_x = std::atoi(pos2xm);
+	ppos2.m_y = std::atoi(pos2ym);
+	ppos3.m_x = std::atoi(pos3xm);
+	ppos3.m_y = std::atoi(pos3ym);
+	ppos4.m_x = std::atoi(pos4xm);
+	ppos4.m_y = std::atoi(pos4ym);
+	pposb.m_x = std::atoi(posbackxm);
+	pposb.m_y = std::atoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
