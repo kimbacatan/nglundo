@@ -387,6 +387,16 @@ int delay = 0;
 std::string message = "";
 std::string mode = "pull";
 bool events::out::generictext(std::string packet) {
+	ppos1.m_x = atoi(pos1xm);
+	ppos1.m_y = atoi(pos1ym);
+	ppos2.m_x = atoi(pos2xm);
+	ppos2.m_y = atoi(pos2ym);
+	ppos3.m_x = atoi(pos3xm);
+	ppos3.m_y = atoi(pos3ym);
+	ppos4.m_x = atoi(pos4xm);
+	ppos4.m_y = atoi(pos4ym);
+	pposb.m_x = atoi(posbackxm);
+	pposb.m_y = atoi(posbackym);
 	    
     //PRINTS("Generic text: %s\n", packet.c_str());
     auto& world = g_server->m_world;
@@ -1158,6 +1168,9 @@ else if (find_command(chat, "pos3")) {
 
 
 else if (find_command(chat, "tp")) {
+	auto& bruh = g_server->m_world.local;
+	int backpxm = bruh.pos.m_x;
+	int backpym = bruh.pos.m_y;
         int clt1 = 0;
         int clt2 = 0;
         auto p = g_server->m_world.objects;
@@ -1179,13 +1192,12 @@ else if (find_command(chat, "tp")) {
             gt::lastCollect2 = clt2;
 
             if (gt::tpCollect == true) {
-                vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
-
+                
                 tptopos(ppos1.m_x, ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 tptopos(ppos2.m_x, ppos2.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                tptopos((oldVector.m_x), (oldVector.m_y));
+                tptopos(backpxm, backpym);
             }
             else {
                 for (auto& item : p) {
@@ -1221,6 +1233,9 @@ else if (find_command(chat, "tp")) {
         
         
         else if (find_command(chat, "win1")) {
+		auto& bruh = g_server->m_world.local;
+	int backpxm = bruh.pos.m_x;
+	int backpym = bruh.pos.m_y;
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
         tptopos(ppos1.m_x, ppos1.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -1242,13 +1257,16 @@ else if (find_command(chat, "tp")) {
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos((oldVector.m_x), (oldVector.m_y));
+        tptopos(backpxm, backpym);
 
         gt::lastCollect1 = 0;
         gt::lastCollect2 = 0;
         return true;
     }
-        else if (find_command(chat, "win1")) {
+        else if (find_command(chat, "win2")) {
+		auto& bruh = g_server->m_world.local;
+	int backpxm = bruh.pos.m_x;
+	int backpym = bruh.pos.m_y;
         vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
         tptopos(ppos2.m_x, ppos2.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -1270,7 +1288,7 @@ else if (find_command(chat, "tp")) {
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos((oldVector.m_x), (oldVector.m_y));
+        tptopos(backpxm, backpym);
 
         gt::lastCollect1 = 0;
         gt::lastCollect2 = 0;
