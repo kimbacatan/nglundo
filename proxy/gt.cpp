@@ -5,7 +5,7 @@
 #include "Pathfinder/PathFinder.h"
 #include <stdint.h>
 
-std::string gt::version = "4.35";
+std::string gt::version = "4.36";
 std::string gt::flag = "id";
 bool gt::resolving_uid2 = false;
 bool gt::connecting = false;
