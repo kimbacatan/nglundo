@@ -65,7 +65,7 @@ vector2_t ppos1;
 vector2_t ppos2;
 vector2_t ppos3;
 vector2_t ppos4;
-vector2_t pposback;
+vector2_t pposb;
 
 
 
@@ -386,18 +386,19 @@ std::string posbackym = "";
 int delay = 0;
 std::string message = "";
 std::string mode = "pull";
-bool events::out::generictext(std::string packet) {
-	ppos1.m_x = atoi(pos1xm);
-	ppos1.m_y = atoi(pos1ym);
-	ppos2.m_x = atoi(pos2xm);
-	ppos2.m_y = atoi(pos2ym);
-	ppos3.m_x = atoi(pos3xm);
-	ppos3.m_y = atoi(pos3ym);
-	ppos4.m_x = atoi(pos4xm);
-	ppos4.m_y = atoi(pos4ym);
-	pposb.m_x = atoi(posbackxm);
-	pposb.m_y = atoi(posbackym);
+ppos1.m_x = std::atoi(pos1xm);
+	ppos1.m_y = std::atoi(pos1ym);
+	ppos2.m_x = std::atoi(pos2xm);
+	ppos2.m_y = std::atoi(pos2ym);
+	ppos3.m_x = std::atoi(pos3xm);
+	ppos3.m_y = std::atoi(pos3ym);
+	ppos4.m_x = std::atoi(pos4xm);
+	ppos4.m_y = std::atoi(pos4ym);
+	pposb.m_x = std::atoi(posbackxm);
+	pposb.m_y = std::atoi(posbackym);
 	    
+bool events::out::generictext(std::string packet) {
+	
     //PRINTS("Generic text: %s\n", packet.c_str());
     auto& world = g_server->m_world;
     rtvar var = rtvar::parse(packet);
