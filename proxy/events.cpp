@@ -955,6 +955,28 @@ else if (find_command(chat, "bdrop ")) {
         gt::send_log("`9Dropping `c" + cdropcount + "`9 Bgl...");
         return true;
         }
+
+		
+else if (find_command(chat, "wdrop ")) {
+        std::string cdropcount = chat.substr(7);
+        dropwl = true;
+        g_server->send(false, "action|drop\n|itemID|242");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //7188
+        gt::send_log("`9Dropping `c" + cdropcount + "`9 wl...");
+        return true;
+        }
+
+	else if (find_command(chat, "wd ")) {
+        std::string cdropcount = chat.substr(4);
+        dropwl = true;
+        g_server->send(false, "action|drop\n|itemID|242");
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //7188
+        gt::send_log("`9Dropping `c" + cdropcount + "`9 wl...");
+        return true;
+        }
+
 		
         
 else if (find_command(chat, "gdrop")) {
@@ -1736,6 +1758,13 @@ if (dropwl == true) {
                 return true;
             }
         }
+
+		else if (dropwl = true) {
+if (content.find("Drop") != -1) {
+	dropwl = false;
+	return true;
+}
+		}
 		
         if (wrench == true) {
             if (content.find("add_button|report_player|`wReport Player``|noflags|0|0|") != -1) {
