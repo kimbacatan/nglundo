@@ -1278,7 +1278,7 @@ else if (find_command(chat, "tp")) {
     }
         else if (find_command(chat, "win2")) {
 		auto& bruh = g_server->m_world.local;
-		ppos1.m_x = std::atoi(pos1xm);
+		ppos1.m_x = stoi(pos1xm);
 	ppos1.m_x = stoi(pos1xm);
 	ppos1.m_y = stoi(pos1ym);
 	ppos2.m_x = stoi(pos2xm);
