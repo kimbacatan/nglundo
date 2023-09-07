@@ -1193,39 +1193,15 @@ else if (find_command(chat, "tp")) {
             gt::lastCollect1 = clt1;
             gt::lastCollect2 = clt2;
 
-            if (gt::tpCollect == true) {
+            
                 
                 tptopos(ppos1.m_x, ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(300));
                 tptopos(ppos2.m_x, ppos2.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 tptopos(backpxm, backpym);
-            }
-            else {
-                for (auto& item : p) {
-                    gameupdatepacket_t packet{};
-                    packet.m_type = PACKET_ITEM_ACTIVATE_OBJECT_REQUEST;
-                    packet.m_player_flags = -1;
-                    packet.m_vec_x = item.second.pos.m_x;
-                    packet.m_vec_y = item.second.pos.m_y;
-                    packet.m_int_data = item.second.uid;
-                    packet.m_state1 = item.second.pos.m_x + item.second.pos.m_y + 4;
-                    if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, 10 * 32, g_server->local_player.pos.m_x, g_server->local_player.pos.m_y)) {
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                        if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
-                            if (item.second.itemID == 242 || item.second.itemID == 1796) {
-                                g_server->send(false, 4, (uint8_t*)&packet, sizeof(packet));
-                                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                            }
-                        }
-                    }
-                }
-            }
+            
+            
             gt::send_log("Collected!");
         
         
@@ -1249,8 +1225,7 @@ else if (find_command(chat, "tp")) {
 	pposb.m_y = stoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-        vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
-        tptopos(ppos1.m_x, ppos1.m_y);
+         tptopos(ppos1.m_x, ppos1.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
@@ -1291,8 +1266,7 @@ else if (find_command(chat, "tp")) {
 	pposb.m_y = stoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-        vector2_t oldVector = { (float)((int)g_server->local_player.pos.m_x / 32), (float)((int)g_server->local_player.pos.m_y / 32) };
-        tptopos(ppos2.m_x, ppos2.m_y);
+         tptopos(ppos2.m_x, ppos2.m_y);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
