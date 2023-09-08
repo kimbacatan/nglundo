@@ -21,7 +21,7 @@ int main() {
     DiscordEventHandlers handlers;
     memset(&handlers, 0, sizeof(handlers));
 #endif
-Discord_Initialize("1149579895886852146"); // id yaz buraya
+Discord_Initialize("1149579895886852146", &handlers, 1, NULL); // id yaz buraya
 
     DiscordRichPresence presence;
     memset(&presence, 0, sizeof(presence));
@@ -55,8 +55,9 @@ printf("Erza Proxy Authentication.\n\n");
    
 
      printf("Erza Proxy is Running...\n");
-        printf("Erza Proxy Online!!\n\n");
-        printf("Now u can login growtopia");
+        printf("Erza Proxy Online!!\n");
+        
+        printf("U can now login growtopia\n");
         while (true) {
             g_server->poll();
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
