@@ -19,6 +19,7 @@ int main() {
 #ifdef _WIN32
     SetConsoleTitleA("Erza Proxy");
     DiscordEventHandlers Handler;
+    memset(&Handle, 0, sizeof(Handle));
 #endif
 Discord_Initialize("1149579895886852146", &Handler, 1, NULL); // id yaz buraya
 
