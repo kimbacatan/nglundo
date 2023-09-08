@@ -10,6 +10,7 @@
 #include "server.h"
 #include "events.h"
 #include "gt.hpp"
+#include "discord-rpc.h"
 
 server* g_server = new server();
 
