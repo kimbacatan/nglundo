@@ -1160,19 +1160,16 @@ else if (find_command(chat, "pos3")) {
 
 
 else if (find_command(chat, "tp")) {
-	auto& bruh = g_server->m_world.local;
-	ppos1.m_x = stoi(pos1xm);
-	ppos1.m_y = stoi(pos1ym);
-	ppos2.m_x = stoi(pos2xm);
-	ppos2.m_y = stoi(pos2ym);
-	ppos3.m_x = stoi(pos3xm);
-	ppos3.m_y = stoi(pos3ym);
-	ppos4.m_x = stoi(pos4xm);
-	ppos4.m_y = stoi(pos4ym);
-	pposb.m_x = stoi(posbackxm);
-	pposb.m_y = stoi(posbackym);
-	int backpxm = bruh.pos.m_x;
-	int backpym = bruh.pos.m_y;
+auto& bruh = g_server->m_world.local;
+        float playerx = bruh.pos.m_x;
+        float playery = bruh.pos.m_y;
+        ppos1.m_x = atoi(pos1xm.c_str());
+	ppos1.m_y = atoi(pos1ym.c_str());
+	ppos2.m_x = atoi(pos2xm.c_str());
+	ppos2.m_y = atoi(pos2ym.c_str());
+	variantlist_t totof{ "OnTextOverlay" };
+                            totof[1] = "`9Collecting Bet!";
+                            g_server->send(true, totof);
         int clt1 = 0;
         int clt2 = 0;
         auto p = g_server->m_world.objects;
@@ -1192,19 +1189,18 @@ else if (find_command(chat, "tp")) {
         
             gt::lastCollect1 = clt1;
             gt::lastCollect2 = clt2;
-
+                tptopos(ppos1.m_x,ppos1.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                tptopos(ppos2.m_x,ppos2.m_y);
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
+                tptopos(playerx,playery);
             
-                
-                tptopos(ppos1.m_x, ppos1.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(800));
-                tptopos(ppos2.m_x, ppos2.m_y);
-                std::this_thread::sleep_for(std::chrono::milliseconds(800));
-                tptopos(backpxm, backpym);
             
             gt::send_log("Collected!");
+ 
+
         return true;
     }
-        
         
         else if (find_command(chat, "win1")) {
 		auto& bruh = g_server->m_world.local;
