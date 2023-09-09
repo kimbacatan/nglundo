@@ -1046,6 +1046,7 @@ auto& bruh = g_server->m_world.local;
         
             gt::lastCollect1 = clt1;
             gt::lastCollect2 = clt2;
+	gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
                 tptopos(ppos1.m_x,ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(ppos2.m_x,ppos2.m_y);
@@ -1056,9 +1057,10 @@ auto& bruh = g_server->m_world.local;
 
         return true;
     }
-        
         else if (find_command(chat, "win1")) {
 		auto& bruh = g_server->m_world.local;
+		int backpxm = bruh.pos.m_x;
+	int backpym = bruh.pos.m_y;
 		ppos1.m_x = stoi(pos1xm);
 	ppos1.m_x = stoi(pos1xm);
 	ppos1.m_y = stoi(pos1ym);
@@ -1070,36 +1072,69 @@ auto& bruh = g_server->m_world.local;
 	ppos4.m_y = stoi(pos4ym);
 	pposb.m_x = stoi(posbackxm);
 	pposb.m_y = stoi(posbackym);
-	int backpxm = bruh.pos.m_x;
-	int backpym = bruh.pos.m_y;
-        
-      
-
-        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-
-        if (dlwl.first != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+         tptopos(ppos1.m_x, ppos1.m_y);	
+std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        bruh = gt::total_bet % 10;
+            if (bruh == 1) {
+                bruh2 = bruh2 - 1;
+            }
+            if (bruh == 2) {
+                bruh2 = bruh2 - 2;
+            }
+            if (bruh == 3) {
+                bruh2 = bruh2 - 3;
+            }
+            if (bruh == 4) {
+                bruh2 = bruh2 - 4;
+            }
+            if (bruh == 5) {
+                bruh2 = bruh2 + 5;
+            }
+            if (bruh == 6) {
+                bruh2 = bruh2 + 4;
+            }
+            if (bruh == 7) {
+                bruh2 = bruh2 + 3;
+            }
+            if (bruh == 8) {
+                bruh2 = bruh2 + 2;
+            }
+            if (bruh == 9) {
+                bruh2 = bruh2 + 1;
+            }
+            bruh3 = gt::total_bet * taxcount / 100;
+            bruh4 = gt::total_bet - bruh3;
+            
+           string cdropcount = bruh4;
+            int weel = bruh4 % 100;
+            int deel = bruh4 / 100;
+            int beel = deel / 100;
+            dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        if (dlwl.second != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|1796");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-       
-
-        gt::lastCollect1 = 0;
-        gt::lastCollect2 = 0;
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+            if (bruh4 > 100) {
+                dropwl = true;
+                g_server->send(false, "action|drop\n|itemID|242");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+                dropdl = true;
+                g_server->send(false, "action|drop\n|itemID|1796");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
+            }
+            variantlist_t notif{ "OnTextOverlay" };
+            notif[1] = "Total Bet :`9 " + to_string(gt::total_bet) + "\nDrop Amount : " + to_string(bruh4) + " (Taken " + taxstring + "% Tax)";
+           g_server->send(true, notif);
+		std::this_thread::sleep_for(std::chrono::milliseconds(800));
+		tptopos(backpxm, backpym);
+		gt::total_bet = 0;
+		gt::lastCollect1 = 0;
+		gt::lastCollect2 = 0;
         return true;
     }
+        
         else if (find_command(chat, "win2")) {
 		auto& bruh = g_server->m_world.local;
+		int backpxm = bruh.pos.m_x;
+	int backpym = bruh.pos.m_y;
 		ppos1.m_x = stoi(pos1xm);
 	ppos1.m_x = stoi(pos1xm);
 	ppos1.m_y = stoi(pos1ym);
@@ -1111,31 +1146,62 @@ auto& bruh = g_server->m_world.local;
 	ppos4.m_y = stoi(pos4ym);
 	pposb.m_x = stoi(posbackxm);
 	pposb.m_y = stoi(posbackym);
-	int backpxm = bruh.pos.m_x;
-	int backpym = bruh.pos.m_y;
-         
-
-        auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-
-        if (dlwl.first != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
+         tptopos(ppos2.m_x, ppos2.m_y);	
+std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        bruh = gt::total_bet % 10;
+            if (bruh == 1) {
+                bruh2 = bruh2 - 1;
+            }
+            if (bruh == 2) {
+                bruh2 = bruh2 - 2;
+            }
+            if (bruh == 3) {
+                bruh2 = bruh2 - 3;
+            }
+            if (bruh == 4) {
+                bruh2 = bruh2 - 4;
+            }
+            if (bruh == 5) {
+                bruh2 = bruh2 + 5;
+            }
+            if (bruh == 6) {
+                bruh2 = bruh2 + 4;
+            }
+            if (bruh == 7) {
+                bruh2 = bruh2 + 3;
+            }
+            if (bruh == 8) {
+                bruh2 = bruh2 + 2;
+            }
+            if (bruh == 9) {
+                bruh2 = bruh2 + 1;
+            }
+            bruh3 = gt::total_bet * taxcount / 100;
+            bruh4 = gt::total_bet - bruh3;
+            
+           string cdropcount = bruh4;
+            int weel = bruh4 % 100;
+            int deel = bruh4 / 100;
+            int beel = deel / 100;
+            dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(dlwl.first));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        if (dlwl.second != 0) {
-            gt::fakeFastDrop = gt::fakeFastDrop + 1;
-            g_server->send(false, "action|drop\n|itemID|1796");
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        
-
-        gt::lastCollect1 = 0;
-        gt::lastCollect2 = 0;
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+            if (bruh4 > 100) {
+                dropwl = true;
+                g_server->send(false, "action|drop\n|itemID|242");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+                dropdl = true;
+                g_server->send(false, "action|drop\n|itemID|1796");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
+            }
+            variantlist_t notif{ "OnTextOverlay" };
+            notif[1] = "Total Bet :`9 " + to_string(gt::total_bet) + "\nDrop Amount : " + to_string(bruh4) + " (Taken " + taxstring + "% Tax)";
+           g_server->send(true, notif);
+		std::this_thread::sleep_for(std::chrono::milliseconds(800));
+		tptopos(backpxm, backpym);
+		gt::total_bet = 0;
+		gt::lastCollect1 = 0;
+		gt::lastCollect2 = 0;
         return true;
     }
 			
