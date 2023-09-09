@@ -18,8 +18,8 @@ server* g_server = new server();
 int main() {
 #ifdef _WIN32
     SetConsoleTitleA("Erza Proxy");
-    DiscordEventHandlers handlers;
 #endif
+    DiscordEventHandlers handlers;
 Discord_Initialize("1149579895886852146", &handlers, 1, NULL); // id yaz buraya
     DiscordRichPresence presence;
     memset(&presence, 0, sizeof(presence));
