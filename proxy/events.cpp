@@ -672,65 +672,7 @@ gt::send_log("`9Set tax game first using /tax <amount>");
 
 		    
                         
-else if (find_command(chat, "cdrop ")) {
-	std::string cdropcount = chat.substr(7);
-	int jumlahcd = stoi(cdropcount);
-auto inventory = g_server->local_player.inventory.items;
-	
-	if (balance() < jumlahcd) {
-                    gt::send_log("`9Dont have `#balance`9. balance: " + to_string(balance()) + ".");
-                    return true;
-                }
-	
-	if (jumlahcd < 100) {
-		if (item_count(242) < jumlahcd) {
-                        gameupdatepacket_t yahacdrop{ 0 };
-                        yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                        yahacdrop.m_int_data = 1796;
-                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-                        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                    }
-		dropwl = true;
-		g_server->send(false, "action|drop\n|itemID|242");
-                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                    g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + cdropcount); //242
-                    gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-                }
-		
-		else if (jumlahcd > 10000) {
-			int jumlahcd1 = (jumlahcd / 10000);
-			int halohai = ((jumlahcd / 100) - (jumlahcd1 * 100));
-			int halohai1 = jumlahcd - ((halohai * 100) + (jumlahcd1 * 10000));
-			if (halohai > item_count(1796)) {
-                        gameupdatepacket_t yahacdrop{ 0 };
-                        yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                        yahacdrop.m_int_data = 7188;
-                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-                        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                    }
-                    else if (item_count(242) < halohai1) {
-                        gameupdatepacket_t yahacdrop{ 0 };
-                        yahacdrop.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                        yahacdrop.m_int_data = 1796;
-                        g_server->send(false, NET_MESSAGE_GAME_PACKET, (uint8_t*)&yahacdrop, sizeof(gameupdatepacket_t));
-                        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                    }
-			dropbgl = true;
-			g_server->send(false, "action|drop\n|itemID|7188");
-                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                    g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|7188|\ncount|" + std::to_string(jumlahcd1)); //242
-                    dropdl = true;
-                    g_server->send(false, "action|drop\n|itemID|1796");
-                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                    g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + std::to_string(halohai)); //242
-                    dropwl = true;
-                    g_server->send(false, "action|drop\n|itemID|242");
-                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-                    g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + std::to_string(halohai1)); //242
-                    gt::send_log("`9Dropping `c" + cdropcount + "`9 wls...");
-			}
-		
-		else {
+
 	
 else if (find_command(chat, "cd ")) {
             string cdropcount = chat.substr(4);
