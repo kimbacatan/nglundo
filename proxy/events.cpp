@@ -1105,7 +1105,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
             bruh3 = gt::total_bet * taxcount / 100;
             bruh4 = gt::total_bet - bruh3;
             
-           string cdropcount = bruh4;
+            cdropcount = bruh4;
             int weel = bruh4 % 100;
             int deel = bruh4 / 100;
             int beel = deel / 100;
@@ -1125,6 +1125,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
            g_server->send(true, notif);
 		std::this_thread::sleep_for(std::chrono::milliseconds(800));
 		tptopos(backpxm, backpym);
+		
 		gt::total_bet = 0;
 		gt::lastCollect1 = 0;
 		gt::lastCollect2 = 0;
@@ -1179,7 +1180,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
             bruh3 = gt::total_bet * taxcount / 100;
             bruh4 = gt::total_bet - bruh3;
             
-           string cdropcount = bruh4;
+            cdropcount = bruh4;
             int weel = bruh4 % 100;
             int deel = bruh4 / 100;
             int beel = deel / 100;
@@ -1199,6 +1200,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
            g_server->send(true, notif);
 		std::this_thread::sleep_for(std::chrono::milliseconds(800));
 		tptopos(backpxm, backpym);
+		
 		gt::total_bet = 0;
 		gt::lastCollect1 = 0;
 		gt::lastCollect2 = 0;
