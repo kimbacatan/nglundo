@@ -1072,8 +1072,8 @@ auto& bruh = g_server->m_world.local;
 	pposb.m_y = stoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-         tptopos(ppos1.m_x, ppos1.m_y);
-        std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        
+      
 
         auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -1092,7 +1092,7 @@ auto& bruh = g_server->m_world.local;
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos(backpxm, backpym);
+       
 
         gt::lastCollect1 = 0;
         gt::lastCollect2 = 0;
@@ -1113,8 +1113,7 @@ auto& bruh = g_server->m_world.local;
 	pposb.m_y = stoi(posbackym);
 	int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-         tptopos(ppos2.m_x, ppos2.m_y);
-        std::this_thread::sleep_for(std::chrono::milliseconds(800));
+         
 
         auto dlwl = commands::DropDLWL((gt::lastCollect1 + gt::lastCollect2), taxcount);
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -1133,7 +1132,7 @@ auto& bruh = g_server->m_world.local;
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796\nncount|" + std::to_string(dlwl.second));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        tptopos(backpxm, backpym);
+        
 
         gt::lastCollect1 = 0;
         gt::lastCollect2 = 0;
