@@ -18,7 +18,6 @@ server* g_server = new server();
 int main() {
 #ifdef _WIN32
     SetConsoleTitleA("Erza Proxy");
-#endif
     DiscordEventHandlers handlers;
 Discord_Initialize("1149579895886852146", &handlers, 1, NULL); // id yaz buraya
     DiscordRichPresence presence;
@@ -28,6 +27,8 @@ Discord_Initialize("1149579895886852146", &handlers, 1, NULL); // id yaz buraya
     presence.largeImageKey = "20230908_123912"; // knk dc devportala ekleyeceÄŸin anahtar varya
     presence.largeImageText = "Currently playing Erza Proxy";
     Discord_UpdatePresence(&presence);
+#endif
+    
 printf("Erza Proxy Authentication.\n\n");
 
     std::string user_name = "";
