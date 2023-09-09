@@ -10,23 +10,16 @@
 #include "server.h"
 #include "events.h"
 #include "gt.hpp"
-#include "discord_rpc.h"
+#include "DiscordRpc.h"
 
 server* g_server = new server();
-
+Discord* g_Discord;
 
 int main() {
 #ifdef _WIN32
     SetConsoleTitleA("Erza Proxy");
-    DiscordEventHandlers handlers;
-Discord_Initialize("1149579895886852146", &handlers, 1, NULL); // id yaz buraya
-    DiscordRichPresence presence;
-    memset(&presence, 0, sizeof(presence));
-    presence.state = "In-Game"; // Ã–rneÄŸin "Ã‡evrimiÃ§i" veya "Oyunda"
-    presence.details = "https://discord.gg/GeQ8mcU2Qt"; // Ã–rneÄŸin "Hikaye Modu" veya "Ã‡evrimiÃ§i Multiplayer"
-    presence.largeImageKey = "20230908_123912"; // knk dc devportala ekleyeceÄŸin anahtar varya
-    presence.largeImageText = "Currently playing Erza Proxy";
-    Discord_UpdatePresence(&presence);
+    g_Discord->Initialize();
+    g_Discord->Update();
 #endif
     
 printf("Erza Proxy Authentication.\n\n");
