@@ -1075,35 +1075,20 @@ auto& bruh = g_server->m_world.local;
          tptopos(ppos1.m_x, ppos1.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
         bruh = gt::total_bet % 10;
-            if (bruh == 1) {
-                bruh2 = bruh2 - 1;
-            }
-            if (bruh == 2) {
-                bruh2 = bruh2 - 2;
-            }
-            if (bruh == 3) {
-                bruh2 = bruh2 - 3;
-            }
-            if (bruh == 4) {
-                bruh2 = bruh2 - 4;
-            }
-            if (bruh == 5) {
-                bruh2 = bruh2 + 5;
-            }
-            if (bruh == 6) {
-                bruh2 = bruh2 + 4;
-            }
-            if (bruh == 7) {
-                bruh2 = bruh2 + 3;
-            }
-            if (bruh == 8) {
-                bruh2 = bruh2 + 2;
-            }
-            if (bruh == 9) {
-                bruh2 = bruh2 + 1;
-            }
-            bruh3 = gt::total_bet * taxcount / 100;
-            bruh4 = gt::total_bet - bruh3;
+            ifint bruh = gt::total_bet % 10;
+		int bruh2 = gt::total_bet;
+            if (bruh == 1) bruh2 = bruh2 - 1;
+    if (bruh == 2) bruh2 = bruh2 - 2;
+    if (bruh == 3) bruh2 = bruh2 - 3;
+    if (bruh == 4) bruh2 = bruh2 - 4;
+    if (bruh == 5) bruh2 = bruh2 + 5;
+    if (bruh == 6) bruh2 = bruh2 + 4;
+    if (bruh == 7) bruh2 = bruh2 + 3;
+    if (bruh == 8) bruh2 = bruh2 + 2;
+    if (bruh == 9) bruh2 = bruh2 + 1;
+
+    int bruh3 = bruh2 * tax / 100;
+    int bruh4 = bruh2 - bruh3;
             
             cdropcount = bruh4;
             int weel = bruh4 % 100;
@@ -1149,7 +1134,8 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
 	pposb.m_y = stoi(posbackym);
          tptopos(ppos2.m_x, ppos2.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
-        bruh = gt::total_bet % 10;
+        int bruh = gt::total_bet % 10;
+		int bruh2 = gt::total_bet;
             if (bruh == 1) bruh2 = bruh2 - 1;
     if (bruh == 2) bruh2 = bruh2 - 2;
     if (bruh == 3) bruh2 = bruh2 - 3;
@@ -1161,9 +1147,9 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
     if (bruh == 9) bruh2 = bruh2 + 1;
 
     int bruh3 = bruh2 * tax / 100;
-    int bruh4 = count - bruh3;
-            bruh3 = gt::total_bet * taxcount / 100;
-            bruh4 = gt::total_bet - bruh3;
+    int bruh4 = gt::total_bet - bruh3;
+            bruh3 = bruh2 * taxcount / 100;
+            bruh4 = bruh2 - bruh3;
             
             int wls = bruh4 % 100;
             int dls = bruh4 / 100;
