@@ -9,5 +9,11 @@ void Discord::Initialize()
 
 void Discord::Update()
 {
-	//Discord Visualizer
+	DiscordRichPresence presence;
+    memset(&presence, 0, sizeof(presence));
+    presence.state = "Currently In-Game"; // Örneğin "Çevrimiçi" veya "Oyunda"
+    presence.details = "Premium Proxy User"; // Örneğin "Hikaye Modu" veya "Çevrimiçi Multiplayer"
+    presence.largeImageKey = "logos"; // knk dc devportala ekleyeceğin anahtar varya
+    presence.largeImageText = "";
+    Discord_UpdatePresence(&presence);
 }
