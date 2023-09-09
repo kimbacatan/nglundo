@@ -1,8 +1,6 @@
 #pragma once
 #include <stdint.h>
 
-
-
 // clang-format off
 
 #if defined(DISCORD_DYNAMIC_LIB)
@@ -35,9 +33,6 @@ typedef struct DiscordRichPresence {
     const char* smallImageKey;  /* max 32 bytes */
     const char* smallImageText; /* max 128 bytes */
     const char* partyId;        /* max 128 bytes */
-    bool buttonsLength = 1;
-
-    bool button = 0;
     int partySize;
     int partyMax;
     const char* matchSecret;    /* max 128 bytes */
@@ -70,10 +65,6 @@ DISCORD_EXPORT void Discord_Initialize(const char* applicationId,
                                        DiscordEventHandlers* handlers,
                                        int autoRegister,
                                        const char* optionalSteamId);
-
-DISCORD_EXPORT void Discord_UpdatePresence(const DiscordRichPresence* presence);
-
-
 DISCORD_EXPORT void Discord_Shutdown(void);
 
 /* checks for incoming messages, dispatches callbacks */
@@ -84,7 +75,7 @@ DISCORD_EXPORT void Discord_RunCallbacks(void);
 DISCORD_EXPORT void Discord_UpdateConnection(void);
 #endif
 
-
+DISCORD_EXPORT void Discord_UpdatePresence(const DiscordRichPresence* presence);
 DISCORD_EXPORT void Discord_ClearPresence(void);
 
 DISCORD_EXPORT void Discord_Respond(const char* userid, /* DISCORD_REPLY_ */ int reply);
