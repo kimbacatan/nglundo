@@ -820,36 +820,7 @@ else if (find_command(chat, "wdrop ")) {
 
 		
         
-else if (find_command(chat, "gdrop")) {
-	string cdropcount = to_string(bruh4);
-            int weel = stoi(cdropcount) % 100;
-            int deel = stoi(cdropcount) / 100;
-            int beel = deel / 100;
-	auto inventory = g_server->local_player.inventory.items;
-for (auto items : inventory) {
-if (items.second.id == 242) {
-if (items.second.count < stoi(cdropcount)) {
-	gameupdatepacket_t kunci{ 0 };
-                kunci.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
-                kunci.m_int_data = 1796;
-                g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
-}
-}
-}
-            dropwl = true;
-            g_server->send(false, "action|drop\n|itemID|242");
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
-	if (stoi(cdropcount) > 100) {
-                dropwl = true;
-                g_server->send(false, "action|drop\n|itemID|242");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
-                dropdl = true;
-                g_server->send(false, "action|drop\n|itemID|1796");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
-}
-            gt::send_log("`9Dropping `#" + to_string(weel) + " `9Wls`# & `#" + to_string(deel) + " `9Dls.");
-            return true;
-	}
+
 
 else if (find_command(chat, "gems")) {
             int count = 0;
@@ -967,10 +938,8 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
 }
             gt::send_log("`9Dropping `#" + to_string(weel) + " `9Wls`# & `#" + to_string(deel) + " `9Dls.");
-		std::this_thread::sleep_for(std::chrono::milliseconds(800));
-            
-		tptopos(backpxm, backpym);
-		bruh4 = 0;
+		
+        
 
         return true;
     }
@@ -986,12 +955,37 @@ if (items.second.count < stoi(cdropcount)) {
 	
          tptopos(ppos2.m_x, ppos2.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
-         
-		tptopos(backpxm, backpym);
+         string cdropcount = to_string(bruh4);
+            int weel = stoi(cdropcount) % 100;
+            int deel = stoi(cdropcount) / 100;
+            int beel = deel / 100;
+	auto inventory = g_server->local_player.inventory.items;
+for (auto items : inventory) {
+if (items.second.id == 242) {
+if (items.second.count < stoi(cdropcount)) {
+	gameupdatepacket_t kunci{ 0 };
+                kunci.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                kunci.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
+}
+}
+	
+}
 		
-		gt::total_bet = 0;
-		gt::lastCollect1 = 0;
-		gt::lastCollect2 = 0;
+		
+            dropwl = true;
+            g_server->send(false, "action|drop\n|itemID|242");
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+	if (stoi(cdropcount) > 100) {
+                dropwl = true;
+                g_server->send(false, "action|drop\n|itemID|242");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+                dropdl = true;
+                g_server->send(false, "action|drop\n|itemID|1796");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
+}
+            gt::send_log("`9Dropping `#" + to_string(weel) + " `9Wls`# & `#" + to_string(deel) + " `9Dls.");
+		
         return true;
     }
 			
@@ -1216,44 +1210,37 @@ else if (find_command(chat, "proxy")) {
             paket1 =
                 "\nadd_label_with_icon|big|`9Erza Proxy Command|left|5956|"
                 "\nadd_spacer|small"
-		"\nadd_label_with_icon|small|`9Main Command|left|5956|"
-		    "\nadd_textbox|`2/uid [name] (resolves no uid)|left|2480|"
-                "\nadd_smalltext|`2/spam (spam menu)|left|2480|"
-		"\nadd_smalltext|`2// (start auto spam)|left|2480|"
-                "\nadd_smalltext|`2/banall (World Ban All People in world)|left|2480|"
-                "\nadd_smalltext|`2/killall (Kick all People in world)|left|2480|"
-                "\nadd_smalltext|`2/tradeall (trade all people in the world|left|2480|"
-                "\nadd_smalltext|`2/warp [world name] (warping world without SSUP)|left|2480|"
-                "\nadd_smalltext|`2/skin [Id] (change skin colours)|left|2480|"
-		    "\nadd_smalltext|`2/ft (fast trash) |left|2480|"
-                "\nadd_smalltext|`2/fd (fast drop) |left|2480|"
-"\nadd_smalltext|`2/info (Proxy information) |left|2480|"
-                "\nadd_smalltext|`2/autopull (auto pull when people enter world) |left|2480|"
-                "\nadd_smalltext|`2/pullauto (auto pull for casino hoster) |left|2480|"
+		"\nadd_label_with_icon|small|`9Information|left|2480|"
+		    "\nadd_smalltext|`2/proxy `#(show commands & feature)|left|2480"
 		    "\nadd_spacer|small|"
-		    "\nadd_label_with_icon|small|`9Visual Command|left|9228|"
-		    "\nadd_smalltext|`2/flag [id] (sets flag to item id)|left|2480|"
-"\nadd_smalltext|`2/name [name] (Change Name Visual)|left|2480|"
-"\nadd_smalltext|`2/country (/countrylist for check list)|left|2480|"
-		    "\nadd_smalltext|`2/countrylist (List Country For /country) |left|2480|"
-		    "\nadd_smalltext|`2/legend (visual legendary title)|left|2480|"
-		    "\nadd_smalltext|`2/g4g (visual grow4good title)|left|2480|"
-		    "\nadd_smalltext|`2/maxlevel (visual maxlevel)|left|2480|"
-		    "\nadd_smalltext|`2/mentor (visual mentor title)|left|2480|"
+		    "\nadd_label_with_icon|small|`9Drop Commands|left|5770|"
+		    "\nadd_smalltext|`2/cd [amount] & /cdrop [amount] `#(custom drop locks)|left|2480|"
+		    "\nadd_smalltext|`2/dd [amount] & /ddrop [amount] `#(diamond locks drop)|left|2480|"
+		    "\nadd_smalltext|`2/bd [amount] & /bdrop [amount]`# (blue gem lock drop)|left|2480|"
 		    "\nadd_spacer|small|"
-"\nadd_label_with_icon|small|`9Casino/Host Feature|left|758|"
-"\nadd_smalltext|`2/pos1 - /pos4 (set pos 1 - 4)|left|2480|"
-		    "\nadd_smalltext|`2/tpos [number] (teleport to pos 1-4)|left|2480|"
-		    "\nadd_smalltext|`2/tp (take wl/dl from pos 1-4)|left|2480|"
-		    "\nadd_smalltext|`2/win1 - /win4 (drop wl include tax to pos1 - pos4)|left|2480|"
+		    "\nadd_label_with_icon|small|`9Visual Commands|left|1790|"
+		    "\nadd_smalltext|`2/legend`# (visual legendary title)|left|2480|"
+		    "\nadd_smalltext|`2/g4g `#(visual grow4good title)|left|2480|"
+		    "\nadd_smalltext|`2/maxlevel `#(visual maxlevel)|left|2480|"
+		    "\nadd_smalltext|`2/mentor `#(visual mentor title)|left|2480|"
 		    "\nadd_spacer|small|"
-		    "\nadd_label_with_icon|small|`9Player Command|left|32|"
-		    "\nadd_smalltext|`2/wrench (dialog wrench)|left|2480|"
+		    "\nadd_label_with_icon|small|`9Host Commands|left|758|"
+		    "\nadd_smalltext|`2/pos1 `#(set position 1 display player)|left|2480|"
+		    "\nadd_smalltext|`2/pos2 `#(set position 2 display player)|left|2480|"
+		    "\nadd_smalltext|`2/tp `#(take bet from pos1 & pos2)|left|2480|"
+		    "\nadd_smalltext|`2/win1 `#(drop bet include tax to player 1 [must /game first] )|left|2480|"
+"\nadd_smalltext|`2/win2 `#(drop bet include tax to player 2 [must /game first] )|left|2480|"
+		    "\nadd_smalltext|`2/game [amount] `#(set game bet for autohost)|left|2480|"
 		    "\nadd_spacer|small|"
-		    "\nadd_label_with_icon|small|`9Drop Command|left|242|"
-		    "\nadd_smalltext|`2/cd [amount] or /cdrop [amount] (custom drop locks)|left|2480|"
-		    "\nadd_smalltext|`2/dd [amount] or /ddrop [amount] (diamond locks drop)|left|2480|"
-		    "\nadd_smalltext|`2/bd [amount] or /bdrop [amount] (blue gem lock drop)|left|2480|"
+		  "\nadd_label_with_icon|small|`9Spam Commands|left|9752|"
+                "\nadd_smalltext|`2/spam `#(spam menu)|left|2480|"
+		"\nadd_smalltext|`2// `#(start auto spam)|left|2480|"
+		    "\nadd_spacer|small|"
+		   "\nadd_label_with_icon|small|`9Player Commands|left|982|"
+		    "\nadd_smalltext|`2/country [key] `#(Change country)|left|2480|"
+		    "\nadd_smalltext|`2/countrylist & /clist `#(Country list)|left|2480|"
+		    "\nadd_smalltext|`2/wrench `#(Open dialog wremch)|left|2480|"
+		    "\nadd_spacer|small|"    
                 "\nadd_spacer|small|\n\nadd_url_button||`3Discord``|NOFLAGS|https://discord.gg/2YZj3fmxRk|Join Erza Proxy Discord!|"
                 "\nadd_quick_exit|"
                 "\nend_dialog|end|Cancel|Okay|";
