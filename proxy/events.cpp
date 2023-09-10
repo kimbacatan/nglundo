@@ -693,13 +693,14 @@ if (items.second.count < stoi(cdropcount)) {
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+	if (stoi(cdropcount) > 100) {
                 dropwl = true;
                 g_server->send(false, "action|drop\n|itemID|242");
                 g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
                 dropdl = true;
                 g_server->send(false, "action|drop\n|itemID|1796");
                 g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
-            }
+}
             gt::send_log("`9Dropping `c" + to_string(weel) + " `9Wls & `c" + to_string(deel) + " `9Dls.");
             return true;
         }
