@@ -845,7 +845,7 @@ if (items.second.count < stoi(cdropcount)) {
 }
 }
 	if (items.second.id == 1796) {
-		if (items.second.count < stoi(deel)) {
+		if (items.second.count < deel) {
 gt::send_log("`9Not enough dls to drop");
 		}
 	}
@@ -963,25 +963,7 @@ auto& bruh = g_server->m_world.local;
 	variantlist_t totof{ "OnTextOverlay" };
                             totof[1] = "`9Collecting Bet!";
                             g_server->send(true, totof);
-        int clt1 = 0;
-        int clt2 = 0;
-        auto p = g_server->m_world.objects;
-        for (auto& item : p) {
-
-            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos1.m_x * 32), (ppos1.m_y * 32))) {
-                if (item.second.itemID == 242) clt1 += item.second.count;
-                if (item.second.itemID == 1796) clt1 += item.second.count * 100;
-            }
-
-            if (utils::isInside(item.second.pos.m_x, item.second.pos.m_y, (1.2 * 32), (ppos2.m_x * 32), (ppos2.m_y * 32))) {
-                if (item.second.itemID == 242) clt2 += item.second.count;
-                if (item.second.itemID == 1796) clt2 += item.second.count * 100;
-            }
-}
         
-            gt::lastCollect1 = clt1;
-            gt::lastCollect2 = clt2;
-	gt::total_bet = gt::lastCollect1 + gt::lastCollect2;
                 tptopos(ppos1.m_x,ppos1.m_y);
                 std::this_thread::sleep_for(std::chrono::milliseconds(800));
                 tptopos(ppos2.m_x,ppos2.m_y);
@@ -1024,7 +1006,7 @@ if (items.second.count < stoi(cdropcount)) {
 }
 }
 	if (items.second.id == 1796) {
-		if (items.second.count < stoi(deel)) {
+		if (items.second.count < deel) {
 gt::send_log("`9Not enough dls to drop");
 		}
 	}
