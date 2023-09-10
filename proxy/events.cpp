@@ -930,17 +930,10 @@ auto& bruh = g_server->m_world.local;
 		auto& bruh = g_server->m_world.local;
 		int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-		ppos1.m_x = stoi(pos1xm);
 	ppos1.m_x = stoi(pos1xm);
 	ppos1.m_y = stoi(pos1ym);
 	ppos2.m_x = stoi(pos2xm);
 	ppos2.m_y = stoi(pos2ym);
-	ppos3.m_x = stoi(pos3xm);
-	ppos3.m_y = stoi(pos3ym);
-	ppos4.m_x = stoi(pos4xm);
-	ppos4.m_y = stoi(pos4ym);
-	pposb.m_x = stoi(posbackxm);
-	pposb.m_y = stoi(posbackym);
          tptopos(ppos1.m_x, ppos1.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
 		string cdropcount = to_string(bruh4);
@@ -985,17 +978,11 @@ if (items.second.count < stoi(cdropcount)) {
 		auto& bruh = g_server->m_world.local;
 		int backpxm = bruh.pos.m_x;
 	int backpym = bruh.pos.m_y;
-		ppos1.m_x = stoi(pos1xm);
 	ppos1.m_x = stoi(pos1xm);
 	ppos1.m_y = stoi(pos1ym);
 	ppos2.m_x = stoi(pos2xm);
 	ppos2.m_y = stoi(pos2ym);
-	ppos3.m_x = stoi(pos3xm);
-	ppos3.m_y = stoi(pos3ym);
-	ppos4.m_x = stoi(pos4xm);
-	ppos4.m_y = stoi(pos4ym);
-	pposb.m_x = stoi(posbackxm);
-	pposb.m_y = stoi(posbackym);
+	
          tptopos(ppos2.m_x, ppos2.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
          
