@@ -689,7 +689,6 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -712,7 +711,7 @@ if (items.second.count < stoi(cdropcount)) {
             //string cdropcount2 = chat.substr();
             int weel = stoi(cdropcount) % 100;
             int deel = stoi(cdropcount) / 100;
-		int beel = deel / 100;
+int beel = deel / 100;
 		auto inventory = g_server->local_player.inventory.items;
 for (auto items : inventory) {
 if (items.second.id == 242) {
@@ -723,7 +722,6 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -836,7 +834,6 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -962,10 +959,8 @@ if (items.second.count < stoi(cdropcount)) {
 }
 	
 }
-		if (bruh4 == 0) {
-gt::send_log("`9Please use /game first");
-}
-		else {
+		
+		
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
@@ -982,7 +977,7 @@ gt::send_log("`9Please use /game first");
             
 		tptopos(backpxm, backpym);
 		bruh4 = 0;
-}
+
         return true;
     }
         
@@ -1017,7 +1012,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
             wrench_block = (block_wrench) ? "1" : "0";
             std::string paket =
                 "\nset_default_color|`o"
-                "\nadd_label_with_icon|big|Wrench Mode : " + mode +
+                "\nadd_label_with_icon|big|`9Wrench Mode : `#" + mode +
                 "|left|32|"
                 "|left|2480|\nadd_spacer|small\n"
                 "\nadd_checkbox|vmode|`9Enable Wrench|" +
