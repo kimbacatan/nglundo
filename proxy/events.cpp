@@ -1009,7 +1009,73 @@ auto& bruh = g_server->m_world.local;
 	pposb.m_y = stoi(posbackym);
          tptopos(ppos1.m_x, ppos1.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
+		bruh = gt::total_bet % 10;
+            bruh2 = gt::total_bet;
+	std::string value2 = to_string(bruh2);
+            if (bruh == 1) {
+                bruh2 = bruh2 - 1;
+            }
+            if (bruh == 2) {
+                bruh2 = bruh2 - 2;
+            }
+            if (bruh == 3) {
+                bruh2 = bruh2 - 3;
+            }
+            if (bruh == 4) {
+                bruh2 = bruh2 - 4;
+            }
+            if (bruh == 5) {
+                bruh2 = bruh2 + 5;
+            }
+            if (bruh == 6) {
+                bruh2 = bruh2 + 4;
+            }
+            if (bruh == 7) {
+                bruh2 = bruh2 + 3;
+            }
+            if (bruh == 8) {
+                bruh2 = bruh2 + 2;
+            }
+            if (bruh == 9) {
+                bruh2 = bruh2 + 1;
+            }
+            bruh3 = bruh2 * taxcount / 100;
+            bruh4 = stoi(value2) - bruh3;
 		
+		string cdropcount = to_string(gt::total_bet);
+            int weel = stoi(cdropcount) % 100;
+            int deel = stoi(cdropcount) / 100;
+            int beel = deel / 100;
+	auto inventory = g_server->local_player.inventory.items;
+for (auto items : inventory) {
+if (items.second.id == 242) {
+if (items.second.count < stoi(cdropcount)) {
+	gameupdatepacket_t kunci{ 0 };
+                kunci.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                kunci.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
+}
+}
+	if (items.second.id == 1796) {
+		if (items.second.count < stoi(deel)) {
+gt::send_log("`9Not enough dls to drop");
+		}
+	}
+}
+            dropwl = true;
+            g_server->send(false, "action|drop\n|itemID|242");
+            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+	if (stoi(cdropcount) > 100) {
+                dropwl = true;
+                g_server->send(false, "action|drop\n|itemID|242");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
+                dropdl = true;
+                g_server->send(false, "action|drop\n|itemID|1796");
+                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
+}
+            gt::send_log("`9Dropping `#" + to_string(weel) + " `9Wls`# & `#" + to_string(deel) + " `9Dls.");
+		std::this_thread::sleep_for(std::chrono::milliseconds(800));
+            
 		tptopos(backpxm, backpym);
 		gt::total_bet = 0;
 		gt::lastCollect1 = 0;
