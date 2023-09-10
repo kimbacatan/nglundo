@@ -679,10 +679,20 @@ else if (find_command(chat, "cd ")) {
             int weel = stoi(cdropcount) % 100;
             int deel = stoi(cdropcount) / 100;
             int beel = deel / 100;
+	auto inventory = g_server->local_player.inventory.items;
+for (auto items : inventory) {
+if (items.second.id == 242) {
+if (items.second.count < stoi(cdropcount)) {
+	gameupdatepacket_t kunci{ 0 };
+                kunci.m_type = PACKET_ITEM_ACTIVATE_REQUEST;
+                kunci.m_int_data = 1796;
+                g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
+}
+}
+}
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
-            if (stoi(cdropcount) > 100) {
                 dropwl = true;
                 g_server->send(false, "action|drop\n|itemID|242");
                 g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
