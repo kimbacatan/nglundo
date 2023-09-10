@@ -1009,40 +1009,7 @@ auto& bruh = g_server->m_world.local;
 	pposb.m_y = stoi(posbackym);
          tptopos(ppos1.m_x, ppos1.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
-		bruh = gt::total_bet % 10;
-            bruh2 = gt::total_bet;
-	std::string value2 = to_string(bruh2);
-            if (bruh == 1) {
-                bruh2 = bruh2 - 1;
-            }
-            if (bruh == 2) {
-                bruh2 = bruh2 - 2;
-            }
-            if (bruh == 3) {
-                bruh2 = bruh2 - 3;
-            }
-            if (bruh == 4) {
-                bruh2 = bruh2 - 4;
-            }
-            if (bruh == 5) {
-                bruh2 = bruh2 + 5;
-            }
-            if (bruh == 6) {
-                bruh2 = bruh2 + 4;
-            }
-            if (bruh == 7) {
-                bruh2 = bruh2 + 3;
-            }
-            if (bruh == 8) {
-                bruh2 = bruh2 + 2;
-            }
-            if (bruh == 9) {
-                bruh2 = bruh2 + 1;
-            }
-            bruh3 = bruh2 * taxcount / 100;
-            bruh4 = stoi(value2) - bruh3;
-		
-		string cdropcount = to_string(gt::total_bet);
+		string cdropcount = to_string(bruh4);
             int weel = stoi(cdropcount) % 100;
             int deel = stoi(cdropcount) / 100;
             int beel = deel / 100;
@@ -1062,6 +1029,10 @@ gt::send_log("`9Not enough dls to drop");
 		}
 	}
 }
+		if (bruh4 == 0) {
+gt::send_log("`9Please use /game first");
+}
+		else {
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
             g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
@@ -1077,9 +1048,8 @@ gt::send_log("`9Not enough dls to drop");
 		std::this_thread::sleep_for(std::chrono::milliseconds(800));
             
 		tptopos(backpxm, backpym);
-		gt::total_bet = 0;
-		gt::lastCollect1 = 0;
-		gt::lastCollect2 = 0;
+		bruh4 = 0;
+}
         return true;
     }
         
