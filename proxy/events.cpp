@@ -689,11 +689,7 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	if (items.second.id == 1796) {
-		if (items.second.count < deel) {
-gt::send_log("`9Not enough dls to drop");
-		}
-	}
+	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -727,11 +723,7 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	if (items.second.id == 1796) {
-		if (items.second.count < deel) {
-gt::send_log("`9Not enough dls to drop");
-		}
-	}
+	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -844,11 +836,7 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	if (items.second.id == 1796) {
-		if (items.second.count < deel) {
-gt::send_log("`9Not enough dls to drop");
-		}
-	}
+	
 }
             dropwl = true;
             g_server->send(false, "action|drop\n|itemID|242");
@@ -914,39 +902,6 @@ else if (find_command(chat, "gems")) {
         return true;
         }
 
-else if (find_command(chat, "pos3")) {
-        auto& bruh = g_server->m_world.local;
-        int pos3x = bruh.pos.m_x;
-        int pos3y = bruh.pos.m_y;
-        pos3xm = to_string(pos3x);
-        pos3ym = to_string(pos3y);
-        variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 88;
-        varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
-        varlist[3] = 0;
-        varlist[4] = 0;
-        g_server->send(true, varlist);
-        
-        gt::send_log("`93rd position: `#" + pos3xm + ", " + pos3ym);
-        return true;
-        }
-
-		else if (find_command(chat, "pos4")) {
-        auto& bruh = g_server->m_world.local;
-        int pos4x = bruh.pos.m_x;
-        int pos4y = bruh.pos.m_y;
-        pos4xm = to_string(pos4x);
-        pos4ym = to_string(pos4y);
-        variantlist_t varlist{"OnParticleEffect"};
-        varlist[1] = 88;
-        varlist[2] = vector2_t{ bruh.pos.m_x,  bruh.pos.m_y};
-        varlist[3] = 0;
-        varlist[4] = 0;
-        g_server->send(true, varlist);
-        
-        gt::send_log("`94th position: `#" + pos4xm + ", " + pos4ym);
-        return true;
-        }
 
 			
 
@@ -1005,11 +960,7 @@ if (items.second.count < stoi(cdropcount)) {
                 g_server->send(false, NET_MESSAGE_GAME_PACKET,(uint8_t*)&kunci,sizeof(gameupdatepacket_t));
 }
 }
-	if (items.second.id == 1796) {
-		if (items.second.count < deel) {
-gt::send_log("`9Not enough dls to drop");
-		}
-	}
+	
 }
 		if (bruh4 == 0) {
 gt::send_log("`9Please use /game first");
