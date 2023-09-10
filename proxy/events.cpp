@@ -690,7 +690,7 @@ if (items.second.count < stoi(cdropcount)) {
 }
 }
 	if (items.second.id == 1796) {
-		if (items.second.count < stoi(deel)) {
+		if (items.second.count < deel) {
 gt::send_log("`9Not enough dls to drop");
 		}
 	}
@@ -728,7 +728,7 @@ if (items.second.count < stoi(cdropcount)) {
 }
 }
 	if (items.second.id == 1796) {
-		if (items.second.count < stoi(deel)) {
+		if (items.second.count < deel) {
 gt::send_log("`9Not enough dls to drop");
 		}
 	}
