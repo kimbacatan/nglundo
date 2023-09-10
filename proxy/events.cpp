@@ -1074,40 +1074,7 @@ auto& bruh = g_server->m_world.local;
 	pposb.m_y = stoi(posbackym);
          tptopos(ppos1.m_x, ppos1.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
-        bruh = gt::total_bet % 10;
-		 bruh2 = gt::total_bet;
-            if (bruh == 1) bruh2 = bruh2 - 1;
-    if (bruh == 2) bruh2 = bruh2 - 2;
-    if (bruh == 3) bruh2 = bruh2 - 3;
-    if (bruh == 4) bruh2 = bruh2 - 4;
-    if (bruh == 5) bruh2 = bruh2 + 5;
-    if (bruh == 6) bruh2 = bruh2 + 4;
-    if (bruh == 7) bruh2 = bruh2 + 3;
-    if (bruh == 8) bruh2 = bruh2 + 2;
-    if (bruh == 9) bruh2 = bruh2 + 1;
-
-    int bruh3 = bruh2 * tax / 100;
-    int bruh4 = bruh2 - bruh3;
-            
-            cdropcount = bruh4;
-            int weel = bruh4 % 100;
-            int deel = bruh4 / 100;
-            int beel = deel / 100;
-            dropwl = true;
-            g_server->send(false, "action|drop\n|itemID|242");
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
-            if (bruh4 > 100) {
-                dropwl = true;
-                g_server->send(false, "action|drop\n|itemID|242");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(weel));
-                dropdl = true;
-                g_server->send(false, "action|drop\n|itemID|1796");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(deel));
-            }
-            variantlist_t notif{ "OnTextOverlay" };
-            notif[1] = "Total Bet :`9 " + to_string(gt::total_bet) + "\nDrop Amount : " + to_string(bruh4) + " (Taken " + taxstring + "% Tax)";
-           g_server->send(true, notif);
-		std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        
 		tptopos(backpxm, backpym);
 		
 		gt::total_bet = 0;
@@ -1133,41 +1100,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds(800));
 	pposb.m_y = stoi(posbackym);
          tptopos(ppos2.m_x, ppos2.m_y);	
 std::this_thread::sleep_for(std::chrono::milliseconds(800));
-         bruh = gt::total_bet % 10;
-		 bruh2 = gt::total_bet;
-            if (bruh == 1) bruh2 = bruh2 - 1;
-    if (bruh == 2) bruh2 = bruh2 - 2;
-    if (bruh == 3) bruh2 = bruh2 - 3;
-    if (bruh == 4) bruh2 = bruh2 - 4;
-    if (bruh == 5) bruh2 = bruh2 + 5;
-    if (bruh == 6) bruh2 = bruh2 + 4;
-    if (bruh == 7) bruh2 = bruh2 + 3;
-    if (bruh == 8) bruh2 = bruh2 + 2;
-    if (bruh == 9) bruh2 = bruh2 + 1;
-
-    int bruh3 = bruh2 * tax / 100;
-    int bruh4 = gt::total_bet - bruh3;
-            bruh3 = bruh2 * taxcount / 100;
-            bruh4 = bruh2 - bruh3;
-            
-            int wls = bruh4 % 100;
-            int dls = bruh4 / 100;
-            int bgls = deel / 100;
-            dropwl = true;
-            g_server->send(false, "action|drop\n|itemID|242");
-            g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(wls));
-            if (bruh4 > 100) {
-                dropwl = true;
-                g_server->send(false, "action|drop\n|itemID|242");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|242|\ncount|" + to_string(wls));
-                dropdl = true;
-                g_server->send(false, "action|drop\n|itemID|1796");
-                g_server->send(false, "action|dialog_return\ndialog_name|drop_item\nitemID|1796|\ncount|" + to_string(dls));
-            }
-            variantlist_t notif{ "OnTextOverlay" };
-            notif[1] = "Total Bet :`9 " + to_string(gt::total_bet) + "\nDrop Amount : " + to_string(bruh4) + " (Taken " + taxstring + "% Tax)";
-           g_server->send(true, notif);
-		std::this_thread::sleep_for(std::chrono::milliseconds(800));
+         
 		tptopos(backpxm, backpym);
 		
 		gt::total_bet = 0;
